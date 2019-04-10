@@ -3,6 +3,7 @@ This project includes [helm](https://helm.sh/) charts developed to deploy orches
 
 The repository includes the following charts:
 * [Orion Context Broker](orion)
+* [QuantumLeap](quantumleap)
 * [CrateDB](crate) (Backend for QuantumLeap)
 
 Be aware that some packages have dependencies on other publicly available charts.
