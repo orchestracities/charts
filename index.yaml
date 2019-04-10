@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   crate:
   - apiVersion: v1
-    created: 2019-04-10T16:36:01.29266+02:00
+    created: 2019-04-10T17:20:15.130331+02:00
     description: CrateDB chart
     digest: de68e70c5e11058a80739ce0c6ebf8a7f1768efb1c0c92db4c28c1900ab7f336
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -18,7 +18,7 @@ entries:
     version: 0.1.0
   orion:
   - apiVersion: v1
-    created: 2019-04-10T16:36:01.293174+02:00
+    created: 2019-04-10T17:20:15.130799+02:00
     description: A Helm chart for Orion Context Broker
     digest: 89410f07baf5ef6a8b8f1b23b548253a3e28cce07a0713a98071153324b837b0
     maintainers:
@@ -30,4 +30,18 @@ entries:
     urls:
     - https://orchestracities.github.io/charts/orion-0.1.0.tgz
     version: 0.1.0
-generated: 2019-04-10T16:36:01.290879+02:00
+  quantumleap:
+  - apiVersion: v1
+    created: 2019-04-10T17:20:15.131308+02:00
+    description: A Helm chart for QuantumLeap
+    digest: 96a36ae36f54137f5e578f6f685b94bf67e74c8256e04ab9a0bd7ff435020186
+    maintainers:
+    - email: tomas.aliaga@martel-innovate.com
+      name: taliaga
+    name: quantumleap
+    sources:
+    - https://github.com/telefonicaid/fiware-orion
+    urls:
+    - https://orchestracities.github.io/charts/quantumleap-0.1.0.tgz
+    version: 0.1.0
+generated: 2019-04-10T17:20:15.129352+02:00
