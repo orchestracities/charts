@@ -13,7 +13,8 @@ This directory contains a Kubernetes chart to deploy a [CrateDB](https://crate.i
 * https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations
 
 ## Todo
-* 
+* follow up with [helm/charts#8432](helm/charts#8432), if PR completed this chart
+  can be removed from here.
 
 ## Chart Details
 This chart will do the following:
