@@ -1,0 +1,11 @@
+apiVersion: v1
+description: 'CrateDB chart'
+name: crate
+version: 0.1.0
+icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
+sources:
+- https://github.com/crate/crate
+- https://github.com/crate/docker-crate
+maintainers:
+- name: taliaga
+  email: tomas.aliaga@martel-innovate.com

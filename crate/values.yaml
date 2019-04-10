@@ -1,0 +1,54 @@
+# Default values for a crate deployment of 3 nodes.
+# Chart consists of:
+#   1) A Service (exposing the ports that crate uses)
+#   2) A StatefulSet (initialising the cluster)
+app: crate
+
+image:
+  name: crate
+  tag: 2.3.6
+  pullPolicy: IfNotPresent
+
+# 1) The Service connecting 3 ports...
+service:
+  name: crate
+  type: ClusterIP
+
+  adminName: crate-web
+  adminPort: 4200
+  clusterName: cluster
+  clusterPort: 4300
+  postgresName: postgres
+  postgresPort: 5432
+
+# 2) The StatefulSet forming the cluster...
+crate:
+  clusterName: quantumleap
+  # https://crate.io/docs/crate/reference/en/latest/config/environment.html#use-max-50-of-available-ram
+  createHeapSize: 3g
+  recoverAfterTime: 5m
+  replicas: 3
+  recoverAfterNodes: 2
+  minimumMasterNodes: 2
+
+http:
+  cors:
+    enabled: true
+    allowOrigin: "*"
+
+# 3) Resources
+resources:
+  requests:
+    cpu: 300m
+    memory: 2Gi
+  limits:
+    cpu: 1000m
+    memory: 5Gi
+
+persistentVolume:
+  enabled: true
+  storageClass: retain
+  accessModes:
+    - ReadWriteOnce
+  size: 20Gi  # Per instance
+  annotations: {}

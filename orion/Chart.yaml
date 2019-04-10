@@ -1,0 +1,9 @@
+apiVersion: v1
+description: A Helm chart for Orion Context Broker
+name: orion
+version: 0.1.0
+sources:
+- https://github.com/telefonicaid/fiware-orion
+maintainers:
+- name: taliaga
+  email: tomas.aliaga@martel-innovate.com

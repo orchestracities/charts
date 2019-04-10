@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "orion.fullname" . }}
+  labels:
+    app: {{ template "orion.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+{{ toYaml .Values.updateStrategy | indent 4 }}
+  template:
+    metadata:
+      annotations:
+        chaos.alpha.kubernetes.io/enabled: "{{ .Values.chaos.enabled }}"
+      labels:
+        app: {{ template "orion.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+        - name: create-indexes
+          image: {{ .Values.mongo.image }}
+          imagePullPolicy: IfNotPresent
+          command: [ "mongo", "--host", "{{ .Values.mongo.rs }}/{{ .Values.mongo.dbhost }}", "orion", "--eval", "db.entities.createIndexes([{\"_id.id\": 1}, {\"_id.type\": 1}, {\"_id.servicePath\": 1}, {\"attrNames\": 1}, {\"creDate\": 1}])" ]
+
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "contextBroker", "-fg", {{- if .Values.service.multitenancy }}"-multiservice",{{- end }}{{- if .Values.service.writeConcern }} "-writeConcern", "{{ .Values.service.writeConcern }}", {{- end }} "-logLevel", "INFO", "-dbhost", "{{ .Values.mongo.dbhost }}", {{- if .Values.mongo.replicaset }} "-rplSet", "{{ .Values.mongo.rs }}", {{- end }} "-dbTimeout", "10000", "-corsOrigin", "__ALL", "-reqMutexPolicy", "none" ]
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: {{ .Values.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /v2
+              port: {{ .Values.service.internalPort }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
