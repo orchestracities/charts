@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   crate:
   - apiVersion: v1
-    created: 2019-04-10T16:33:15.143238+02:00
+    created: 2019-04-10T16:36:01.29266+02:00
     description: CrateDB chart
     digest: de68e70c5e11058a80739ce0c6ebf8a7f1768efb1c0c92db4c28c1900ab7f336
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -16,4 +16,18 @@ entries:
     urls:
     - https://orchestracities.github.io/charts/crate-0.1.0.tgz
     version: 0.1.0
-generated: 2019-04-10T16:33:15.141178+02:00
+  orion:
+  - apiVersion: v1
+    created: 2019-04-10T16:36:01.293174+02:00
+    description: A Helm chart for Orion Context Broker
+    digest: 89410f07baf5ef6a8b8f1b23b548253a3e28cce07a0713a98071153324b837b0
+    maintainers:
+    - email: tomas.aliaga@martel-innovate.com
+      name: taliaga
+    name: orion
+    sources:
+    - https://github.com/telefonicaid/fiware-orion
+    urls:
+    - https://orchestracities.github.io/charts/orion-0.1.0.tgz
+    version: 0.1.0
+generated: 2019-04-10T16:36:01.290879+02:00
