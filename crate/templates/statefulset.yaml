@@ -64,6 +64,8 @@ spec:
             command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
           initialDelaySeconds: 240
           periodSeconds: 60
+  updateStrategy:
+    type: RollingUpdate
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
     - metadata:
