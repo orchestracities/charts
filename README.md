@@ -35,3 +35,19 @@ contributions"
 
 Ultimately, contributing guides should keep aligned with those suggested by
 FIWARE (see [here](https://github.com/Fiware/developmentGuidelines/blob/master/external_contributions.mediawiki)).
+
+### How to publish a new chart in the catalogue 
+Ultimately we will automate the process, but for the time being only owners of the repo will update the catalogue.
+
+The procedure is as follows, once the PR for an updated/new chart is approved:
+1. The owners will package the chart from the master repo:
+    ```
+    $ helm package CHART_NAME
+    ```
+1. The owners will then will create a new branch of the documentation branch `gh-pages`
+1. The owners will update the index:
+    ```
+    $ helm repo index . --url https://orchestracities.github.io/charts/
+    ```
+1. The owners will commit the package and the updated index.
+1. The owners will issues a PR to the `gh-pages` branch.
