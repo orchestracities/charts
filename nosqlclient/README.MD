@@ -48,7 +48,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```console
-$ helm install --name my-release -f values.yaml oc/crate
+$ helm install --name my-release -f values.yaml oc/nosqlclient
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
