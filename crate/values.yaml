@@ -13,7 +13,7 @@ image:
 service:
   name: crate
   type: ClusterIP
-
+  annotations: {}
   adminName: crate-web
   adminPort: 4200
   clusterName: cluster

@@ -4,6 +4,10 @@ metadata:
   name: {{ .Values.service.name }}
   labels:
     app: {{ .Values.app }}
+  annotations:
+    {{- range $key, $value := .Values.service.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   ports:
   - port: {{ .Values.service.adminPort }}
