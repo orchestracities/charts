@@ -49,6 +49,9 @@ The following table lists the configurable parameters of the patroni chart and t
 | `persistentVolume.annotations`    | Annotations for Persistent Volume Claim`    | `{}`                                                |
 | `persistentVolume.size`           | Persistent Volume size                      | `2Gi`                                               |
 | `persistentVolume.storageClass`   | Persistent Volume Storage Class             | `volume.alpha.kubernetes.io/storage-class: default` |
+| `crate.nodeSelector`              | Crate Node labels for pod assignment        | {}                                                  |
+| `crate.tolerations`               | Toleration labels for Crate pod assignment  | []                                                  |
+| `crate.affinity`                  | Affinity settings for Crate pod assignment  | {}                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

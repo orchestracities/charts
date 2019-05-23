@@ -64,6 +64,17 @@ spec:
             command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
           initialDelaySeconds: 240
           periodSeconds: 60
+      affinity:
+{{ tpl (toYaml .) $ | indent 8 }}
+      {{- end }}
+      {{- if .Values.crate.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.crate.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.crate.tolerations }}
+      tolerations:
+{{ toYaml .Values.crate.tolerations | indent 8 }}
+      {{- end }}
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
     - metadata:
