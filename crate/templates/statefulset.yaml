@@ -64,6 +64,7 @@ spec:
             command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
           initialDelaySeconds: 240
           periodSeconds: 60
+      {{- with .Values.crate.affinity }}
       affinity:
 {{ tpl (toYaml .) $ | indent 8 }}
       {{- end }}
