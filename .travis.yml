@@ -37,4 +37,7 @@ jobs:
       install:
       - sh git-clean.sh
       - sh chart-package.sh
+      script:
+      - sh chart-lint.sh
+      after_success:
       - sh git-push.sh
