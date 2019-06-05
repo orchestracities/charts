@@ -5,6 +5,8 @@ The repository includes the following charts:
 * [Orion Context Broker](orion)
 * [QuantumLeap](quantumleap)
 * [CrateDB](crate) (Backend for QuantumLeap)
+* [Nosql Client](nosqlclient)
+* [PgAdmin](pgadmin-chart)
 
 Be aware that some packages have dependencies on other publicly available charts.
 
