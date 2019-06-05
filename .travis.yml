@@ -17,7 +17,7 @@ jobs:
       name: "Chart Lint"
 
       script:
-        - sh chart-lint.sh
+        - bash chart-lint.sh
 
     - stage: test
       name: "Documentation Tests"
@@ -34,6 +34,6 @@ jobs:
       - sh git-clean.sh
       - sh chart-package.sh
       script:
-      - sh chart-lint.sh
+      - bash chart-lint.sh
       after_success:
       - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sh git-push.sh; fi'
