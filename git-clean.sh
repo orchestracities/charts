@@ -4,4 +4,4 @@ git fetch
 for branch in $(git branch -r|grep -v HEAD) ; do
     git checkout ${branch#origin/}
 done
-git checkout master
+git checkout $TRAVIS_BRANCH
