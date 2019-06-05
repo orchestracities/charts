@@ -1,0 +1,17 @@
+language: python
+sudo: required
+dist: xenial
+cache: pip
+
+jobs:
+  include:
+    - stage: test
+      name: "Documentation Tests"
+      language: node_js
+      node_js: 10
+
+      install:
+        - npm install
+
+      script:
+        - npm run lint:md
