@@ -1,7 +1,9 @@
-language: python
+language: bash
 sudo: required
 dist: xenial
-cache: pip
+
+git:
+  depth: false
 
 jobs:
   include:
@@ -23,6 +25,6 @@ jobs:
         - npm run lint:md
     - stage: deploy
       if: branch = master AND type IN (pull_request)
-      script:
+      install:
       - sh chart-package.sh
       - sh git-push.sh
