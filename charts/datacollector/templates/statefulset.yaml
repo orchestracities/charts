@@ -1,0 +1,121 @@
+apiVersion: "apps/v1beta1"
+kind: StatefulSet
+metadata:
+  name: {{ template "datacollector.fullname" . }}
+  labels:
+    app: {{ template "datacollector.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  serviceName: {{ template "datacollector.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "datacollector.name" . }}
+        release: {{ .Release.Name }}
+        {{- if .Values.podAnnotations }}
+        annotations:
+{{ toYaml .Values.podAnnotations | indent 8 }}
+        {{- end }}
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds}}
+      initContainers:
+       - name: init-datacollector-data
+         image: busybox
+         command: ['sh', '-c', 'chown -R 20159 /data /opt/streamsets-datacollector/streamsets-libs']
+         volumeMounts:
+         - name: data
+           mountPath: /data
+           subPath: data
+         - name: data
+           mountPath: /opt/streamsets-datacollector/streamsets-libs
+           subPath: stagelibs
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          env:
+          - name: SDC_JAVA_OPTS
+            value: "-Xmx{{ .Values.configuration.memoryHeap}} -Xms{{ .Values.configuration.memoryHeap}}"
+          livenessProbe:
+            httpGet:
+              path: /public-rest/ping
+              port: {{ .Values.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /public-rest/ping
+              port: {{ .Values.service.internalPort }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+          - name: data
+            mountPath: /data
+            subPath: data
+          - name: data
+            mountPath: /opt/streamsets-datacollector/streamsets-libs
+            subPath: stagelibs
+          - name: config
+            mountPath: /etc/sdc/sdc.properties
+            subPath: sdc.properties
+      {{- if or .Values.antiAffinity .Values.nodeAffinity }}
+      affinity:
+      {{- end }}
+      {{- if eq .Values.antiAffinity "hard" }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchLabels:
+                  app: "{{ template "datacollector.name" . }}"
+                  release: "{{ .Release.Name }}"
+      {{- else if eq .Values.antiAffinity "soft" }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: "{{ template "datacollector.name" . }}"
+                  release: "{{ .Release.Name }}"
+      {{- end }}
+      {{- with .Values.nodeAffinity }}
+        nodeAffinity:
+        {{ toYaml . | indent 10 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
+  {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "datacollector.fullname" . }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.persistence.name }}
+    spec:
+      accessModes:
+        - {{ .Values.persistence.accessMode | quote }}
+    {{- if .Values.persistence.storageClass }}
+    {{- if (eq "-" .Values.persistence.storageClass) }}
+      storageClassName: ""
+    {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClass }}"
+    {{- end }}
+    {{- end }}
+      resources:
+        requests:
+          storage: "{{ .Values.persistence.size }}"
+  {{ end }}
