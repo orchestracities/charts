@@ -46,10 +46,10 @@ FIWARE (see
 
 ### How to publish a new chart in the catalogue
 
-Ultimately we will automate the process, but for the time being only owners of
-the repo will update the catalogue.
+The process is automated: once a merge request lands in the repo, the catalogue
+is updated.
 
-The procedure is as follows, once the PR for an updated/new chart is approved:
+In case you need to update manually:
 
 1. The owners will package the chart from the master repo:
     ```
