@@ -40,4 +40,4 @@ jobs:
       script:
       - sh chart-lint.sh
       after_success:
-      - sh git-push.sh
+      - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sh git-push.sh; fi'
