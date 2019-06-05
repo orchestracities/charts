@@ -1,9 +1,4 @@
 #!/bin/sh
-git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-git fetch
-for branch in $(git branch -r|grep -v HEAD) ; do
-    git checkout ${branch#origin/}
-done
 echo "git push"
 echo "PR - ${TRAVIS_PULL_REQUEST}"
 git config --global user.email "travis@travis-ci.org"

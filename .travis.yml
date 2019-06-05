@@ -26,5 +26,6 @@ jobs:
     - stage: deploy
       if: branch = master AND type IN (pull_request)
       install:
+      - sh git-clean.sh
       - sh chart-package.sh
       - sh git-push.sh
