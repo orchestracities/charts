@@ -6,6 +6,12 @@ cache: pip
 jobs:
   include:
     - stage: test
+      name: "Chart Lint"
+
+      script:
+        - sh chart-lint.sh
+
+    - stage: test
       name: "Documentation Tests"
       language: node_js
       node_js: 10
