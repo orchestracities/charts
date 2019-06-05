@@ -25,3 +25,4 @@ jobs:
       if: branch = master AND type IN (pull_request)
       script:
       - sh chart-package.sh
+      - sh git-push.sh
