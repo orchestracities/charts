@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   crate:
   - apiVersion: v1
-    created: 2019-06-05T16:11:35.938899264Z
+    created: 2019-06-05T16:22:20.346051088Z
     description: CrateDB chart
     digest: 36f979ab93b6a7605d089177fe281846abf9e76240e2ff1d0109a5e6d14b9aa6
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -17,7 +17,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-05T16:11:35.938279414Z
+    created: 2019-06-05T16:22:20.345302285Z
     description: CrateDB chart
     digest: de68e70c5e11058a80739ce0c6ebf8a7f1768efb1c0c92db4c28c1900ab7f336
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -34,7 +34,7 @@ entries:
   nosqlclient:
   - apiVersion: v1
     appVersion: 2.2.0
-    created: 2019-06-05T16:11:35.939563723Z
+    created: 2019-06-05T16:22:20.346718733Z
     description: A Helm chart to deploy nosql client
     digest: 94d56ca775ee86fdfecb089361b860909f1f412d967ced32d2cb4daef3075a96
     name: nosqlclient
@@ -43,7 +43,7 @@ entries:
     version: 0.1.0
   orion:
   - apiVersion: v1
-    created: 2019-06-05T16:11:35.940284682Z
+    created: 2019-06-05T16:22:20.347405813Z
     description: A Helm chart for Orion Context Broker
     digest: 89410f07baf5ef6a8b8f1b23b548253a3e28cce07a0713a98071153324b837b0
     maintainers:
@@ -57,7 +57,7 @@ entries:
     version: 0.1.0
   pgadmin-chart:
   - apiVersion: v1
-    created: 2019-06-05T16:11:35.945479269Z
+    created: 2019-06-05T16:22:20.353413023Z
     description: pgAdmin is the most popular and feature rich Open Source administration
       and development platform for PostgreSQL, the most advanced Open Source database
       in the world.
@@ -74,7 +74,7 @@ entries:
     version: 0.1.0
   quantumleap:
   - apiVersion: v1
-    created: 2019-06-05T16:11:35.945856134Z
+    created: 2019-06-05T16:22:20.35383274Z
     description: A Helm chart for QuantumLeap
     digest: 96a36ae36f54137f5e578f6f685b94bf67e74c8256e04ab9a0bd7ff435020186
     maintainers:
@@ -86,4 +86,4 @@ entries:
     urls:
     - https://orchestracities.github.io/charts/quantumleap-0.1.0.tgz
     version: 0.1.0
-generated: 2019-06-05T16:11:35.937079688Z
+generated: 2019-06-05T16:22:20.344262814Z
