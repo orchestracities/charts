@@ -1,0 +1,43 @@
+language: bash
+sudo: required
+dist: xenial
+
+git:
+  depth: false
+
+stages:
+  - test
+  - name: deploy
+    # require the branch name to be master (note for PRs this is the base branch name)
+    if: branch = master
+
+env:
+  global:
+  - GH_REPO="github.com/${USER}/${REPO}.git"
+
+jobs:
+  include:
+    - stage: test
+      name: "Chart Lint"
+
+      script:
+        - sh chart-lint.sh
+
+    - stage: test
+      name: "Documentation Tests"
+      language: node_js
+      node_js: 10
+
+      install:
+        - npm install
+
+      script:
+        - npm run lint:md
+    - stage: deploy
+      install:
+      - sh git-clean.sh
+      - sh chart-package.sh
+      script:
+      - sh chart-lint.sh
+      after_success:
+      - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sh git-push.sh; fi'

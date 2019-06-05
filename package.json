@@ -1,0 +1,46 @@
+{
+  "name": "orchestracities-charts",
+  "version": "0.0.1",
+  "description": "Helm Charts for orchestracities",
+  "keywords": [
+    "node",
+    "fiware",
+    "ngsi"
+  ],
+  "license": "APACHE 2.0",
+  "author": "Federico Facca <name.surname@martel-innovate.com> (https://martel-innovate.com)",
+  "contributors": [
+    "Tomas Aliaga <name.surname@martel-innovate.com> (https://martel-innovate.com)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orchestracities/charts"
+  },
+  "devDependencies": {
+    "husky": "^1.1.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.2",
+    "remark-cli": "^6.0.1",
+    "remark-preset-lint-recommended": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=8.6"
+  },
+  "scripts": {
+    "lint:text": "textlint 'README.md' './charts/**/*.MD' './charts/**/*.md'",
+    "lint:md": "remark -f 'README.md' './charts/**/*.MD' './charts/**/*.md'",
+    "precommit": "lint-staged",
+    "prettier:text": "prettier './*.md' './charts/**/*.MD' './charts/**/*.md' --tab-width 4 --print-width 80 --write --prose-wrap always"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.md": [
+      "prettier --tab-width 4 --print-width 80 --write --prose-wrap always",
+      "git add"
+    ]
+  }
+}
