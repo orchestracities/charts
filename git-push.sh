@@ -10,6 +10,6 @@ docker run -ti --rm -v $(pwd):/apps -v $(pwd)/local:/root/.helm/repository/local
 echo "3. commit changes"
 git add --all && git commit -m "Travis build: $TRAVIS_BUILD_NUMBER"
 echo "4. fix remote"
-git remote add origin-pages https://${GH_TOKEN}@github.com/orchestracities/charts.git > /dev/null 2>&1
+git remote add origin-pages "https://${GITHUB_TOKEN}@github.com/orchestracities/charts.git" > /dev/null 2>&1
 echo "5. push to gh-pages"
 git push --quiet --set-upstream origin-pages gh-pages
