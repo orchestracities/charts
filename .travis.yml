@@ -5,6 +5,11 @@ dist: xenial
 git:
   depth: false
 
+stages:
+  - name: deploy
+    # require the branch name to be master (note for PRs this is the base branch name)
+    if: branch = master
+
 jobs:
   include:
     - stage: test
@@ -24,7 +29,6 @@ jobs:
       script:
         - npm run lint:md
     - stage: deploy
-      if: branch = master AND type IN (pull_request)
       install:
       - sh git-clean.sh
       - sh chart-package.sh
