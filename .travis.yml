@@ -11,10 +11,6 @@ stages:
     # require the branch name to be master (note for PRs this is the base branch name)
     if: branch = master
 
-env:
-  global:
-  - GH_REPO="github.com/${USER}/${REPO}.git"
-
 jobs:
   include:
     - stage: test
