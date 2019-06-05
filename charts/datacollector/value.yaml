@@ -1,0 +1,67 @@
+# Default values for datacollector.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+terminationGracePeriodSeconds: 10
+configuration:
+  http2: true
+  forwardedRequest: true
+  accessControl: true
+  title:  "tile"
+  memoryHeap: 1024m
+  url: <url>
+  email:
+    host: smtp.example.com
+    port: 25
+    auth: true
+    starttls: false
+    sslhost: localhost
+    sslport: 465
+    sslauth: false
+    username: info@example.com
+    password: password
+    from: info@example.com
+
+image:
+  repository: streamsets/datacollector
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  name: datacollector
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 18630
+  annotations: {}
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  name: data
+  size: "4Gi"
+  storageClass: default
+antiAffinity: "soft"
+nodeAffinity: {}
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
