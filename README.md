@@ -12,6 +12,7 @@ The repository includes the following charts:
 -   [Nosql Client](charts/nosqlclient)
 -   [PgAdmin](charts/pgadmin-chart)
 -   [IoT Agent](charts/iot-agent)
+-   [IoT Agent Manager](charts/iot-agent-manager)
 
 Be aware that some packages have dependencies on other publicly available
 charts.

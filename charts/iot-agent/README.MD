@@ -9,7 +9,6 @@ Deployment. IoT Agents supported are:
 
 ## Prerequisites Details
 * Kubernetes 1.5+
-* PV support on the underlying infrastructure
 
 ## Todo
 * Finalise README
@@ -35,7 +34,8 @@ TODO
 
 ## Configuration
 
-The following table lists the configurable parameters of the patroni chart and their default values.
+The following table lists the configurable parameters of the IoT Agent
+chart and their default values.
 
 |       Parameter                   |           Description                       |                         Default                     |
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|
@@ -43,14 +43,13 @@ The following table lists the configurable parameters of the patroni chart and t
 | `image.repository`                | The image to pull                           | `fiware/iotagent-ul`                                      |
 | `image.tag`                       | The version of the image to pull            | `1.9.0`                                             |
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
-| `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `service.agentType`               | The type of agent deployed | `ul`                                                |
 | `service.name`                    | Name of the service deployed | `iotagent-ul`                                                |
 | `service.timestamp`               | If this flag is activated, the IoT Agent will add a 'TimeInstant' metadata attribute to all the attributes updated from device information. | `true`
-| `service.defaultService`          | default service for the IoT Agent. If a device is being registered, and no service information comes with the device data, and no service information is configured for the given type, the default IoT agent service will be used instead. | `Default`
-| `service.defaultSubservice`       | default subservice for the IoT Agent. If a device is being registered, and no subservice information comes with the device data, and no subservice information is configured for the given type, the default IoT agent subservice will be used instead. | '/'
-| `service.providerUrl`             | URL to send in the Context Provider registration requests. Should represent the external IP of the deployed IoT Agent (the IP where the Context Broker will redirect the NGSI requests) | 'http://ul-iot-agent:4041'
-| `service.deviceRegistrationDuration`          | duration of the registrations as Context Providers, in ISO 8601 standard format. | P1M
+| `service.defaultService`          | default service for the IoT Agent. If a device is being registered, and no service information comes with the device data, and no service information is configured for the given type, the default IoT agent service will be used instead. | `Default` |
+| `service.defaultSubservice`       | default subservice for the IoT Agent. If a device is being registered, and no subservice information comes with the device data, and no subservice information is configured for the given type, the default IoT agent subservice will be used instead. | '/' |
+| `service.providerUrl`             | URL to send in the Context Provider registration requests. Should represent the external IP of the deployed IoT Agent (the IP where the Context Broker will redirect the NGSI requests) | 'http://ul-iot-agent:4041' |
+| `service.deviceRegistrationDuration`          | duration of the registrations as Context Providers, in ISO 8601 standard format. | P1M |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
