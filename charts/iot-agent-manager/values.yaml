@@ -1,0 +1,70 @@
+# Default values for iot-agent.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: telefonicaiot/iotagent-manager
+  tag: 1.6.0
+  pullPolicy: IfNotPresent
+
+chaos:
+  enabled: true
+
+updateStrategy:
+  rollingUpdate:
+    maxUnavailable: 1
+  type: RollingUpdate
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  targetAverageUtilization: 50
+
+service:
+  name: iotagentmanager
+  type: ClusterIP
+  # log level supported: DEBUG, INFO, ERROR, FATAL.
+  logLevel: DEBUG
+  #
+  externalPort: 8082
+  internalPort: 8082
+
+
+mongo:
+  # is the replicaset enabled?
+  rsEnabled: true
+  # The name of the replicaset iot-agent will attempt to connect to
+  rs: rs
+  # The hostname of the mongodb service
+  dbhost: mongo-rs-mongodb-replicaset-0.mongo-rs-mongodb-replicaset.prod,mongo-rs-mongodb-replicaset-1.mongo-rs-mongodb-replicaset.prod,mongo-rs-mongodb-replicaset-2.mongo-rs-mongodb-replicaset.prod
+  # The database name to be used for the agent
+  dbname: iot-agent-manager
+  # The database name to be used for the agent
+  dbport: 27017
+
+
+ingress:
+  enabled: true
+  # Used to create an Ingress record.
+  hosts:
+    - iot-manager.example.com
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  tls: {}
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
