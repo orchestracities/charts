@@ -1,0 +1,112 @@
+{{- if eq .Values.service.agentType "ul" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "iot-agent.name" . }}
+    component: "{{ .Values.service.agentType }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "iot-agent.fullname" . }}
+data:
+  config.js: |
+    var config = {};
+
+    config.mqtt = {
+    {{- if .Values.mqtt.enabled }}
+        host: {{ .Values.mqtt.host | quote }},
+        port: {{ .Values.mqtt.port }},
+        {{- if .Values.mqtt.username -}}
+        /**
+         * User name for the IoTAgent in the MQTT broker, if authentication is activated.
+         */
+        username: {{ .Values.mqtt.username | quote }},
+        {{- end }}
+        {{- if .Values.mqtt.password }}
+        /**
+         * Password for the IoTAgent in the MQTT broker, if authentication is activated.
+         */
+        password: {{ .Values.mqtt.password | quote }},
+        {{- end }}
+    {{- end }}
+    };
+
+    config.amqp = {
+    {{- if .Values.amqp.enabled }}
+        host: {{ .Values.amqp.host | quote }},
+        port: {{ .Values.amqp.port }},
+        {{- if .Values.amqp.username }}
+        username: {{ .Values.amqp.username | quote }},
+        {{- end }}
+        {{- if .Values.amqp.password }}
+        password: {{ .Values.amqp.password | quote }},
+        {{- end }}
+        {{- if .Values.amqp.vhost }}
+        vhost: {{ .Values.amqp.vhost | quote }},
+        {{- end }}
+        exchange: "iota-exchange",
+        queue: "iotaqueue",
+        options: {durable: true}
+    {{- end }}
+    };
+
+    config.http = {
+        port: {{ required "A valid service.dataInternalPort is required" .Values.service.dataInternalPort }}
+    };
+
+    config.iota = {
+        logLevel:  {{ .Values.service.logLevel | default "DEBUG" | quote }},
+        timestamp:  {{ .Values.service.timestamp | default true }},
+        contextBroker: {
+            host: {{ required "A valid contextBroker.host is required" .Values.contextBroker.host | quote }},
+            port: {{ required "A valid contextBroker.port is required" .Values.contextBroker.port }},
+            ngsiVersion: {{ .Values.contextBroker.ngsiVersion | quote }}
+        },
+        server: {
+            port: {{ required "A valid service.configInternalPort is required" .Values.service.configInternalPort }},
+            baseRoot: '/config'
+        },
+        deviceRegistry: {
+            type: 'mongodb'
+        },
+        mongodb: {
+            host: {{ required "A valid mongo.dbhost is required" .Values.mongo.dbhost | quote }},
+            port: {{ required "A valid mongo.dbport is required" .Values.mongo.dbport }},
+            db: {{ required "A valid mongo.dbname is required" .Values.mongo.dbname | quote }},
+            {{ if .Values.mongo.rsEnabled -}}replicaSet: {{ .Values.mongo.rs | quote }}{{- end }}
+        },
+        {{- if .Values.iotManager.enabled }}
+        iotManager: {
+          host: {{ .Values.iotManager.host | quote }},
+          port: {{ .Values.iotManager.port }},
+          path: {{ .Values.iotManager.path | quote }},
+          protocol: {{ .Values.iotManager.protocol | quote }},
+          description: {{ .Values.iotManager.description | default "A generic protocol" | quote }},
+          agentPath: {{ .Values.iotManager.agentPath | default "/iot" | quote }}
+        },
+        {{- end }}
+        /**
+         * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
+         * Manager.
+         */
+        defaultResource: '/iot/{{ .Release.Name }}',
+        types: {{ toJson .Values.types }},
+        service: {{ required "A valid service.defaultService is required" .Values.service.defaultService | quote }},
+        subservice: {{ required "A valid service.defaultSubservice is required" .Values.service.defaultSubservice | quote }},
+        {{- if .Values.service.providerUrl }}
+        providerUrl: {{ .Values.service.providerUrl | quote }},
+        {{- else if .Values.ingress.enabled }}
+        providerUrl: 'https://{{ index .Values.ingress.hosts 0 }}/config',
+        {{- else }}
+        providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}'
+        {{- end }}
+        deviceRegistrationDuration: {{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration | quote }},
+        defaultType: {{ required "A valid service.defaultType is required" .Values.service.defaultType | quote }}
+    };
+
+    config.defaultKey = {{ required "A valid service.defaultKey is required" .Values.service.defaultKey | quote }};
+    config.defaultTransport = {{ required "A valid service.defaultTransport is required" .Values.service.defaultTransport | quote }};
+    module.exports = config;
+
+{{- end -}}

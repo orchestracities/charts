@@ -1,0 +1,82 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "iot-agent.fullname" . }}
+  labels:
+    app: {{ template "iot-agent.name" . }}
+    component: "{{ .Values.service.agentType }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+{{ toYaml .Values.updateStrategy | indent 4 }}
+  template:
+    metadata:
+      annotations:
+        chaos.alpha.kubernetes.io/enabled: "{{ .Values.chaos.enabled }}"
+      labels:
+        app: {{ template "iot-agent.name" . }}
+        component: "{{ .Values.service.agentType }}"
+        release: {{ .Release.Name }}
+    spec:
+      {{ if eq .Values.service.agentType "lwm2m" }}
+      hostAliases:
+        - ip: "100.122.0.5"
+          hostnames:
+          - "orion"
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.dataInternalPort }}
+              {{ if eq .Values.service.agentType "lwm2m" }}
+              name: external-udp
+              protocol: UDP
+              {{- end }}
+            - containerPort: {{ .Values.service.configInternalPort }}
+          livenessProbe:
+            httpGet:
+              path: /config/iot/about
+              port: {{ .Values.service.configInternalPort }}
+          readinessProbe:
+            httpGet:
+              path: /config/iot/about
+              port: {{ .Values.service.configInternalPort }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+          {{- if eq .Values.service.agentType "ul" }}
+          volumeMounts:
+            - name: config
+              mountPath: /opt/iotaul/config.js
+              subPath: config.js
+          {{- else if eq .Values.service.agentType "json" }}
+          volumeMounts:
+            - name: config
+              mountPath: /opt/iotajson/config.js
+              subPath: config.js
+          {{- else if eq .Values.service.agentType "lorawan" }}
+          volumeMounts:
+             - name: config
+               mountPath: /opt/iotagent-lora/config.js
+               subPath: config.js
+          {{- else if eq .Values.service.agentType "lwm2m" }}
+          volumeMounts:
+             - name: config
+               mountPath: /opt/iota-lwm2m/config-blank.js
+               subPath: config-blank.js
+          {{- end }}
+      {{- if eq .Values.service.agentType "lwm2m" }}
+      hostNetwork: true
+      {{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "iot-agent.fullname" . }}

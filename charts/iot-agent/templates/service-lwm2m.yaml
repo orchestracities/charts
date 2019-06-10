@@ -1,0 +1,28 @@
+{{- if eq .Values.service.agentType "lwm2m" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "iot-agent.fullname" . }}-lwm2m
+  labels:
+    app: {{ template "iot-agent.name" . }}
+    component: "{{ .Values.service.agentType }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    dns.alpha.kubernetes.io/external: lwm2m.s.orchestracities.com
+    external-dns.alpha.kubernetes.io/hostname: lwm2m.s.orchestracities.com
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+#  clusterIP: None
+  ports:
+    - port: {{ .Values.service.dataInternalPort }}
+      targetPort: {{ .Values.service.dataInternalPort }}
+      nodePort: {{ .Values.service.dataExternalPort }}
+      protocol: UDP
+      name: external-udp
+  selector:
+    app: {{ template "iot-agent.name" . }}
+    release: {{ .Release.Name }}
+{{- end }}
