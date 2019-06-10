@@ -1,0 +1,45 @@
+{{- if .Values.ingress.enabled -}}
+{{- $serviceName := include "iot-agent.fullname" . -}}
+{{- $httpPort := .Values.service.dataExternalPort -}}
+{{- $northPort := .Values.service.configExternalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "iot-agent.fullname" . }}
+  labels:
+    app: {{ template "iot-agent.name" . }}
+    component: "{{ .Values.service.agentType }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  rules:
+{{- if ne .Values.service.agentType "lwm2m" -}}
+    {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $httpPort }}
+    {{- end -}}
+{{- end -}}
+    {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /config
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $northPort }}
+    {{- end -}}
+  {{- if .Values.ingress.tls }}
+  tls:
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end -}}
+{{- end -}}

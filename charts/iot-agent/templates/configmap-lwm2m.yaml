@@ -1,0 +1,90 @@
+{{- if eq .Values.service.agentType "lwm2m" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "iot-agent.name" . }}
+    component: "{{ .Values.service.agentType }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "iot-agent.fullname" . }}
+data:
+  config-blank.js: |
+    var config = {};
+
+    config.lwm2m = {
+        logLevel: '{{ .Values.lwm2m.logLevel | default "DEBUG" }}',
+        port: {{ required "A valid service.dataInternalPort is required" .Values.service.dataInternalPort }},
+        defaultType: '{{ .Values.lwm2m.defaultType | default "Device" }}',
+        lifetimeCheckInterval: 1000,        // Minimum interval between lifetime checks in ms
+        udpWindow: 100,
+        ipProtocol: '{{ .Values.lwm2m.ipProtocol | default "udp4" }}',
+        serverProtocol: '{{ .Values.lwm2m.serverProtocol | default "udp4" }}',
+        formats: [
+            {
+                name: 'application-vnd-oma-lwm2m/text',
+                value: 1541
+            },
+            {
+                name: 'application-vnd-oma-lwm2m/tlv',
+                value: 1542
+            },
+            {
+                name: 'application-vnd-oma-lwm2m/json',
+                value: 1543
+            },
+            {
+                name: 'application-vnd-oma-lwm2m/opaque',
+                value: 1544
+            }
+        ],
+        writeFormat: 'application-vnd-oma-lwm2m/text',
+        types: [ ]
+    };
+
+    config.ngsi = {
+        logLevel: '{{ .Values.service.logLevel | default "DEBUG" }}',
+        contextBroker: {
+            host: '{{ required "A valid contextBroker.host is required" .Values.contextBroker.host }}',
+            port: {{ required "A valid contextBroker.port is required" .Values.contextBroker.port }},
+            ngsiVersion: {{ .Values.contextBroker.ngsiVersion | quote }}
+        },
+        server: {
+            port: {{ required "A valid service.configInternalPort is required" .Values.service.configInternalPort }},
+            baseRoot: '/config'
+        },
+        deviceRegistry: {
+            type: 'memory'
+        },
+        mongodb: {
+            host: '{{ required "A valid mongo.dbhost is required" .Values.mongo.dbhost }}',
+            port: {{ required "A valid mongo.dbport is required" .Values.mongo.dbport }},
+            db: '{{ required "A valid mongo.dbname is required" .Values.mongo.dbname }}',
+            {{ if .Values.mongo.rsEnabled -}}replicaSet: '{{ .Values.mongo.rs }}'{{- end }}
+        },
+        {{- if .Values.iotManager.enabled }}
+        iotManager: {
+          host: '{{ .Values.iotManager.host }}',
+          port: {{ .Values.iotManager.port }},
+          path: '{{ .Values.iotManager.path }}',
+          protocol: '{{ .Values.iotManager.protocol }}',
+          description: '{{ .Values.iotManager.description | default "A generic protocol" }}',
+          agentPath: '{{ .Values.iotManager.agentPath | default "/iot" }}'
+        },
+        {{- end }}
+        types: {{ toJson .Values.types }},
+        service: '{{ required "A valid service.defaultService is required" .Values.service.defaultService }}',
+        subservice: '{{ required "A valid service.defaultSubservice is required" .Values.service.defaultSubservice }}',
+        {{- if .Values.service.providerUrl }}
+        providerUrl: '{{ .Values.service.providerUrl }}',
+        {{- else if .Values.ingress.enabled }}
+        providerUrl: 'https://{{ index .Values.ingress.hosts 0 }}/config',
+        {{- else }}
+        providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}',
+        {{- end }}
+        deviceRegistrationDuration: '{{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration }}'
+    };
+
+    module.exports = config;
+{{- end -}}

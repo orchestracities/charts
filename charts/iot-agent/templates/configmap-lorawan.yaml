@@ -1,0 +1,68 @@
+{{- if eq .Values.service.agentType "lorawan" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "iot-agent.name" . }}
+    component: "{{ .Values.service.agentType }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "iot-agent.fullname" . }}
+data:
+  config.js: |
+    var config = {};
+
+    config.iota = {
+        logLevel:  {{ .Values.service.logLevel | default "DEBUG" | quote }},
+        timestamp:  {{ .Values.service.timestamp | default true }},
+        contextBroker: {
+            host: {{ required "A valid contextBroker.host is required" .Values.contextBroker.host | quote }},
+            port: {{ required "A valid contextBroker.port is required" .Values.contextBroker.port }},
+            ngsiVersion: {{ .Values.contextBroker.ngsiVersion | quote }}
+        },
+        server: {
+            port: {{ required "A valid service.configInternalPort is required" .Values.service.configInternalPort }},
+            baseRoot: '/config'
+        },
+        deviceRegistry: {
+            type: 'mongodb'
+        },
+        mongodb: {
+            host: {{ required "A valid mongo.dbhost is required" .Values.mongo.dbhost | quote }},
+            port: {{ required "A valid mongo.dbport is required" .Values.mongo.dbport }},
+            db: {{ required "A valid mongo.dbname is required" .Values.mongo.dbname | quote }},
+            {{ if .Values.mongo.rsEnabled -}}replicaSet: {{ .Values.mongo.rs | quote }}{{- end }}
+        },
+        {{- if .Values.iotManager.enabled }}
+        iotManager: {
+          host: {{ .Values.iotManager.host | quote }},
+          port: {{ .Values.iotManager.port }},
+          path: {{ .Values.iotManager.path | quote }},
+          protocol: {{ .Values.iotManager.protocol | quote }},
+          description: {{ .Values.iotManager.description | default "A generic protocol" | quote }},
+          agentPath: {{ .Values.iotManager.agentPath | default "/iot" | quote }}
+        },
+        {{- end }}
+        /**
+         * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
+         * Manager.
+         */
+        defaultResource: '/iot/{{ .Release.Name }}',
+        types: {{ toJson .Values.types }},
+        service: {{ required "A valid service.defaultService is required" .Values.service.defaultService | quote }},
+        subservice: {{ required "A valid service.defaultSubservice is required" .Values.service.defaultSubservice | quote }},
+        {{- if .Values.service.providerUrl }}
+        providerUrl: {{ .Values.service.providerUrl | quote }},
+        {{- else if .Values.ingress.enabled }}
+        providerUrl: 'https://{{ index .Values.ingress.hosts 0 }}/config',
+        {{- else }}
+        providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}'
+        {{- end }}
+        deviceRegistrationDuration: {{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration | quote }},
+        defaultType: {{ required "A valid service.defaultType is required" .Values.service.defaultType | quote }}
+    };
+
+    module.exports = config;
+
+{{- end -}}
