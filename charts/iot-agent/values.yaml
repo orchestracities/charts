@@ -25,9 +25,7 @@ service:
   agentType: ul
   name: iotagent-ul
   type: ClusterIP
-  annotations:
-    alb.ingress.kubernetes.io/healthcheck-path: /config/iot/about
-    alb.ingress.kubernetes.io/healthcheck-port: iotagent-ul-north
+  annotations: {}
   # log level supported: DEBUG, INFO, ERROR, FATAL.
   logLevel: DEBUG
   # if this flag is activated, the IoT Agent will add a 'TimeInstant' metadata
@@ -42,7 +40,7 @@ service:
   # and no service information comes with the device data,
   # and no service information is configured for the given type,
   # the default IoT agent service will be used instead. E.g.: 'Antwerp'.
-  defaultService: 'OrchestraCities'
+  defaultService: 'Default'
   # default subservice for the IoT Agent. If a device is being registered,
   # and no subservice information comes with the device data, and no subservice
   # information is configured for the given type, the default IoT agent
