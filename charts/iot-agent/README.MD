@@ -61,6 +61,7 @@ $ helm install --name my-release -f values.yaml oc/iot-agent
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
 > **Tip**: Use `service.agentType` to define the type of agent to that 
 agent specific configuration is applied
 

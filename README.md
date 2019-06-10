@@ -11,6 +11,7 @@ The repository includes the following charts:
 -   [StreamSets Data Collector](charts/datacollector)
 -   [Nosql Client](charts/nosqlclient)
 -   [PgAdmin](charts/pgadmin-chart)
+-   [IoT Agent](charts/iot-agent)
 
 Be aware that some packages have dependencies on other publicly available
 charts.
