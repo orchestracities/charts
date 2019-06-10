@@ -30,6 +30,33 @@ data:
          */
         password: '{{ .Values.mqtt.password }}'
         {{- end }}
+        {{- if .Values.mqtt.retain }}
+        /**
+         * Retain flag. (default is true.) Normally if a publisher publishes a message to a topic, and no one is
+         * subscribed to that topic (i.e retain flag is set to false) the message is simply discarded by the broker.
+         * The publisher can tell the broker to keep the last message on that topic by setting the retained message flag to true.
+         */
+        retain: {{ .Values.mqtt.retain }}
+        {{- end }}
+    {{- end }}
+    };
+
+    config.amqp = {
+    {{- if .Values.amqp.enabled }}
+        host: {{ .Values.amqp.host | quote }},
+        port: {{ .Values.amqp.port }},
+        {{- if .Values.amqp.username }}
+        username: {{ .Values.amqp.username | quote }},
+        {{- end }}
+        {{- if .Values.amqp.password }}
+        password: {{ .Values.amqp.password | quote }},
+        {{- end }}
+        {{- if .Values.amqp.vhost }}
+        vhost: {{ .Values.amqp.vhost | quote }},
+        {{- end }}
+        exchange: "iota-exchange",
+        queue: "iotaqueue",
+        options: {durable: true}
     {{- end }}
     };
 
