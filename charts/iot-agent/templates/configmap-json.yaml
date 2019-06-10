@@ -28,7 +28,7 @@ data:
         /**
          * Password for the IoTAgent in the MQTT broker, if authentication is activated.
          */
-        password: '{{ .Values.mqtt.password }}'
+        password: '{{ .Values.mqtt.password }}',
         {{- end }}
         {{- if .Values.mqtt.retain }}
         /**
