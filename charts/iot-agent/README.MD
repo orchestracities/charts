@@ -9,7 +9,6 @@ Deployment. IoT Agents supported are:
 
 ## Prerequisites Details
 * Kubernetes 1.5+
-* PV support on the underlying infrastructure
 
 ## Todo
 * Finalise README
@@ -35,7 +34,8 @@ TODO
 
 ## Configuration
 
-The following table lists the configurable parameters of the patroni chart and their default values.
+The following table lists the configurable parameters of the IoT Agent
+chart and their default values.
 
 |       Parameter                   |           Description                       |                         Default                     |
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|

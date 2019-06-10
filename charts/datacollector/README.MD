@@ -32,7 +32,8 @@ $ helm install --name my-release oc/datacollector
 
 ## Configuration
 
-The following table lists the configurable parameters of the StreamSets Data Collector chart and their default values.
+The following table lists the configurable parameters of the StreamSets Data
+Collector chart and their default values.
 
 |       Parameter                   |           Description                       |                         Default                     |
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|

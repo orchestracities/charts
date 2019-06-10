@@ -4,7 +4,6 @@ This directory contains a Kubernetes chart to deploy a [Orion Context Broker](ht
 
 ## Prerequisites Details
 * Kubernetes 1.5+
-* PV support on the underlying infrastructure
 
 ## Todo
 * 
@@ -29,7 +28,8 @@ $ helm install --name my-release oc/orion
 
 ## Configuration
 
-The following table lists the configurable parameters of the patroni chart and their default values.
+The following table lists the configurable parameters of the 
+Orion Context Broker chart and their default values.
 
 |       Parameter                   |           Description                       |                         Default                     |
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|
@@ -52,12 +52,3 @@ $ helm install --name my-release -f values.yaml oc/orion
 ## Cleanup
 
 To remove the spawned pods you can run a simple `helm delete <release-name>`.
-
-Helm will however preserve created persistent volume claims,
-to also remove them execute the commands below.
-
-```console
-$ release=<release-name>
-$ helm delete $release
-$ kubectl delete pvc -l release=$release
-```

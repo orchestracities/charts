@@ -4,10 +4,9 @@ This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://gi
 
 ## Prerequisites Details
 * Kubernetes 1.5+
-* PV support on the underlying infrastructure
 
 ## Todo
-* 
+* Complete README
 
 ## Chart Details
 This chart will do the following:
@@ -52,12 +51,3 @@ $ helm install --name my-release -f values.yaml oc/quantumleap
 ## Cleanup
 
 To remove the spawned pods you can run a simple `helm delete <release-name>`.
-
-Helm will however preserve created persistent volume claims,
-to also remove them execute the commands below.
-
-```console
-$ release=<release-name>
-$ helm delete $release
-$ kubectl delete pvc -l release=$release
-```
