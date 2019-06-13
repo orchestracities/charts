@@ -35,7 +35,8 @@ service:
   dataInternalPort: 7896
   configExternalPort: 4041
   configInternalPort: 4041
-  # command: [ "bin/iotagent-ul", "config.js" ]
+  # When enabled, the IoT Agents will try to cast attribute's values considering the JSON native type (only for NGSIv2).
+  autocast: true
   # default service for the IoT Agent. If a device is being registered,
   # and no service information comes with the device data,
   # and no service information is configured for the given type,
@@ -51,7 +52,7 @@ service:
   # will redirect the NGSI requests). E.g.: 'http://192.168.56.1:4041'.
   providerUrl: http://ul-iot-agent:4041
   # duration of the registrations as Context Providers,
-  # in ISO 8601 standard format. E.g.: 'P1M'.
+  # in ISO 8601 standard format. E.g.: 'P1M'. (1 month)
   deviceRegistrationDuration: P1M
   defaultType: Device
   # Default API Key, to use with device that have been provisioned
@@ -125,6 +126,8 @@ mqtt:
   port: 1883
   username: username
   password: password
+  qos: 0
+  retain: true
 
 # configures all the information needed to register the IoT Agent in the
 # IoTManager. If this section is present, the IoTA will try to register to a

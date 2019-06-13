@@ -30,6 +30,12 @@ data:
          */
         password: '{{ .Values.mqtt.password }}',
         {{- end }}
+        {{- if .Values.mqtt.qos }}
+        /**
+         * QoS level: at most once (0), at least once (1), exactly once (2). (default is 0).
+         */
+        qos: {{ .Values.mqtt.qos }},
+        {{- end }}
         {{- if .Values.mqtt.retain }}
         /**
          * Retain flag. (default is true.) Normally if a publisher publishes a message to a topic, and no one is
@@ -104,6 +110,9 @@ data:
         providerUrl: 'https://{{ index .Values.ingress.hosts 0 }}/config',
         {{- else }}
         providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}',
+        {{- end }}
+        {{- if .Values.service.autocast }}
+        autocast: {{ .Values.service.autocast }},
         {{- end }}
         deviceRegistrationDuration: '{{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration }}',
         defaultType: '{{ required "A valid service.defaultType is required" .Values.service.defaultType }}',
