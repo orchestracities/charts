@@ -83,6 +83,9 @@ data:
         {{- else }}
         providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}',
         {{- end }}
+        {{- if .Values.service.autocast }}
+        autocast: {{ .Values.service.autocast }},
+        {{- end }}
         deviceRegistrationDuration: '{{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration }}'
     };
 
