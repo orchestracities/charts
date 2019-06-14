@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   crate:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.589726911Z
+    created: 2019-06-14T22:54:00.618196435Z
     description: CrateDB chart
     digest: 47efcf939b8fe73ced311524a3e436abf633a79d5f886e718e8c137a8797f104
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -17,7 +17,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.589092137Z
+    created: 2019-06-14T22:54:00.617568532Z
     description: CrateDB chart
     digest: 08ebcc1eb2c33131ed2c81d08647fc4dbadae469dc65c96fa5337c339c0bb1b1
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -32,7 +32,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.588385566Z
+    created: 2019-06-14T22:54:00.616824207Z
     description: CrateDB chart
     digest: 36f979ab93b6a7605d089177fe281846abf9e76240e2ff1d0109a5e6d14b9aa6
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -47,7 +47,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.587774131Z
+    created: 2019-06-14T22:54:00.616172809Z
     description: CrateDB chart
     digest: de68e70c5e11058a80739ce0c6ebf8a7f1768efb1c0c92db4c28c1900ab7f336
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -63,7 +63,7 @@ entries:
     version: 0.1.0
   datacollector:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.590865066Z
+    created: 2019-06-14T22:54:00.619396031Z
     description: A Helm chart to deploy streamsets data datacollector
     digest: ca734f244e99c68aca16db310d1031553a932698d7f1fe0631b309acae1196f8
     name: datacollector
@@ -72,7 +72,7 @@ entries:
     version: 0.1.0
   iot-agent:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.593604196Z
+    created: 2019-06-14T22:54:00.622011743Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: a6de71dd38731eb0dd65c86e2061cc7a4e1e434e2fdaabdc8fd6d179c693901d
     name: iot-agent
@@ -80,7 +80,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.593055807Z
+    created: 2019-06-14T22:54:00.621465234Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: eddeec9cd3db3715fbf16bc1bc6b6e5d33c34fc5ac7cb2aa1a66df5ec5c36bb4
     name: iot-agent
@@ -88,7 +88,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.592466409Z
+    created: 2019-06-14T22:54:00.62091475Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: 3de6d3f5921ec787ae5158a3ecc638602d344685ce1e620a412bce5c748e8d3c
     name: iot-agent
@@ -96,7 +96,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.591900043Z
+    created: 2019-06-14T22:54:00.620346026Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: 676b2ce8dd8eacdeabb18d62c389f191e02d73221366ae01096d6bc53aa27429
     name: iot-agent
@@ -105,7 +105,7 @@ entries:
     version: 0.1.0
   iot-agent-manager:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.594591775Z
+    created: 2019-06-14T22:54:00.623196908Z
     description: A Helm chart for IoT Agent Manager
     digest: 24a0aae2ad2388fb2c02510c0cbd8d54c94061ad886a80f45bf9e8eec4a19826
     name: iot-agent-manager
@@ -113,7 +113,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-manager-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.594255935Z
+    created: 2019-06-14T22:54:00.622824102Z
     description: A Helm chart for IoT Agent Manager
     digest: aedc6b49f358d3a5482ddafa9c8ff718a03ab91795838e280960124ffee436e0
     name: iot-agent-manager
@@ -121,7 +121,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-manager-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.593934185Z
+    created: 2019-06-14T22:54:00.622351282Z
     description: A Helm chart for IoT Agent Manager
     digest: 3acf737099f2da21be61cac388abafb00ffb27aea0df106b74960bace31317b0
     name: iot-agent-manager
@@ -131,7 +131,7 @@ entries:
   nosqlclient:
   - apiVersion: v1
     appVersion: 2.2.0
-    created: 2019-06-14T21:15:36.594924972Z
+    created: 2019-06-14T22:54:00.623530224Z
     description: A Helm chart to deploy nosql client
     digest: 94d56ca775ee86fdfecb089361b860909f1f412d967ced32d2cb4daef3075a96
     name: nosqlclient
@@ -140,7 +140,20 @@ entries:
     version: 0.1.0
   orion:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.595289635Z
+    created: 2019-06-14T22:54:00.624311345Z
+    description: A Helm chart for Orion Context Broker
+    digest: e44a20d19850884f8de6671a3ba70edcb16f14c6ee51263cd08edd586f06f247
+    maintainers:
+    - email: tomas.aliaga@martel-innovate.com
+      name: taliaga
+    name: orion
+    sources:
+    - https://github.com/telefonicaid/fiware-orion
+    urls:
+    - https://orchestracities.github.io/charts/orion-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    created: 2019-06-14T22:54:00.62390615Z
     description: A Helm chart for Orion Context Broker
     digest: 89410f07baf5ef6a8b8f1b23b548253a3e28cce07a0713a98071153324b837b0
     maintainers:
@@ -154,7 +167,7 @@ entries:
     version: 0.1.0
   pgadmin-chart:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.600167032Z
+    created: 2019-06-14T22:54:00.629098298Z
     description: pgAdmin is the most popular and feature rich Open Source administration
       and development platform for PostgreSQL, the most advanced Open Source database
       in the world.
@@ -171,7 +184,7 @@ entries:
     version: 0.1.0
   quantumleap:
   - apiVersion: v1
-    created: 2019-06-14T21:15:36.600583503Z
+    created: 2019-06-14T22:54:00.629509969Z
     description: A Helm chart for QuantumLeap
     digest: 96a36ae36f54137f5e578f6f685b94bf67e74c8256e04ab9a0bd7ff435020186
     maintainers:
@@ -183,4 +196,4 @@ entries:
     urls:
     - https://orchestracities.github.io/charts/quantumleap-0.1.0.tgz
     version: 0.1.0
-generated: 2019-06-14T21:15:36.586778637Z
+generated: 2019-06-14T22:54:00.615150569Z
