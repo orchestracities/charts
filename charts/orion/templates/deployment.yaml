@@ -23,7 +23,7 @@ spec:
         - name: create-indexes
           image: {{ .Values.mongo.image }}
           imagePullPolicy: IfNotPresent
-          command: [ "mongo", "--host", "{{ .Values.mongo.rs }}/{{ .Values.mongo.dbhost }}", "orion", "--eval", "db.entities.createIndexes([{\"_id.id\": 1}, {\"_id.type\": 1}, {\"_id.servicePath\": 1}, {\"attrNames\": 1}, {\"creDate\": 1}])" ]
+          command: [ "mongo", "--host", "{{ .Values.mongo.rs }}/{{ .Values.mongo.dbhost }}", "orion", "--eval", "db = db.getSiblingDB(\"admin\"); dbs = db.runCommand({ \"listDatabases\": 1 }).databases; dbs.forEach(function(database) { if(database.entities) database.entities.createIndexes([{\"_id.id\": 1}, {\"_id.type\": 1}, {\"_id.servicePath\": 1}, {\"attrNames\": 1}, {\"creDate\": 1}]); });" ]
 
       containers:
         - name: {{ .Chart.Name }}
