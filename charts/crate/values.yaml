@@ -65,6 +65,7 @@ persistentVolume:
 
 # Readiness probe
 readinessProbe:
+  enabled: false
   initialDelaySeconds: 60
   timeoutSeconds: 1
   failureThreshold: 3
@@ -73,6 +74,7 @@ readinessProbe:
 
 # Liveness probe
 livenessProbe:
+  enabled: false
   initialDelaySeconds: 240
   timeoutSeconds: 5
   failureThreshold: 5
