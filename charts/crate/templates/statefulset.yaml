@@ -41,7 +41,7 @@ spec:
           - -Cnetwork.host="0.0.0.0"
           - -Cdiscovery.zen.hosts_provider=srv
           - -Cdiscovery.zen.minimum_master_nodes=${MINIMUM_MASTER_NODES}
-          - -Cdiscovery.srv.query=_{{ .Values.service.clusterName }}._tcp.{{ .Values.service.name }}.{{ .Release.Namespace }}.svc.cluster.local
+          - -Cdiscovery.srv.query=_{{ .Values.service.clusterName }}._tcp.{{ template "crate.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
           - -Cgateway.recover_after_nodes=${RECOVER_AFTER_NODES}
           - -Cgateway.recover_after_time={{ .Values.crate.recoverAfterTime }}
           - -Cgateway.expected_nodes=${EXPECTED_NODES}
