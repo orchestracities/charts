@@ -1,17 +1,28 @@
 apiVersion: "apps/v1beta1"
 kind: StatefulSet
 metadata:
-  name: crate
+  name: {{ template "crate.fullname" . }}
+  labels:
+    app: {{ template "crate.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  serviceName: "crate-db"
+  serviceName: {{ template "crate.fullname" . }}
   replicas: {{ .Values.crate.replicas }}
+  updateStrategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app: {{ .Values.app }}
-      annotations:
-        pod.alpha.kubernetes.io/initialized: "true"
+        app: {{ template "crate.name" . }}
+        release: {{ .Release.Name }}
+        {{- if .Values.podAnnotations }}
+        annotations:
+{{ toYaml .Values.podAnnotations | indent 8 }}
+        {{- end }}
     spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds}}
       initContainers:
       - name: init-sysctl
         image: busybox
@@ -67,8 +78,40 @@ spec:
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           successThreshold: {{ .Values.livenessProbe.successThreshold }}
-  updateStrategy:
-    type: RollingUpdate
+      {{- if or .Values.antiAffinity .Values.nodeAffinity }}
+      affinity:
+      {{- end }}
+      {{- if eq .Values.antiAffinity "hard" }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchLabels:
+                  app: "{{ template "crate.name" . }}"
+                  release: "{{ .Release.Name }}"
+      {{- else if eq .Values.antiAffinity "soft" }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: "{{ template "crate.name" . }}"
+                  release: "{{ .Release.Name }}"
+      {{- end }}
+      {{- with .Values.nodeAffinity }}
+        nodeAffinity:
+        {{ toYaml . | indent 10 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
     - metadata:
