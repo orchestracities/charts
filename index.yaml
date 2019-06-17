@@ -2,7 +2,22 @@ apiVersion: v1
 entries:
   crate:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.215015948Z
+    created: 2019-06-17T12:27:44.34271196Z
+    description: CrateDB chart
+    digest: 4ff57f343851370b633f4c3e96d60f0b89590248ead6f386625cea5f0c0b0e7e
+    icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
+    maintainers:
+    - email: tomas.aliaga@martel-innovate.com
+      name: taliaga
+    name: crate
+    sources:
+    - https://github.com/crate/crate
+    - https://github.com/crate/docker-crate
+    urls:
+    - https://orchestracities.github.io/charts/crate-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v1
+    created: 2019-06-17T12:27:44.342330165Z
     description: CrateDB chart
     digest: 32cd1a806b813a858e6d57f0f363397d9e3236ca7a64d4bb1b164ae8975afc52
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -17,7 +32,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.5.tgz
     version: 0.1.5
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.214257413Z
+    created: 2019-06-17T12:27:44.341960905Z
     description: CrateDB chart
     digest: 962806907be20b80cd66bad236657f65263957b38c19527c1f3f9dbe8084da9c
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -32,7 +47,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.4.tgz
     version: 0.1.4
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.213503562Z
+    created: 2019-06-17T12:27:44.341587717Z
     description: CrateDB chart
     digest: 47efcf939b8fe73ced311524a3e436abf633a79d5f886e718e8c137a8797f104
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -47,7 +62,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.212841945Z
+    created: 2019-06-17T12:27:44.341256151Z
     description: CrateDB chart
     digest: 08ebcc1eb2c33131ed2c81d08647fc4dbadae469dc65c96fa5337c339c0bb1b1
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -62,7 +77,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.212200263Z
+    created: 2019-06-17T12:27:44.340875237Z
     description: CrateDB chart
     digest: 36f979ab93b6a7605d089177fe281846abf9e76240e2ff1d0109a5e6d14b9aa6
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -77,7 +92,7 @@ entries:
     - https://orchestracities.github.io/charts/crate-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.211545268Z
+    created: 2019-06-17T12:27:44.340566326Z
     description: CrateDB chart
     digest: de68e70c5e11058a80739ce0c6ebf8a7f1768efb1c0c92db4c28c1900ab7f336
     icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
@@ -93,7 +108,7 @@ entries:
     version: 0.1.0
   datacollector:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.216234589Z
+    created: 2019-06-17T12:27:44.343392639Z
     description: A Helm chart to deploy streamsets data datacollector
     digest: ca734f244e99c68aca16db310d1031553a932698d7f1fe0631b309acae1196f8
     name: datacollector
@@ -102,7 +117,7 @@ entries:
     version: 0.1.0
   iot-agent:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.218828129Z
+    created: 2019-06-17T12:27:44.345715594Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: a6de71dd38731eb0dd65c86e2061cc7a4e1e434e2fdaabdc8fd6d179c693901d
     name: iot-agent
@@ -110,7 +125,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.218283518Z
+    created: 2019-06-17T12:27:44.345166953Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: eddeec9cd3db3715fbf16bc1bc6b6e5d33c34fc5ac7cb2aa1a66df5ec5c36bb4
     name: iot-agent
@@ -118,7 +133,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.21774302Z
+    created: 2019-06-17T12:27:44.344581772Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: 3de6d3f5921ec787ae5158a3ecc638602d344685ce1e620a412bce5c748e8d3c
     name: iot-agent
@@ -126,7 +141,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.217168407Z
+    created: 2019-06-17T12:27:44.343996119Z
     description: A Helm chart for NodeJS based IoT Agents
     digest: 676b2ce8dd8eacdeabb18d62c389f191e02d73221366ae01096d6bc53aa27429
     name: iot-agent
@@ -135,7 +150,7 @@ entries:
     version: 0.1.0
   iot-agent-manager:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.219904912Z
+    created: 2019-06-17T12:27:44.346734175Z
     description: A Helm chart for IoT Agent Manager
     digest: 24a0aae2ad2388fb2c02510c0cbd8d54c94061ad886a80f45bf9e8eec4a19826
     name: iot-agent-manager
@@ -143,7 +158,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-manager-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.219541174Z
+    created: 2019-06-17T12:27:44.346404825Z
     description: A Helm chart for IoT Agent Manager
     digest: aedc6b49f358d3a5482ddafa9c8ff718a03ab91795838e280960124ffee436e0
     name: iot-agent-manager
@@ -151,7 +166,7 @@ entries:
     - https://orchestracities.github.io/charts/iot-agent-manager-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.219205197Z
+    created: 2019-06-17T12:27:44.346058422Z
     description: A Helm chart for IoT Agent Manager
     digest: 3acf737099f2da21be61cac388abafb00ffb27aea0df106b74960bace31317b0
     name: iot-agent-manager
@@ -161,7 +176,7 @@ entries:
   nosqlclient:
   - apiVersion: v1
     appVersion: 2.2.0
-    created: 2019-06-17T09:10:29.220243395Z
+    created: 2019-06-17T12:27:44.347064157Z
     description: A Helm chart to deploy nosql client
     digest: 94d56ca775ee86fdfecb089361b860909f1f412d967ced32d2cb4daef3075a96
     name: nosqlclient
@@ -170,7 +185,7 @@ entries:
     version: 0.1.0
   orion:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.220993296Z
+    created: 2019-06-17T12:27:44.347758785Z
     description: A Helm chart for Orion Context Broker
     digest: e44a20d19850884f8de6671a3ba70edcb16f14c6ee51263cd08edd586f06f247
     maintainers:
@@ -183,7 +198,7 @@ entries:
     - https://orchestracities.github.io/charts/orion-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.220644828Z
+    created: 2019-06-17T12:27:44.347412401Z
     description: A Helm chart for Orion Context Broker
     digest: 89410f07baf5ef6a8b8f1b23b548253a3e28cce07a0713a98071153324b837b0
     maintainers:
@@ -197,7 +212,7 @@ entries:
     version: 0.1.0
   pgadmin-chart:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.225682053Z
+    created: 2019-06-17T12:27:44.352388792Z
     description: pgAdmin is the most popular and feature rich Open Source administration
       and development platform for PostgreSQL, the most advanced Open Source database
       in the world.
@@ -214,7 +229,7 @@ entries:
     version: 0.1.0
   quantumleap:
   - apiVersion: v1
-    created: 2019-06-17T09:10:29.226066612Z
+    created: 2019-06-17T12:27:44.353208045Z
     description: A Helm chart for QuantumLeap
     digest: 96a36ae36f54137f5e578f6f685b94bf67e74c8256e04ab9a0bd7ff435020186
     maintainers:
@@ -226,4 +241,4 @@ entries:
     urls:
     - https://orchestracities.github.io/charts/quantumleap-0.1.0.tgz
     version: 0.1.0
-generated: 2019-06-17T09:10:29.210259427Z
+generated: 2019-06-17T12:27:44.340073425Z
