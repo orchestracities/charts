@@ -97,7 +97,7 @@ spec:
               topologyKey: kubernetes.io/hostname
               labelSelector:
                 matchLabels:
-                  app: "{{ template "datacollector.name" . }}"
+                  app: "{{ template "crate.name" . }}"
                   release: "{{ .Release.Name }}"
       {{- end }}
       {{- with .Values.nodeAffinity }}
