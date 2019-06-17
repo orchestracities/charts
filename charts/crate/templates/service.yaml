@@ -1,14 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name }}
+  name: {{ template "crate.fullname" . }}
   labels:
-    app: {{ .Values.app }}
+    app: {{ template "crate.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
   annotations:
     {{- range $key, $value := .Values.service.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
+  type: {{ .Values.service.type }}
+  clusterIP: None
   ports:
   - port: {{ .Values.service.adminPort }}
     name: {{ .Values.service.adminName }}
@@ -16,6 +21,6 @@ spec:
     name: {{ .Values.service.clusterName }}
   - port: {{ .Values.service.postgresPort }}
     name: {{ .Values.service.postgresName }}
-  type: {{ .Values.service.type }}
   selector:
-    app: {{ .Values.app }}
+    app: {{ template "crate.name" . }}
+    release: {{ .Release.Name }}
