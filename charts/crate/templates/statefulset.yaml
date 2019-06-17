@@ -70,14 +70,26 @@ spec:
           value: {{ .Values.crate.recoverAfterNodes | quote }}
         - name: MINIMUM_MASTER_NODES
           value: {{ .Values.crate.minimumMasterNodes | quote }}
+        {{- if .Values.livenessProbe.enabled }}
         livenessProbe:
           exec:
-            command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
+            command: ["sh", "-c", "curl -I http://localhost:4200 2&>/dev/null | grep '\"200\" : true'"]
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           successThreshold: {{ .Values.livenessProbe.successThreshold }}
+        {{- end }}
+        {{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          exec:
+            command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+        {{- end }}
       {{- if or .Values.antiAffinity .Values.nodeAffinity }}
       affinity:
       {{- end }}
