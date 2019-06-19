@@ -32,6 +32,7 @@ jobs:
     - stage: deploy
       install:
       - sh git-clean.sh
+      - sh synch-remotes.sh
       - sh chart-package.sh
       script:
       - bash chart-lint.sh
