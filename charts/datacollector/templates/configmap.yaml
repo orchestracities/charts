@@ -107,6 +107,7 @@ data:
     # The authentication for the HTTP endpoint of the data collector
     # Valid values are: 'none', 'basic', 'digest', or 'form'
     #
+
     {{- if .Values.configuration.auth -}}
     http.authentication={{ .Values.configuration.auth }}
     {{- else -}}
