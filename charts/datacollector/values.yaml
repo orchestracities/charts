@@ -21,6 +21,7 @@ configuration:
     username: info@example.com
     password: password
     from: info@example.com
+  auth: form
 
 image:
   repository: streamsets/datacollector
