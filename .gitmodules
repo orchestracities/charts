@@ -1,3 +1,0 @@
-[submodule "pgadmin"]
-	path = charts/pgadmin-chart
-	url = https://github.com/jjcollinge/pgadmin-chart
