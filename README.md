@@ -10,9 +10,13 @@ The repository includes the following charts:
 -   [CrateDB](charts/crate) (Backend for QuantumLeap)
 -   [StreamSets Data Collector](charts/datacollector)
 -   [Nosql Client](charts/nosqlclient)
--   [PgAdmin](charts/pgadmin-chart)
 -   [IoT Agent](charts/iot-agent)
 -   [IoT Agent Manager](charts/iot-agent-manager)
+
+The following charts are available as packages but synched from external repos:
+
+-   [Gravitee](https://github.com/gravitee-io/gravitee-kubernetes/tree/master/gravitee)
+-   [PgAdmin](https://github.com/stakater-charts/pgadmin/tree/master/pgadmin)
 
 Be aware that some packages have dependencies on other publicly available
 charts.
