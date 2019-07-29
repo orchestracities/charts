@@ -37,6 +37,27 @@ The following table lists the configurable parameters of the patroni chart and t
 | `image.tag`                       | The version of the image to pull            | `0.4.1`                                             |
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `resources`                       | Any resources you wish to assign to the pod | `{}`                                                |
+| `init`                            | Init section enable init image to configure | `password: password`                                |
+|                                   | TimescaleDB (option not required using only | `image:`                                            |
+|                                   | CrateDB)                                    | `  repository: smartsdk/quantumleap-pg-init`        |
+|                                   |                                             | `  tag: latest`                                     |
+|                                   |                                             | `  pullPolicy: IfNotPresent`                        |
+|                                   |                                             | `resources: {}`                                     |
+| `database`                        | Section to configure details for            | `crate:`                                            |
+|                                   | TimescaleDB and CrateDB)                    | `  host: crate`                                     |
+|                                   |                                             | `  defaultdb: default`                              |
+|                                   |                                             | `timescale:`                                        |
+|                                   |                                             | `  host: timescale`                                 |
+|                                   |                                             | `  port: 5432`                                      |
+|                                   |                                             | `  name: quantumleap`                               |
+|                                   |                                             | `  user: quantumleap`                               |
+|                                   |                                             | `  password: quantumleap`                           |
+| `config`                          | Section to configure db support per tenant  | `tenants:`                                          |
+|                                   |                                             | `  t1:`                                             |
+|                                   |                                             | `      backend: Timescale`                          |
+|                                   |                                             | `  t2:`                                             |
+|                                   |                                             | `      backend: Crate`                              |
+|                                   |                                             | `default-backend: Crate`                            |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

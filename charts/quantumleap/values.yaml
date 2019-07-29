@@ -64,7 +64,7 @@ config:
   default-backend: Crate
 
 init:
-  password: tea
+  password: password
   image:
     repository: smartsdk/quantumleap-pg-init
     tag: latest
