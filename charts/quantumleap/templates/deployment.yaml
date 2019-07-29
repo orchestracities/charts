@@ -53,7 +53,7 @@ spec:
           - name: POSTGRES_HOST
             value: {{ .Values.database.timescale.host }}
           - name: POSTGRES_PORT
-            value: {{ .Values.database.timescale.port }}
+            value: "{{ .Values.database.timescale.port }}"
           - name: POSTGRES_DB_NAME
             value: {{ .Values.database.timescale.name }}
           - name: POSTGRES_DB_USER
