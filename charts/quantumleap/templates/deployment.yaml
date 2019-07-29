@@ -19,6 +19,26 @@ spec:
         app: {{ template "quantumleap.name" . }}
         release: {{ .Release.Name }}
     spec:
+    {{- if .Values.init }}
+      initContainers:
+        - name: init-postgresql
+          image: "{{ .Values.init.image.repository }}:{{ .Values.init.image.tag }}"
+          imagePullPolicy: {{ .Values.init.image.pullPolicy }}
+          env:
+          - name: PG_HOST
+            value: {{ .Values.database.timescale.host }}
+          - name: PG_PASS
+            value: {{ .Values.init.password }}
+          - name: QL_DB_PASS
+            value: {{ .Values.database.timescale.password }}
+          - name: QL_DB_INIT_DIR
+            value: "/init"
+          resources:
+            {{- toYaml .Values.init.resources | nindent 12 }}
+          volumeMounts:
+            - name: init
+              mountPath: "/init"
+    {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -27,9 +47,23 @@ spec:
             - containerPort: {{ .Values.service.internalPort }}
           env:
           - name: CRATE_HOST
-            value: {{ .Values.database.host }}
+            value: {{ .Values.database.crate.host }}
           - name: CRATE_DEFAULTDB
-            value: {{ .Values.database.defaultdb }}
+            value: {{ .Values.database.crate.defaultdb }}
+          - name: POSTGRES_HOST
+            value: {{ .Values.database.timescale.host }}
+          - name: POSTGRES_PORT
+            value: {{ .Values.database.timescale.port }}
+          - name: POSTGRES_DB_NAME
+            value: {{ .Values.database.timescale.name }}
+          - name: POSTGRES_DB_USER
+            value: {{ .Values.database.timescale.user }}
+          - name: POSTGRES_DB_PASS
+            value: {{ .Values.database.timescale.password }}
+{{- if .Values.config }}
+          - name: QL_CONFIG
+            value: /config/config.yml
+{{- end }}
           - name: USE_GEOCODING
             value: {{ .Values.geocoding.enabled | quote }}
           - name: REDIS_HOST
@@ -44,7 +78,23 @@ spec:
               port: {{ .Values.service.internalPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+          {{- if .Values.config }}
+          volumeMounts:
+            - name: config
+              mountPath: /config/config.yml
+              subPath: config.yml
+          {{- end }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
+      volumes:
+      {{- if .Values.config }}
+        - name: config
+          configMap:
+            name: {{ template "quantumleap.fullname" . }}
+      {{- end }}
+      {{- if .Values.init }}
+        - name: init
+          emptyDir: {}
+      {{- end }}

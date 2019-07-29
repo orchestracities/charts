@@ -4,7 +4,7 @@
 replicaCount: 2
 image:
   repository: smartsdk/quantumleap
-  tag: 0.4.1
+  tag: 0.7.2
   pullPolicy: IfNotPresent
 
 chaos:
@@ -42,9 +42,34 @@ ingress:
     #     - chart-example.local
 
 database:
+  crate:
   # Endpoint to reach crate database cluster
-  host: crate
-  defaultdb: default
+    host: crate
+    defaultdb: default
+  timescale:
+    host: timescale
+    port: 5432
+    name: quantumleap
+    user: quantumleap
+    password: quantumleap
+
+config:
+  tenants:
+    t1:
+        backend: Timescale
+    t2:
+        backend: Crate
+    t3:
+        backend: Timescale
+  default-backend: Crate
+
+init:
+  password: password
+  image:
+    repository: smartsdk/quantumleap-pg-init
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources: {}
 
 geocoding:
   enabled: True
