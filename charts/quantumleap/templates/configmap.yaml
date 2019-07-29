@@ -1,0 +1,14 @@
+{{- if .Values.config }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "quantumleap.fullname" . }}
+  labels:
+    app: {{ template "quantumleap.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  config.yaml: |-
+{{ toYaml .Values.config | indent 4 }}
+{{- end }}
