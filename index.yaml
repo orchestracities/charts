@@ -271,19 +271,6 @@ entries:
     version: 0.1.14
   quantumleap:
   - apiVersion: v1
-    created: 2019-07-29T15:13:27.912176015Z
-    description: A Helm chart for QuantumLeap
-    digest: 31621e67fdd85e07636be23a5112ebeea8d85b441a7edef8a5a36bd51ccb6e22
-    maintainers:
-    - email: tomas.aliaga@martel-innovate.com
-      name: taliaga
-    name: quantumleap
-    sources:
-    - https://github.com/smartsdk/ngsi-timeseries-api
-    urls:
-    - https://orchestracities.github.io/charts/quantumleap-0.1.2.tgz
-    version: 0.1.2
-  - apiVersion: v1
     created: 2019-07-29T15:13:27.911764256Z
     description: A Helm chart for QuantumLeap
     digest: eaebc601016f5355c714ad9b40f2af77fe4ff3137f071e1eb59a8047db4b1858
