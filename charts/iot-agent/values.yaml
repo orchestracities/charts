@@ -28,6 +28,8 @@ service:
   annotations: {}
   # log level supported: DEBUG, INFO, ERROR, FATAL.
   logLevel: DEBUG
+  # if this flag is activated, the IoT Agent will use JEXL as expression language.
+  useJEXL: false
   # if this flag is activated, the IoT Agent will add a 'TimeInstant' metadata
   # attribute to all the attributes updateded from device information.
   timestamp: true

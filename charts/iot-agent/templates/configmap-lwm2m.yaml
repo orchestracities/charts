@@ -17,6 +17,7 @@ data:
         logLevel: '{{ .Values.lwm2m.logLevel | default "DEBUG" }}',
         port: {{ required "A valid service.dataInternalPort is required" .Values.service.dataInternalPort }},
         defaultType: '{{ .Values.lwm2m.defaultType | default "Device" }}',
+        useJEXL: {{ .Values.service.useJEXL | default false }},
         lifetimeCheckInterval: 1000,        // Minimum interval between lifetime checks in ms
         udpWindow: 100,
         ipProtocol: '{{ .Values.lwm2m.ipProtocol | default "udp4" }}',
