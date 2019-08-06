@@ -70,7 +70,7 @@ database:
     name: quantumleap
     user: quantumleap
     password: quantumleap
-    ssl: true
+    ssl: yes
 
 config:
   tenants: {}
