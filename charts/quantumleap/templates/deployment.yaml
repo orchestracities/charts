@@ -33,6 +33,10 @@ spec:
             value: {{ .Values.database.timescale.password }}
           - name: QL_DB_INIT_DIR
             value: "/init"
+          {{- if .Values.database.timescale.ssl }}
+          - name: POSTGRES_USE_SSL
+            value: {{ .Values.database.timescale.ssl }}
+          {{- end }}
           resources:
             {{- toYaml .Values.init.resources | nindent 12 }}
           volumeMounts:
@@ -68,14 +72,28 @@ spec:
             value: {{ .Values.geocoding.enabled | quote }}
           - name: REDIS_HOST
             value: {{ .Values.geocoding.redisHost }}
+          {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
               path: /v2/health
               port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /v2/health
               port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+        {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           {{- if .Values.config }}
