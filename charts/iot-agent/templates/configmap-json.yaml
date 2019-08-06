@@ -73,6 +73,7 @@ data:
     config.iota = {
         logLevel: '{{ .Values.service.logLevel | default "DEBUG" }}',
         timestamp: {{ .Values.service.timestamp | default true }},
+        useJEXL: {{ .Values.service.useJEXL | default false }},
         contextBroker: {
             host: '{{ required "A valid contextBroker.host is required" .Values.contextBroker.host }}',
             port: {{ required "A valid contextBroker.port is required" .Values.contextBroker.port }},
