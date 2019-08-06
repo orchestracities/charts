@@ -35,7 +35,7 @@ spec:
             value: "/init"
           {{- if .Values.database.timescale.ssl }}
           - name: POSTGRES_USE_SSL
-            value: {{ .Values.database.timescale.ssl }}
+            value: "{{ .Values.database.timescale.ssl }}"
           {{- end }}
           resources:
             {{- toYaml .Values.init.resources | nindent 12 }}
@@ -64,6 +64,10 @@ spec:
             value: {{ .Values.database.timescale.user }}
           - name: POSTGRES_DB_PASS
             value: {{ .Values.database.timescale.password }}
+          {{- if .Values.database.timescale.ssl }}
+          - name: POSTGRES_USE_SSL
+            value: "{{ .Values.database.timescale.ssl }}"
+          {{- end }}
 {{- if .Values.config }}
           - name: QL_CONFIG
             value: /config/config.yml

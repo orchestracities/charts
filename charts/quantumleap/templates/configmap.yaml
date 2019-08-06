@@ -9,6 +9,6 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
-  config.yaml:
-{{ toYaml .Values.config | indent 4 }}
+  config.yaml: |
+{{ toYaml .Values.config | trim | indent 4 }}
 {{- end }}
