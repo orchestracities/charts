@@ -73,14 +73,15 @@ database:
     ssl: true
 
 config:
-  tenants:
-    t1:
-        backend: Timescale
-    t2:
-        backend: Crate
-    t3:
-        backend: Timescale
-  default-backend: Crate
+  tenants: {}
+# example valid configuration
+#    t1:
+#        backend: "Timescale"
+#    t2:
+#        backend: "Crate"
+#    t3:
+#        backend: "Timescale"
+  default-backend: "Crate"
 
 init:
   password: password
