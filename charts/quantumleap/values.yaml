@@ -70,7 +70,7 @@ database:
     name: quantumleap
     user: quantumleap
     password: quantumleap
-    ssl: yes
+    ssl: true
 
 config:
   tenants: {}
@@ -92,7 +92,7 @@ init:
   resources: {}
 
 geocoding:
-  enabled: True
+  enabled: true
   # installed via deploy-redis.sh
   redisHost: redis-redis
 

@@ -33,12 +33,8 @@ spec:
             value: {{ .Values.database.timescale.password }}
           - name: QL_DB_INIT_DIR
             value: "/init"
-          {{- if .Values.database.timescale.ssl }}
-          - name: POSTGRES_USE_SSL
-            value: {{ .Values.database.timescale.ssl }}
-          {{- end }}
           resources:
-            {{- toYaml .Values.init.resources | nindent 12 }}
+{{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
             - name: init
               mountPath: "/init"
@@ -64,10 +60,10 @@ spec:
             value: {{ .Values.database.timescale.user }}
           - name: POSTGRES_DB_PASS
             value: {{ .Values.database.timescale.password }}
-          {{- if .Values.database.timescale.ssl }}
+{{- if .Values.database.timescale.ssl }}
           - name: POSTGRES_USE_SSL
-            value: {{ .Values.database.timescale.ssl }}
-          {{- end }}
+            value: t
+{{- end }}
 {{- if .Values.config }}
           - name: QL_CONFIG
             value: /config/config.yml
@@ -97,7 +93,7 @@ spec:
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
-        {{- end }}
+          {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           {{- if .Values.config }}
