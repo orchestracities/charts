@@ -152,7 +152,7 @@ entries:
     appVersion: 1.26.1
     created: "2019-08-30T19:14:02.432296+02:00"
     description: A Gravitee Helm chart for Kubernetes
-    digest: acd320d96252def5bbfd34a3b2a002ec678c02d2961c4d897538adcf9e2ccaee
+    digest: b701ca34e679867bcdbbf59e2d62cdb772172a9355aea62ac5e6718fb7df1e30
     name: gravitee
     urls:
     - https://orchestracities.github.io/charts/gravitee-1.26.2.tgz
