@@ -31,12 +31,13 @@ data:
     # If not set http://<hostname>:<http.port> is used
     # <hostname> is either taken from http.bindHost or resolved using
     # 'hostname -f' if not configured.
+
     {{- if .Values.ingress.enabled -}}
     sdc.base.http.url=https://{{ index .Values.ingress.hosts 0 }}
-    {{- end -}}
-    {{- if .Values.configuration.url -}}
+    {{- else if .Values.configuration.url -}}
     sdc.base.http.url=https://{{ index .Values.configuration.url }}
     {{- end -}}
+
     # Hostname or IP address that data collector will bind to.
     # Default is 0.0.0.0 that will bind to all interfaces.
     #http.bindHost=0.0.0.0

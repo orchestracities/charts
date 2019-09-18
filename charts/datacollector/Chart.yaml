@@ -1,4 +1,4 @@
 apiVersion: v1
 description: A Helm chart to deploy streamsets data datacollector
 name: datacollector
-version: 0.1.1
+version: 0.1.2
