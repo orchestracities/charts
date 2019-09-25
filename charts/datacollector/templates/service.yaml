@@ -18,6 +18,12 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
       name: {{ .Values.service.name }}
+    {{- if .Values.service.dataExternalPort }}
+    - port: {{ .Values.service.dataExternalPort }}
+      targetPort: {{ .Values.service.dataInternalPort }}
+      protocol: TCP
+      name: {{ .Values.service.name }}-data
+    {{- end }}
   selector:
     app: {{ template "datacollector.name" . }}
     release: {{ .Release.Name }}

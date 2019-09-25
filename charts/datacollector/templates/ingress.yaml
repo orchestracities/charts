@@ -1,6 +1,8 @@
 {{- if .Values.ingress.enabled -}}
 {{- $serviceName := include "datacollector.fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
+{{- $servicedataPort := .Values.service.dataExternalPort -}}
+{{- $servicedataPath := .Values.service.dataPath -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -24,6 +26,12 @@ spec:
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+      {{- if $servicedataPath }}
+          - path: {{ $servicedataPath }}
+            backend:
+              serviceName: {{ $serviceName }}-data
+              servicePort: {{ $servicedataPort }}
+      {{- end }}
     {{- end -}}
   {{- if .Values.ingress.tls }}
   tls:

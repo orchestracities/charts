@@ -26,7 +26,7 @@ spec:
       initContainers:
        - name: init-datacollector-data
          image: busybox
-         command: ['sh', '-c', 'chown -R 20159 /data /opt/streamsets-datacollector/streamsets-libs']
+         command: ['sh', '-c', 'chown -R 20159 /data /opt/streamsets-datacollector/streamsets-libs /opt/sdc-extras']
          volumeMounts:
          - name: data
            mountPath: /data
@@ -34,15 +34,23 @@ spec:
          - name: data
            mountPath: /opt/streamsets-datacollector/streamsets-libs
            subPath: stagelibs
+         - name: data
+           mountPath: /opt/sdc-extras
+           subPath: sdc-extras
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+          {{- if .Values.dataInternalPort }}
+            - dataPort: {{ .Values.service.dataInternalPort }}
+          {{- end }}
           env:
           - name: SDC_JAVA_OPTS
             value: "-Xmx{{ .Values.configuration.memoryHeap}} -Xms{{ .Values.configuration.memoryHeap}}"
+          - name: STREAMSETS_LIBRARIES_EXTRA_DIR
+            value: "/opt/sdc-extras/"
           livenessProbe:
             httpGet:
               path: /public-rest/ping
@@ -60,6 +68,9 @@ spec:
           - name: data
             mountPath: /opt/streamsets-datacollector/streamsets-libs
             subPath: stagelibs
+          - name: data
+            mountPath: /opt/sdc-extras
+            subPath: sdc-extras
           - name: config
             mountPath: /etc/sdc/sdc.properties
             subPath: sdc.properties
