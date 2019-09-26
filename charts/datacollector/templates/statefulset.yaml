@@ -26,13 +26,13 @@ spec:
       initContainers:
        - name: init-datacollector-data
          image: busybox
-         command: ['sh', '-c', 'chown -R 20159 /data /opt/streamsets-datacollector/streamsets-libs /opt/sdc-extras']
+         command: ['sh', '-c', 'chown -R 20159 /data {{ .Values.configuration.sdcHome }}/streamsets-libs /opt/sdc-extras']
          volumeMounts:
          - name: data
            mountPath: /data
            subPath: data
          - name: data
-           mountPath: /opt/streamsets-datacollector/streamsets-libs
+           mountPath: {{ .Values.configuration.sdcHome }}/streamsets-libs
            subPath: stagelibs
          - name: data
            mountPath: /opt/sdc-extras
@@ -66,7 +66,7 @@ spec:
             mountPath: /data
             subPath: data
           - name: data
-            mountPath: /opt/streamsets-datacollector/streamsets-libs
+            mountPath: {{ .Values.configuration.sdcHome }}/streamsets-libs
             subPath: stagelibs
           - name: data
             mountPath: /opt/sdc-extras

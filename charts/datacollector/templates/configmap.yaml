@@ -319,7 +319,7 @@ data:
     # http://archives.streamsets.com/datacollector/<version>/tarball/,http://archives.streamsets.com/datacollector/<version>/tarball/enterprise/
     # Data Collector source code builds (master branch) use the following repositories by default:
     # http://nightly.streamsets.com/datacollector/latest/tarball/,http://nightly.streamsets.com/datacollector/latest/tarball/enterprise/
-    package.manager.repository.links=http://archives.streamsets.com/datacollector/3.6.1/tarball/
+    package.manager.repository.links={{ .Values.configuration.archives }}
 
     # Support bundles
     #

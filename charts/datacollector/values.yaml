@@ -10,6 +10,9 @@ configuration:
   title:  "tile"
   memoryHeap: 1024m
   url: <url>
+  sdcHome: /opt/streamsets-datacollector-3.10.1
+  archives: http://archives.streamsets.com/datacollector/latest/tarball/
+  help: https://streamsets.com/documentation/datacollector/latest/help
   email:
     host: smtp.example.com
     port: 25
