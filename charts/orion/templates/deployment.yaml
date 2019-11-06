@@ -29,7 +29,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "contextBroker", "-fg", {{- if .Values.service.multitenancy }}"-multiservice",{{- end }}{{- if .Values.service.writeConcern }} "-writeConcern", "{{ .Values.service.writeConcern }}", {{- end }} "-logLevel", "INFO", "-dbhost", "{{ .Values.mongo.dbhost }}", {{- if .Values.mongo.replicaset }} "-rplSet", "{{ .Values.mongo.rs }}", {{- end }} "-dbTimeout", "10000", "-corsOrigin", "__ALL", "-reqMutexPolicy", "none" ]
+          command: [ "contextBroker", "-fg", {{- if .Values.service.notificationMode }} "-notificationMode", "{{ .Values.service.notificationMode }}", {{- end }}{{- if .Values.service.httpTimeout }} "-httpTimeout", "{{ .Values.service.httpTimeout }}", {{- end }}{{- if .Values.service.multitenancy }}"-multiservice",{{- end }}{{- if .Values.service.disableMetrics }}"-disableMetrics",{{- end }}{{- if .Values.service.writeConcern }} "-writeConcern", "{{ .Values.service.writeConcern }}", {{- end }} "-logLevel", "INFO", "-dbhost", "{{ .Values.mongo.dbhost }}", {{- if .Values.mongo.replicaset }} "-rplSet", "{{ .Values.mongo.rs }}", {{- end }} "-dbTimeout", "10000", "-corsOrigin", "__ALL", "-reqMutexPolicy", "none" ]
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           livenessProbe:

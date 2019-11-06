@@ -34,7 +34,7 @@ spec:
           - name: QL_DB_INIT_DIR
             value: "/init"
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.init.resources | indent 12 }}
           volumeMounts:
             - name: init
               mountPath: "/init"
@@ -75,7 +75,7 @@ spec:
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
-              path: /v2/health
+              path: /health
               port: {{ .Values.service.internalPort }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
@@ -86,7 +86,7 @@ spec:
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
-              path: /v2/health
+              path: /health
               port: {{ .Values.service.internalPort }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}

@@ -30,6 +30,9 @@ service:
   # Enable multitenancy support in contextBroker
   writeConcern: 0
   # Configure write concern for MongoDB write operations: acknowledged (1) or unacknowledged (0). Default is 1.
+  notificationMode: transient
+  httpTimeout: 30000
+  disableMetrics: false
 
 mongo:
   replicaset: true
