@@ -13,8 +13,9 @@ data:
   config.js: |
     var config = {};
 
-    config.mqtt = {
+
     {{- if .Values.mqtt.enabled }}
+    config.mqtt = {
         host: {{ .Values.mqtt.host | quote }},
         port: {{ .Values.mqtt.port }},
         thinkingThingsPlugin: {{ .Values.mqtt.thinkingThingsPlugin }}
@@ -44,11 +45,11 @@ data:
          */
         retain: {{ .Values.mqtt.retain }}
         {{- end }}
-    {{- end }}
     };
+    {{- end }}
 
-    config.amqp = {
     {{- if .Values.amqp.enabled }}
+    config.amqp = {
         host: {{ .Values.amqp.host | quote }},
         port: {{ .Values.amqp.port }},
         {{- if .Values.amqp.username }}
@@ -63,8 +64,9 @@ data:
         exchange: "iota-exchange",
         queue: "iotaqueue",
         options: {durable: true}
-    {{- end }}
     };
+    {{- end }}
+
 
     config.http = {
         port: {{ required "A valid service.dataInternalPort is required" .Values.service.dataInternalPort }}
