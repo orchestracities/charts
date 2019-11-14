@@ -29,7 +29,7 @@ spec:
       {{- if $servicedataPath }}
           - path: {{ $servicedataPath }}
             backend:
-              serviceName: {{ $serviceName }}-data
+              serviceName: {{ $serviceName }}
               servicePort: {{ $servicedataPort }}
       {{- end }}
     {{- end -}}
