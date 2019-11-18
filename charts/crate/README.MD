@@ -3,7 +3,7 @@
 This directory contains a Kubernetes chart to deploy a [CrateDB](https://crate.io) cluster using a StatefulSet.
 
 ## Prerequisites Details
-* Kubernetes 1.5+
+* Kubernetes 1.9+
 * PV support on the underlying infrastructure
 
 ## StatefulSet Details
