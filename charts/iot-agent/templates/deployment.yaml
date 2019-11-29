@@ -9,6 +9,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "iot-agent.name" . }}
   replicas: {{ .Values.replicaCount }}
   strategy:
 {{ toYaml .Values.updateStrategy | indent 4 }}

@@ -8,6 +8,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ template "datacollector.name" . }}
   serviceName: {{ template "datacollector.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   updateStrategy:
