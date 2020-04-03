@@ -470,3 +470,4 @@ data:
     # has elapsed after the entry's creation, the most recent replacement of its value, or its last access.
     # In minutes
     store.pipeline.state.cache.expire.after.access=10
+    capture.snapshot.on.start=false
