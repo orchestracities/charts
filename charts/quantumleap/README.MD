@@ -3,7 +3,7 @@
 This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://github.com/smartsdk/ngsi-timeseries-api) cluster using Deployment.
 
 ## Prerequisites Details
-* Kubernetes 1.5+
+* Kubernetes 1.9+
 
 ## Todo
 * Complete README
