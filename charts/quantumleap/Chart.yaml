@@ -1,9 +1,10 @@
 apiVersion: v1
 description: A Helm chart for QuantumLeap
 name: quantumleap
-version: 0.1.10
+appVersion: "0.8.x"
+version: 0.1.11
 sources:
 - https://github.com/smartsdk/ngsi-timeseries-api
 maintainers:
-- name: taliaga
-  email: tomas.aliaga@martel-innovate.com
+- name: chicco785
+  email: federico.facca@martel-innovate.com
