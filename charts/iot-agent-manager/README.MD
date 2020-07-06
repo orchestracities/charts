@@ -4,6 +4,9 @@ This directory contains a Kubernetes chart to deploy an
 [IoT Agent Manager](https://github.com/telefonicaid/iotagent-manager)
 cluster using Deployment.
 
+## Prerequisites Details
+* Kubernetes 1.14+
+
 ## Todo
 * Finalise README
 
@@ -34,8 +37,8 @@ chart and their default values.
 |       Parameter                   |           Description                       |                         Default                     |
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|
 | `replicaCount`                    | Amount of pods to spawn                     | `3`                                                 |
-| `image.repository`                | The image to pull                           | `fiware/iotagent-ul`                                      |
-| `image.tag`                       | The version of the image to pull            | `1.9.0`                                             |
+| `image.repository`                | The image to pull                           | `telefonicaiot/iotagent-manager`                                      |
+| `image.tag`                       | The version of the image to pull            | `1.6.0`                                             |
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 | `affinity`               | If specified, defines affinity rules  | ``                                                  |
