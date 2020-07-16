@@ -46,6 +46,7 @@ Collector chart and their default values.
 | `persistentVolume.annotations`    | Annotations for Persistent Volume Claim`    | `{}`                                                |
 | `persistentVolume.size`           | Persistent Volume size                      | `4Gi`                                               |
 | `persistentVolume.storageClass`   | Persistent Volume Storage Class             | `default` |
+| `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
