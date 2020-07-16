@@ -44,6 +44,7 @@ NoSQL Client chart and their default values.
 | `nodeSelector`                    | Node labels for pod assignment              | `{}`                                                |
 | `affinity`                        | Pod affinity. Passed through the `tpl` function and thus to be configured a string | `Hard node and soft zone anti-affinity`|
 | `tolerations`                     | Node taints to tolerate                     | `[]`                                                |
+| `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

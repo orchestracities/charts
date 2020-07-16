@@ -22,6 +22,10 @@ spec:
         app: {{ template "orion.name" . }}
         release: {{ .Release.Name }}
     spec:
+    {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+    {{- end }}
+
       initContainers:
         - name: create-indexes
           image: {{ .Values.mongo.image }}

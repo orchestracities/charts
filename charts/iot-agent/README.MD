@@ -50,6 +50,7 @@ chart and their default values.
 | `service.defaultSubservice`       | default subservice for the IoT Agent. If a device is being registered, and no subservice information comes with the device data, and no subservice information is configured for the given type, the default IoT agent subservice will be used instead. | '/' |
 | `service.providerUrl`             | URL to send in the Context Provider registration requests. Should represent the external IP of the deployed IoT Agent (the IP where the Context Broker will redirect the NGSI requests) | 'http://ul-iot-agent:4041' |
 | `service.deviceRegistrationDuration`          | duration of the registrations as Context Providers, in ISO 8601 standard format. | P1M |
+| `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
