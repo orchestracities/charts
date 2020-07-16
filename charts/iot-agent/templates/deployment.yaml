@@ -24,6 +24,9 @@ spec:
         component: "{{ .Values.service.agentType }}"
         release: {{ .Release.Name }}
     spec:
+    {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+    {{- end }}
       {{ if eq .Values.service.agentType "lwm2m" }}
       hostAliases:
         - ip: "100.122.0.5"
