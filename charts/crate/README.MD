@@ -52,6 +52,8 @@ The following table lists the configurable parameters of the patroni chart and t
 | `nodeSelector`                    | Crate Node labels for pod assignment        | {}                                                  |
 | `tolerations`                     | Toleration labels for Crate pod assignment  | []                                                  |
 | `affinity`                        | Affinity settings for Crate pod assignment  | {}                                                  |
+| `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
