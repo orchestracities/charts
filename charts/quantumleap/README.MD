@@ -1,9 +1,19 @@
-# CrateDB Helm Chart
+# Quantum Leap Helm Chart
 
 This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://github.com/smartsdk/ngsi-timeseries-api) cluster using Deployment.
 
 ## Prerequisites Details
 * Kubernetes 1.9+
+* Quantum Leap >= 0.7.6
+
+#### Note: Quantum Leap version
+This chart is **not** fully compatible with Quantum Leap versions earlier
+than `0.7.6`. However, it is still possible to use this chart with an older
+image if liveness and readiness probes are both turned off---default settings.
+Alternatively, to turn the probes on, change the probes path from `/health`
+to `/v2/health`. (This is because of API backward-incompatible changes in
+release `0.7.6`, see PR [#275](https://github.com/smartsdk/ngsi-timeseries-api/pull/275)
+for further details.)
 
 ## Todo
 * Complete README
