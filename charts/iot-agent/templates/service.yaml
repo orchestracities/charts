@@ -4,7 +4,7 @@ metadata:
   name: {{ template "iot-agent.fullname" . }}
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -15,7 +15,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-{{- if ne .Values.service.agentType "lwm2m" }}
+{{- if ne .Values.agent.agentType "lwm2m" }}
     - port: {{ .Values.service.dataExternalPort }}
       targetPort: {{ .Values.service.dataInternalPort }}
       protocol: TCP

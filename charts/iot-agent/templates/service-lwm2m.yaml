@@ -1,11 +1,11 @@
-{{- if eq .Values.service.agentType "lwm2m" -}}
+{{- if eq .Values.agent.agentType "lwm2m" -}}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "iot-agent.fullname" . }}-lwm2m
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

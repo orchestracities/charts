@@ -6,7 +6,7 @@ echo "1. checkout gh-pages"
 git checkout gh-pages
 rm -rf charts
 echo "2. update index"
-docker run -ti --rm -v $(pwd):/apps -v $(pwd)/local:/root/.helm/repository/local alpine/helm:2.9.0 repo index . --url https://orchestracities.github.io/charts/
+docker run -ti --rm -v $(pwd):/apps -v $(pwd)/local:/root/.helm/repository/local alpine/helm:2.16.9 repo index . --url https://orchestracities.github.io/charts/
 echo "3. commit changes"
 git add --all && git commit -m "Travis build: $TRAVIS_BUILD_NUMBER"
 echo "4. fix remote"
