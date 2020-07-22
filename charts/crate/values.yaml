@@ -39,6 +39,8 @@ crate:
   recoverAfterTime: 5m
   replicas: 3
   recoverAfterNodes: 2
+  # minimumMasterNodes is only required for Crate versions prior to 4 and will
+  # be ignored when using a 4.x image.
   minimumMasterNodes: 2
 
 http:
