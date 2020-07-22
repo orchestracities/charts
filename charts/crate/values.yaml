@@ -6,7 +6,7 @@ app: crate
 
 image:
   name: crate
-  tag: 2.3.6
+  tag: 3.3.5
   pullPolicy: IfNotPresent
 
 # 1) The Service connecting 3 ports...
