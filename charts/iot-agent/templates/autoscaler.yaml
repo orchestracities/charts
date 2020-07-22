@@ -4,7 +4,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

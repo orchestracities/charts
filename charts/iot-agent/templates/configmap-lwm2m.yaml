@@ -1,10 +1,10 @@
-{{- if eq .Values.service.agentType "lwm2m" -}}
+{{- if eq .Values.agent.agentType "lwm2m" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}

@@ -7,63 +7,6 @@ image:
   tag: 1.12.0
   pullPolicy: Always
 
-chaos:
-  enabled: false
-
-updateStrategy:
-  rollingUpdate:
-    maxUnavailable: 1
-  type: RollingUpdate
-
-autoscaling:
-  enabled: true
-  minReplicas: 3
-  maxReplicas: 12
-  targetAverageUtilization: 50
-
-service:
-  agentType: ul
-  name: iotagent-ul
-  type: ClusterIP
-  annotations: {}
-  # log level supported: DEBUG, INFO, ERROR, FATAL.
-  logLevel: DEBUG
-  # if this flag is activated, the IoT Agent will use JEXL as expression language.
-  useJEXL: false
-  # if this flag is activated, the IoT Agent will add a 'TimeInstant' metadata
-  # attribute to all the attributes updateded from device information.
-  timestamp: true
-  dataExternalPort: 7896
-  dataInternalPort: 7896
-  configExternalPort: 4041
-  configInternalPort: 4041
-  # When enabled, the IoT Agents will try to cast attribute's values considering the JSON native type (only for NGSIv2).
-  autocast: true
-  # default service for the IoT Agent. If a device is being registered,
-  # and no service information comes with the device data,
-  # and no service information is configured for the given type,
-  # the default IoT agent service will be used instead. E.g.: 'Antwerp'.
-  defaultService: 'Default'
-  # default subservice for the IoT Agent. If a device is being registered,
-  # and no subservice information comes with the device data, and no subservice
-  # information is configured for the given type, the default IoT agent
-  # subservice will be used instead. E.g.: '/gardens'.
-  defaultSubservice: '/'
-  # URL to send in the Context Provider registration requests. Should represent
-  # the external IP of the deployed IoT Agent (the IP where the Context Broker
-  # will redirect the NGSI requests). E.g.: 'http://192.168.56.1:4041'.
-  providerUrl: http://ul-iot-agent:4041
-  # duration of the registrations as Context Providers,
-  # in ISO 8601 standard format. E.g.: 'P1M'. (1 month)
-  deviceRegistrationDuration: P1M
-  defaultType: Device
-  # Default API Key, to use with device that have been provisioned
-  # without a Configuration Group.
-  defaultKey: T3JjaGVzdHJhQ2l0aWVzOi86RGV2aWNlczox
-  # Default transport protocol when no transport is provisioned
-  # through the Device Provisioning API.
-  defaultTransport: HTTP
-
 # Type Configuration
 # 
 # The IoT Agent can be configured to expect certain kinds of devices, with
@@ -91,6 +34,48 @@ service:
 #        the global CB configuration for specific types of devices.
 
 types: {}
+
+agent:
+  agentType: lorawan
+  logLevel: INFO
+  # if this flag is activated, the IoT Agent will add a 'TimeInstant' metadata
+  # attribute to all the attributes updateded from device information.
+  timestamp: true
+  # When enabled, the IoT Agents will try to cast attribute's values considering the JSON native type (only for NGSIv2).
+  autocast: true
+  # default service for the IoT Agent. If a device is being registered,
+  # and no service information comes with the device data,
+  # and no service information is configured for the given type,
+  # the default IoT agent service will be used instead. E.g.: 'Antwerp'.
+  defaultService: 'Default'
+  # default subservice for the IoT Agent. If a device is being registered,
+  # and no subservice information comes with the device data, and no subservice
+  # information is configured for the given type, the default IoT agent
+  # subservice will be used instead. E.g.: '/gardens'.
+  defaultSubservice: '/'
+  # URL to send in the Context Provider registration requests. Should represent
+  # the external IP of the deployed IoT Agent (the IP where the Context Broker
+  # will redirect the NGSI requests). E.g.: 'http://192.168.56.1:4041'.
+  providerUrl: http://ul-iot-agent:4041
+  # duration of the registrations as Context Providers,
+  # in ISO 8601 standard format. E.g.: 'P1M'. (1 month)
+  deviceRegistrationDuration: P1M
+  defaultType: Device
+  # Default API Key, to use with device that have been provisioned
+  # without a Configuration Group.
+  defaultKey: T3JjaGVzdHJhQ2l0aWVzOi86RGV2aWNlczox
+  # Default transport protocol when no transport is provisioned
+  # through the Device Provisioning API.
+  defaultTransport: HTTP
+  # flag indicating whether the incoming notifications to the IoTAgent should be processed using the bidirectionality
+  # plugin from the latest versions of the library or the UL-specific configuration retrieval mechanism.
+  configRetrieval: false
+  # flag indicating whether the node server will be executed in multi-core option (true) or it will be a
+  # single-thread one (false).
+  multiCore: true
+  # flag indicating whether the incoming measures to the IoTAgent should be processed as per the "attributes" field.
+  explicitAttrs: false
+  defaultExpressionLanguage: legacy
 
 contextBroker:
   host: orion-orion.prod
@@ -126,10 +111,25 @@ mqtt:
   host: mqtt-mosquitto-interal
   # mqtt server post
   port: 1883
+  protocol: "mqtt"
   username: username
   password: password
   qos: 0
   retain: true
+  retries: 5
+  retryTime: 5
+  keepalive: 0
+  avoidLeadingSlash: fals
+  ssl:
+    rejectUnauthorized: true
+    ca: <path_to_ca>
+    key: <path_to_key>
+    cert: <path_to_cert>
+
+http:
+  timeout: 1000
+  key: <path_to_key>
+  cert: <path_to_cert>
 
 # configures all the information needed to register the IoT Agent in the
 # IoTManager. If this section is present, the IoTA will try to register to a
@@ -144,6 +144,29 @@ iotManager:
   protocol: UL
   description: Ultralight 2.0 IoT Agent (Node.js version) supports HTTP/MQTT/AMQP protocols
   agentPath: /config/iot
+
+chaos:
+  enabled: false
+
+updateStrategy:
+  rollingUpdate:
+    maxUnavailable: 1
+  type: RollingUpdate
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 12
+  targetAverageUtilization: 50
+
+service:
+  name: iotagent-ul
+  type: ClusterIP
+  dataExternalPort: 7896
+  dataInternalPort: 7896
+  configExternalPort: 4041
+  configInternalPort: 4041
+  annotations: {}
 
 ingress:
   enabled: false

@@ -1,10 +1,10 @@
-{{- if eq .Values.service.agentType "lorawan" -}}
+{{- if eq .Values.agent.agentType "lorawan" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -14,9 +14,8 @@ data:
     var config = {};
 
     config.iota = {
-        logLevel:  {{ .Values.service.logLevel | default "DEBUG" | quote }},
-        timestamp:  {{ .Values.service.timestamp | default true }},
-        useJEXL: {{ .Values.service.useJEXL | default false }},
+        logLevel:  {{ .Values.agent.logLevel | default "DEBUG" | quote }},
+        timestamp:  {{ .Values.agent.timestamp | default true }},
         contextBroker: {
             host: {{ required "A valid contextBroker.host is required" .Values.contextBroker.host | quote }},
             port: {{ required "A valid contextBroker.port is required" .Values.contextBroker.port }},
@@ -51,22 +50,40 @@ data:
          */
         defaultResource: '/iot/{{ .Release.Name }}',
         types: {{ toJson .Values.types }},
-        service: {{ required "A valid service.defaultService is required" .Values.service.defaultService | quote }},
-        subservice: {{ required "A valid service.defaultSubservice is required" .Values.service.defaultSubservice | quote }},
-        {{- if .Values.service.providerUrl }}
-        providerUrl: {{ .Values.service.providerUrl | quote }},
+        service: {{ required "A valid agent.defaultService is required" .Values.agent.defaultService | quote }},
+        subservice: {{ required "A valid agent.defaultSubservice is required" .Values.agent.defaultSubservice | quote }},
+        {{- if .Values.agent.providerUrl }}
+        providerUrl: {{ .Values.agent.providerUrl | quote }},
         {{- else if .Values.ingress.enabled }}
         providerUrl: 'https://{{ index .Values.ingress.hosts 0 }}/config',
         {{- else }}
         providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}'
         {{- end }}
-        {{- if .Values.service.autocast }}
-        autocast: {{ .Values.service.autocast }},
+        {{- if .Values.agent.autocast }}
+        autocast: {{ .Values.agent.autocast }},
         {{- end }}
-        deviceRegistrationDuration: {{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration | quote }},
-        defaultType: {{ required "A valid service.defaultType is required" .Values.service.defaultType | quote }}
+        deviceRegistrationDuration: {{ required "A valid agent.deviceRegistrationDuration is required" .Values.agent.deviceRegistrationDuration | quote }},
+        defaultType: {{ required "A valid agent.defaultType is required" .Values.agent.defaultType | quote }},
+        /**
+         * flag indicating whether the incoming measures to the IoTAgent should be processed as per the "attributes" field.
+         */
+        explicitAttrs: {{ .Values.agent.explicitAttrs | default false }}
     };
 
+    /**
+     * flag indicating whether the incoming notifications to the IoTAgent should be processed using the bidirectionality
+     * plugin from the latest versions of the library or the UL-specific configuration retrieval mechanism.
+     */
+    config.configRetrieval = {{ .Values.agent.configRetrieval | default false }};
+
+    config.defaultKey = '{{ required "A valid agent.defaultKey is required" .Values.agent.defaultKey }}';
+    config.defaultTransport = '{{ required "A valid agent.defaultTransport is required" .Values.agent.defaultTransport }}';
+    /**
+     * flag indicating whether the node server will be executed in multi-core option (true) or it will be a
+     * single-thread one (false).
+     */
+    config.multiCore = {{ .Values.agent.multiCore | default true }};
+    config.defaultExpressionLanguage = {{ .Values.agent.defaultExpressionLanguage }};
     module.exports = config;
 
 {{- end -}}

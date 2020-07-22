@@ -1,10 +1,10 @@
-{{- if eq .Values.service.agentType "ul" -}}
+{{- if eq .Values.agent.agentType "ul" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -18,31 +18,92 @@ data:
     config.mqtt = {
         host: {{ .Values.mqtt.host | quote }},
         port: {{ .Values.mqtt.port }},
-        {{- if .Values.mqtt.username -}}
+
+        /**
+         * protocol to use for connecting with the MQTT broker
+         * (`mqtt`, `mqtts`, `tcp`, `tls`, `ws`, `wss`)
+         */
+        protocol: {{ .Values.mqtt.protocol |  default "mqtt" | quote}},
+
+        {{- if .Values.mqtt.username }}
         /**
          * User name for the IoTAgent in the MQTT broker, if authentication is activated.
          */
         username: {{ .Values.mqtt.username | quote }},
         {{- end }}
+
         {{- if .Values.mqtt.password }}
         /**
          * Password for the IoTAgent in the MQTT broker, if authentication is activated.
          */
         password: {{ .Values.mqtt.password | quote }},
         {{- end }}
+
+        {{- if .Values.mqtt.ssl.rejectUnauthorized }}
+        /**
+         * Set to `false` if using a self-signed certificate.
+         * Beware that you are exposing yourself to man in the middle attacks
+         */
+        rejectUnauthorized: {{ .Values.mqtt.ssl.rejectUnauthorized }},
+        {{- end }}
+
+        {{- if .Values.mqtt.ssl.ca }}
+        /**
+         * Path to your certification authority for MQTT binding over SSL
+         */
+        ca: {{ .Values.mqtt.ssl.ca | quote }},
+        {{- end }}
+
+        {{- if .Values.mqtt.ssl.key }}
+        /**
+         * Path to your private key for MQTT binding over SSL
+         */
+        key: {{ .Values.mqtt.ssl.key | quote }},
+        {{- end }}
+
+        {{- if .Values.mqtt.ssl.cert }}
+        /**
+         * Path to your certificate for MQTT binding over SSL
+         */
+        cert: {{ .Values.mqtt.ssl.cert | quote }},
+        {{- end }}
+
         {{- if .Values.mqtt.qos }}
         /**
          * QoS level: at most once (0), at least once (1), exactly once (2). (default is 0).
          */
-        qos: {{ .Values.mqtt.qos }}
+        qos: {{ .Values.mqtt.qos }},
         {{- end }}
+
         {{- if .Values.mqtt.retain }}
         /**
          * Retain flag. (default is true.) Normally if a publisher publishes a message to a topic, and no one is
          * subscribed to that topic (i.e retain flag is set to false) the message is simply discarded by the broker.
          * The publisher can tell the broker to keep the last message on that topic by setting the retained message flag to true.
          */
-        retain: {{ .Values.mqtt.retain }}
+        retain: {{ .Values.mqtt.retain }},
+        {{- end }}
+
+        /**
+         * Number of MQTT connection error retries (default is 5).
+         */
+        retries: {{ .Values.mqtt.retries | default 5 }},
+
+        /**
+         * Time between MQTT connection retries (default is 5 seconds).
+         */
+        retryTime: {{ .Values.mqtt.retryTime | default 5 }},
+
+        /**
+         * Time to keep connection open between client and MQTT broker (default is 0 seconds)
+         */
+        keepalive: {{ .Values.mqtt.keepalive | default 0 }},
+
+        {{- if .Values.mqtt.avoidLeadingSlash }}
+        /**
+         * Whether to use slashes at the beginning of topic when sending or not
+         */
+        avoidLeadingSlash: {{ .Values.mqtt.avoidLeadingSlash }}
         {{- end }}
     };
     {{- end }}
@@ -68,13 +129,29 @@ data:
 
 
     config.http = {
-        port: {{ required "A valid service.dataInternalPort is required" .Values.service.dataInternalPort }}
+        port: {{ required "A valid service.dataInternalPort is required" .Values.service.dataInternalPort }},
+        /**
+         * HTTP Timeout for the http command endpoint (in milliseconds).
+         */
+        timeout: {{ .Values.http.timeout | default 1000 }},
+        {{- if .Values.http.key }}
+        /**
+         * Path to your private key for HTTPS binding
+         */
+        key: {{ .Values.http.key | quote }},
+        {{- end }}
+
+        {{- if .Values.http.cert }}
+        /**
+         * Path to your certificate for HTTPS binding
+         */
+        cert: {{ .Values.http.cert | quote }},
+        {{- end }}
     };
 
     config.iota = {
-        logLevel:  {{ .Values.service.logLevel | default "DEBUG" | quote }},
-        timestamp:  {{ .Values.service.timestamp | default true }},
-        useJEXL: {{ .Values.service.useJEXL | default false }},
+        logLevel:  {{ .Values.agent.logLevel | default "DEBUG" | quote }},
+        timestamp:  {{ .Values.agent.timestamp | default true }},
         contextBroker: {
             host: {{ required "A valid contextBroker.host is required" .Values.contextBroker.host | quote }},
             port: {{ required "A valid contextBroker.port is required" .Values.contextBroker.port }},
@@ -84,6 +161,70 @@ data:
             port: {{ required "A valid service.configInternalPort is required" .Values.service.configInternalPort }},
             baseRoot: '/config'
         },
+
+        /**
+         * Configuration for secured access to instances of the Context Broker secured with a PEP Proxy.
+         * For the authentication mechanism to work, the authentication attribute in the configuration has to be fully
+         * configured, and the authentication.enabled subattribute should have the value `true`.
+         *
+         * The Username and password should be considered as sensitive data and should not be stored in plaintext.
+         * Either encrypt the config and decrypt when initializing the instance or use environment variables secured by
+         * docker secrets.
+         */
+        authentication: {
+          enabled: false,
+          /**
+           * Type of the Identity Manager which is used when authenticating the IoT Agent.
+           * Either 'oauth2' or 'keystone'
+           */
+          type: 'keystone',
+          /**
+           * Name of the additional header passed to retrieve the identity of the IoT Agent
+           */
+          header: 'Authorization',
+          /**
+           * Hostname of the Identity Manager.
+           */
+          host: 'localhost',
+          /**
+           * Port of the Identity Manager.
+           */
+          port: '5000',
+          /**
+           * URL of the Identity Manager - a combination of the above
+           */
+          url: 'localhost:5000',
+          /**
+           * KEYSTONE ONLY: Username for the IoT Agent
+           *  - Note this should not be stored in plaintext.
+           */
+          user: 'IOTA_AUTH_USER',
+          /**
+           * KEYSTONE ONLY: Password for the IoT Agent
+           *    - Note this should not be stored in plaintext.
+           */
+          password: 'IOTA_AUTH_PASSWORD',
+          /**
+           * OAUTH2 ONLY: URL path for retrieving the token
+           */
+          tokenPath: '/oauth2/token',
+          /**
+           * OAUTH2 ONLY: Flag to indicate whether or not the token needs to be periodically refreshed.
+           */
+          permanentToken: true,
+          /**
+           * OAUTH2 ONLY: ClientId for the IoT Agent
+           *    - Note this should not be stored in plaintext.
+           */
+          clientId: 'IOTA_AUTH_CLIENT_ID',
+          /**
+           * OAUTH2 ONLY: ClientSecret for the IoT Agent
+           *    - Note this should not be stored in plaintext.
+           */
+          clientSecret: 'IOTA_AUTH_CLIENT_SECRET'
+        },
+
+
         deviceRegistry: {
             type: 'mongodb'
         },
@@ -109,24 +250,41 @@ data:
          */
         defaultResource: '/iot/{{ .Release.Name }}',
         types: {{ toJson .Values.types }},
-        service: {{ required "A valid service.defaultService is required" .Values.service.defaultService | quote }},
-        subservice: {{ required "A valid service.defaultSubservice is required" .Values.service.defaultSubservice | quote }},
-        {{- if .Values.service.providerUrl }}
-        providerUrl: {{ .Values.service.providerUrl | quote }},
+        service: {{ required "A valid agent.defaultService is required" .Values.agent.defaultService | quote }},
+        subservice: {{ required "A valid agent.defaultSubservice is required" .Values.agent.defaultSubservice | quote }},
+        {{- if .Values.agent.providerUrl }}
+        providerUrl: {{ .Values.agent.providerUrl | quote }},
         {{- else if .Values.ingress.enabled }}
         providerUrl: 'https://{{ index .Values.ingress.hosts 0 }}/config',
         {{- else }}
         providerUrl: 'http://{{ .Release.Name }}-{{ template "iot-agent.name" . }}.{{ .Release.Namespace }}:{{ .Values.service.configExternalPort }}',
         {{- end }}
-        {{- if .Values.service.autocast }}
-        autocast: {{ .Values.service.autocast }},
+        {{- if .Values.agent.autocast }}
+        autocast: {{ .Values.agent.autocast }},
         {{- end }}
-        deviceRegistrationDuration: {{ required "A valid service.deviceRegistrationDuration is required" .Values.service.deviceRegistrationDuration | quote }},
-        defaultType: {{ required "A valid service.defaultType is required" .Values.service.defaultType | quote }}
+        deviceRegistrationDuration: {{ required "A valid agent.deviceRegistrationDuration is required" .Values.agent.deviceRegistrationDuration | quote }},
+        defaultType: {{ required "A valid agent.defaultType is required" .Values.agent.defaultType | quote }},
+        /**
+         * flag indicating whether the incoming measures to the IoTAgent should be processed as per the "attributes" field.
+         */
+        explicitAttrs: {{ .Values.agent.explicitAttrs | default false }}
     };
 
-    config.defaultKey = {{ required "A valid service.defaultKey is required" .Values.service.defaultKey | quote }};
-    config.defaultTransport = {{ required "A valid service.defaultTransport is required" .Values.service.defaultTransport | quote }};
+    /**
+     * flag indicating whether the incoming notifications to the IoTAgent should be processed using the bidirectionality
+     * plugin from the latest versions of the library or the UL-specific configuration retrieval mechanism.
+     */
+    config.configRetrieval = {{ .Values.agent.configRetrieval | default false }};
+
+    config.defaultKey = {{ required "A valid agent.defaultKey is required" .Values.agent.defaultKey | quote }};
+    config.defaultTransport = {{ required "A valid agent.defaultTransport is required" .Values.agent.defaultTransport | quote }};
+
+    /**
+     * flag indicating whether the node server will be executed in multi-core option (true) or it will be a
+     * single-thread one (false).
+     */
+    config.multiCore = {{ .Values.agent.multiCore | default true }};
+    config.defaultExpressionLanguage = {{ .Values.agent.defaultExpressionLanguage }};
     module.exports = config;
 
 {{- end -}}

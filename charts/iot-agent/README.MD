@@ -3,8 +3,8 @@
 This directory contains a Kubernetes chart to deploy an IoT Agent cluster using
 Deployment. IoT Agents supported are:
 
-* [UL](https://github.com/telefonicaid/iotagent-ul)
-* [JSON](https://github.com/telefonicaid/iotagent-json)
+* [UL](https://github.com/telefonicaid/iotagent-ul) v1.13
+* [JSON](https://github.com/telefonicaid/iotagent-json) v1.14
 * [LORAWAN](https://github.com/Atos-Research-and-Innovation/IoTagent-LoRaWAN)
 
 ## Prerequisites Details

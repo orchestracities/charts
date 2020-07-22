@@ -4,7 +4,7 @@ metadata:
   name: {{ template "iot-agent.fullname" . }}
   labels:
     app: {{ template "iot-agent.name" . }}
-    component: "{{ .Values.service.agentType }}"
+    component: "{{ .Values.agent.agentType }}"
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -21,13 +21,13 @@ spec:
         chaos.alpha.kubernetes.io/enabled: "{{ .Values.chaos.enabled }}"
       labels:
         app: {{ template "iot-agent.name" . }}
-        component: "{{ .Values.service.agentType }}"
+        component: "{{ .Values.agent.agentType }}"
         release: {{ .Release.Name }}
     spec:
     {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
     {{- end }}
-      {{ if eq .Values.service.agentType "lwm2m" }}
+      {{ if eq .Values.agent.agentType "lwm2m" }}
       hostAliases:
         - ip: "100.122.0.5"
           hostnames:
@@ -39,7 +39,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.dataInternalPort }}
-              {{ if eq .Values.service.agentType "lwm2m" }}
+              {{ if eq .Values.agent.agentType "lwm2m" }}
               name: external-udp
               protocol: UDP
               {{- end }}
@@ -58,28 +58,28 @@ spec:
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
-          {{- if eq .Values.service.agentType "ul" }}
+          {{- if eq .Values.agent.agentType "ul" }}
           volumeMounts:
             - name: config
               mountPath: /opt/iotaul/config.js
               subPath: config.js
-          {{- else if eq .Values.service.agentType "json" }}
+          {{- else if eq .Values.agent.agentType "json" }}
           volumeMounts:
             - name: config
               mountPath: /opt/iotajson/config.js
               subPath: config.js
-          {{- else if eq .Values.service.agentType "lorawan" }}
+          {{- else if eq .Values.agent.agentType "lorawan" }}
           volumeMounts:
              - name: config
                mountPath: /opt/iotagent-lora/config.js
                subPath: config.js
-          {{- else if eq .Values.service.agentType "lwm2m" }}
+          {{- else if eq .Values.agent.agentType "lwm2m" }}
           volumeMounts:
              - name: config
                mountPath: /opt/iota-lwm2m/config-blank.js
                subPath: config-blank.js
           {{- end }}
-      {{- if eq .Values.service.agentType "lwm2m" }}
+      {{- if eq .Values.agent.agentType "lwm2m" }}
       hostNetwork: true
       {{- end }}
       volumes:
