@@ -36,7 +36,7 @@ image:
 types: {}
 
 agent:
-  agentType: lorawan
+  agentType: ul
   logLevel: INFO
   # if this flag is activated, the IoT Agent will add a 'TimeInstant' metadata
   # attribute to all the attributes updateded from device information.
@@ -95,7 +95,7 @@ mongo:
   dbport: 27017
 
 amqp:
-  enabled: true
+  enabled: false
   # amqp server hostname
   host: amqp.example.com
   # amqp server post
@@ -106,7 +106,7 @@ amqp:
 
 mqtt:
   # enable mqtt transport
-  enabled: true
+  enabled: false
   # mqtt server hostname
   host: mqtt-mosquitto-interal
   # mqtt server post

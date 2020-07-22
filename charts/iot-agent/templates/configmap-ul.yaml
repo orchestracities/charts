@@ -284,7 +284,7 @@ data:
      * single-thread one (false).
      */
     config.multiCore = {{ .Values.agent.multiCore | default true }};
-    config.defaultExpressionLanguage = {{ .Values.agent.defaultExpressionLanguage }};
+    config.defaultExpressionLanguage = {{ .Values.agent.defaultExpressionLanguage | quote }};
     module.exports = config;
 
 {{- end -}}
