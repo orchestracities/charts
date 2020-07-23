@@ -31,6 +31,7 @@ Build a Crate command line suitable to the specified Crate version.
           - -Cgateway.expected_nodes=${EXPECTED_NODES}
           - -Chttp.cors.enabled={{ .Values.http.cors.enabled }}
           - -Chttp.cors.allow-origin={{ .Values.http.cors.allowOrigin }}
+          - -Cpath.repo="/backup"
 {{- else }}
           - /docker-entrypoint.sh
           - -Clicense.enterprise=false
@@ -44,6 +45,7 @@ Build a Crate command line suitable to the specified Crate version.
           - -Cgateway.expected_nodes=${EXPECTED_NODES}
           - -Chttp.cors.enabled={{ .Values.http.cors.enabled }}
           - -Chttp.cors.allow-origin={{ .Values.http.cors.allowOrigin }}
+          - -Cpath.repo="/backup"
 {{- end }}
 {{- end -}}
 
