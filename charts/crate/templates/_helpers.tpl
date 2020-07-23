@@ -47,7 +47,7 @@ Build a Crate command line suitable to the specified Crate version.
           - -Chttp.cors.allow-origin={{ .Values.http.cors.allowOrigin }}
           - -Cpath.repo="/backup"
 {{- end }}
-{{- end -}}
+{{- end }}
 
 {{/*
 Set up persistent and backup volumes if enabled.
@@ -72,47 +72,35 @@ Set up persistent and backup volumes if enabled.
       {{- if .Values.persistentVolume.storageClass }}
         storageClassName: "{{ .Values.persistentVolume.storageClass }}"
       {{- end }}
-    {{- if eq .Values.backupVolume.enabled true }}
-    - metadata:
-        name: backup
-        annotations:
-        {{- range $key, $value := .Values.backupVolume.annotations }}
-          {{ $key }}: {{ $value }}
-        {{- end }}
-      spec:
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: {{ .Values.backupVolume.size | quote }}
-      {{- if .Values.backupVolume.storageClass }}
-        storageClassName: "{{ .Values.backupVolume.storageClass }}"
-      {{- end }}
-    {{- end }}
   {{- end }}
 {{- end -}}
 
 {{/*
 Mount volumes for database file storage and, optionally, backups.
 */}}
-{{- define "crate.mounts" -}}
+{{- define "crate.mounts" }}
         volumeMounts:
           - mountPath: /data
             name: data
-  {{- if and (eq .Values.persistentVolume.enabled true) (eq .Values.backupVolume.enabled true) }}
+  {{- if (eq .Values.backupVolume.enabled true) }}
           - mountPath: /backup
             name: backup
   {{- end }}
-{{- end -}}
+{{- end }}
 
 {{/*
 Fallback to RAM disk for database file storage if persistent volume is disabled.
 */}}
-{{- define "crate.emptydir" -}}
-  {{- if ne .Values.persistentVolume.enabled true }}
+{{- define "crate.volumes" }}
       volumes:
+  {{- if ne .Values.persistentVolume.enabled true }}
         - name: data
           emptyDir:
             medium: "Memory"
+  {{- end }}
+  {{- if eq .Values.backupVolume.enabled true }}
+        - name: backup
+          persistentVolumeClaim:
+            claimName: {{ template "crate.fullname" . }}-backup
   {{- end }}
 {{- end -}}
