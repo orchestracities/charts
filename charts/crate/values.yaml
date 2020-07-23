@@ -65,6 +65,17 @@ persistentVolume:
   size: 20Gi  # Per instance
   annotations: {}
 
+backupVolume:
+  # even if set to true, it'll be ignored if persistentVolume.enabled is false,
+  # since in that case the container gets an emptyDir volume for database file
+  # storage.
+  enabled: false
+  storageClass: retain
+  # accessModes gets hard-coded to ReadWriteMany since Crate backup requires a
+  # volume shared by **all** nodes in the cluster.
+  size: 100Gi  # must cater for data of **all** nodes
+  annotations: {}
+
 # Readiness probe
 readinessProbe:
   enabled: false

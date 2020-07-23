@@ -41,9 +41,7 @@ spec:
         image: {{ .Values.image.name }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: {{ template "crate.command" . }}
-        volumeMounts:
-            - mountPath: /data
-              name: data
+        {{ template "crate.mounts" . }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
@@ -118,27 +116,6 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
-{{- if .Values.persistentVolume.enabled }}
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-        annotations:
-        {{- range $key, $value := .Values.persistentVolume.annotations }}
-          {{ $key }}: {{ $value }}
-        {{- end }}
-      spec:
-        accessModes:
-        {{- range .Values.persistentVolume.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistentVolume.size | quote }}
-      {{- if .Values.persistentVolume.storageClass }}
-        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-      {{- end }}
-{{- else }}
-        - name: data
-          emptyDir:
-            medium: "Memory"
-{{- end }}
+
+{{ template "crate.emptydir" . }}
+{{ template "crate.pvc" . }}
