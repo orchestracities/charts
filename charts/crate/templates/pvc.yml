@@ -1,0 +1,25 @@
+{{- if eq .Values.backupVolume.enabled true }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "crate.fullname" . }}-backup
+  labels:
+    app: {{ template "crate.name" . }}
+    name: {{ template "crate.fullname" . }}-backup
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    annotations:
+    {{- range $key, $value := .Values.backupVolume.annotations }}
+      {{ $key }}: {{ $value }}
+    {{- end }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.backupVolume.size | quote }}
+{{- if .Values.backupVolume.storageClass }}
+  storageClassName: "{{ .Values.backupVolume.storageClass }}"
+{{- end }}
+{{- end }}

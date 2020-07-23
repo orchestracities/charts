@@ -116,6 +116,5 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
-
-{{ template "crate.emptydir" . }}
+{{ template "crate.volumes" . }}
 {{ template "crate.pvc" . }}
