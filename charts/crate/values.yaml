@@ -6,7 +6,7 @@ app: crate
 
 image:
   name: crate
-  tag: 2.3.6
+  tag: 3.3.5
   pullPolicy: IfNotPresent
 
 # 1) The Service connecting 3 ports...
@@ -39,6 +39,8 @@ crate:
   recoverAfterTime: 5m
   replicas: 3
   recoverAfterNodes: 2
+  # minimumMasterNodes is only required for Crate versions prior to 4 and will
+  # be ignored when using a 4.x image.
   minimumMasterNodes: 2
 
 http:
@@ -61,6 +63,17 @@ persistentVolume:
   accessModes:
     - ReadWriteOnce
   size: 20Gi  # Per instance
+  annotations: {}
+
+backupVolume:
+  # even if set to true, it'll be ignored if persistentVolume.enabled is false,
+  # since in that case the container gets an emptyDir volume for database file
+  # storage.
+  enabled: false
+  storageClass: retain
+  # accessModes gets hard-coded to ReadWriteMany since Crate backup requires a
+  # volume shared by **all** nodes in the cluster.
+  size: 100Gi  # must cater for data of **all** nodes
   annotations: {}
 
 # Readiness probe

@@ -40,22 +40,8 @@ spec:
       - name: crate
         image: {{ .Values.image.name }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command:
-          - /docker-entrypoint.sh
-          - -Clicense.enterprise=false
-          - -Ccluster.name=${CLUSTER_NAME}
-          - -Cnetwork.host="0.0.0.0"
-          - -Cdiscovery.zen.hosts_provider=srv
-          - -Cdiscovery.zen.minimum_master_nodes=${MINIMUM_MASTER_NODES}
-          - -Cdiscovery.srv.query=_{{ .Values.service.clusterName }}._tcp.{{ template "crate.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
-          - -Cgateway.recover_after_nodes=${RECOVER_AFTER_NODES}
-          - -Cgateway.recover_after_time={{ .Values.crate.recoverAfterTime }}
-          - -Cgateway.expected_nodes=${EXPECTED_NODES}
-          - -Chttp.cors.enabled={{ .Values.http.cors.enabled }}
-          - -Chttp.cors.allow-origin={{ .Values.http.cors.allowOrigin }}
-        volumeMounts:
-            - mountPath: /data
-              name: data
+        command: {{ template "crate.command" . }}
+        {{ template "crate.mounts" . }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
@@ -130,27 +116,6 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
-{{- if .Values.persistentVolume.enabled }}
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-        annotations:
-        {{- range $key, $value := .Values.persistentVolume.annotations }}
-          {{ $key }}: {{ $value }}
-        {{- end }}
-      spec:
-        accessModes:
-        {{- range .Values.persistentVolume.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistentVolume.size | quote }}
-      {{- if .Values.persistentVolume.storageClass }}
-        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-      {{- end }}
-{{- else }}
-        - name: data
-          emptyDir:
-            medium: "Memory"
-{{- end }}
+
+{{ template "crate.emptydir" . }}
+{{ template "crate.pvc" . }}

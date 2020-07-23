@@ -46,9 +46,12 @@ The following table lists the configurable parameters of the patroni chart and t
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `resources`                       | Any resources you wish to assign to the pod | `{}`                                                |
 | `persistentVolume.accessModes`    | Persistent Volume access modes              | `[ReadWriteOnce]`                                   |
-| `persistentVolume.annotations`    | Annotations for Persistent Volume Claim`    | `{}`                                                |
+| `persistentVolume.annotations`    | Annotations for Persistent Volume Claim     | `{}`                                                |
 | `persistentVolume.size`           | Persistent Volume size                      | `2Gi`                                               |
 | `persistentVolume.storageClass`   | Persistent Volume Storage Class             | `volume.alpha.kubernetes.io/storage-class: default` |
+| `backupVolume.annotations`        | Annotations for Backup Volume Claim         | `{}`                                                |
+| `backupVolume.size`               | Backup Volume size                          | `100Gi`                                             |
+| `backupVolume.storageClass`       | Backup Volume Storage Class                 | `retain`                                            |
 | `nodeSelector`                    | Crate Node labels for pod assignment        | {}                                                  |
 | `tolerations`                     | Toleration labels for Crate pod assignment  | []                                                  |
 | `affinity`                        | Affinity settings for Crate pod assignment  | {}                                                  |
