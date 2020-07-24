@@ -119,17 +119,18 @@ mqtt:
   retries: 5
   retryTime: 5
   keepalive: 0
-  avoidLeadingSlash: fals
-  ssl:
-    rejectUnauthorized: true
-    ca: <path_to_ca>
-    key: <path_to_key>
-    cert: <path_to_cert>
+  avoidLeadingSlash: false
+  # ssl configuration 
+  # ssl:
+  #  rejectUnauthorized: true
+  #  ca: <path_to_ca>
+  #  key: <path_to_key>
+  #  cert: <path_to_cert>
 
 http:
   timeout: 1000
-  key: <path_to_key>
-  cert: <path_to_cert>
+  # key: <path_to_key>
+  # cert: <path_to_cert>
 
 # configures all the information needed to register the IoT Agent in the
 # IoTManager. If this section is present, the IoTA will try to register to a
@@ -174,7 +175,7 @@ ingress:
   hosts:
     - iot-agent-ul.example.com
   annotations:
-    kubernetes.io/ingress.class: nginx
+    #kubernetes.io/ingress.class: nginx
     #kubernetes.io/tls-acme: "true"
   tls: {}
     # Secrets must be manually created in the namespace.
