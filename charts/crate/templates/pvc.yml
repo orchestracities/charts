@@ -1,4 +1,4 @@
-{{- if eq .Values.backupVolume.enabled true }}
+{{- if and (eq .Values.backupVolume.enabled true) (not .Values.backupVolume.existingClame) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
