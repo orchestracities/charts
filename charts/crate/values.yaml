@@ -6,10 +6,9 @@ app: crate
 
 image:
   name: crate
-  tag: 3.3.5
+  tag: 4.0.12
   pullPolicy: IfNotPresent
 
-# 1) The Service connecting 3 ports...
 service:
   type: ClusterIP
   annotations: {}
@@ -48,14 +47,17 @@ http:
     enabled: true
     allowOrigin: "*"
 
-# 3) Resources
 resources:
-  requests:
-    cpu: 300m
-    memory: 2Gi
-  limits:
-    cpu: 1000m
-    memory: 5Gi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # requests:
+  #   cpu: 300m
+  #   memory: 2Gi
+  # limits:
+  #   cpu: 1000m
+  #   memory: 5Gi
 
 persistentVolume:
   enabled: true
@@ -111,4 +113,3 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-# 2) The StatefulSet forming the cluster...
