@@ -70,9 +70,9 @@ backupVolume:
   # since in that case the container gets an emptyDir volume for database file
   # storage.
   enabled: false
-  # instead of creating a new clame, reuse an exsting one (useful to migrate
+  # instead of creating a new claim, reuse an exsting one (useful to migrate
   # data from a cluster to another)
-  existingClame: "existingClame"
+  # existingClaim: "existingClaim"
 
   storageClass: retain
   # accessModes gets hard-coded to ReadWriteMany since Crate backup requires a

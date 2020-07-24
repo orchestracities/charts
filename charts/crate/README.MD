@@ -50,7 +50,7 @@ The following table lists the configurable parameters of the cratedb chart and t
 | `persistentVolume.size`           | Persistent Volume size                      | `2Gi`                                               |
 | `persistentVolume.storageClass`   | Persistent Volume Storage Class             | `volume.alpha.kubernetes.io/storage-class: default` |
 | `backupVolume.annotations`        | Annotations for Backup Volume Claim         | `{}`                                                |
-| `backupVolume.existingClame`      | Name of an existing PVC to reuse            | `existingClame`                                     |
+| `backupVolume.existingClaim`      | Name of an existing PVC to reuse            | `existingClaim`                                     |
 | `backupVolume.size`               | Backup Volume size                          | `100Gi`                                             |
 | `backupVolume.storageClass`       | Backup Volume Storage Class                 | `retain`                                            |
 | `nodeSelector`                    | Crate Node labels for pod assignment        | {}                                                  |

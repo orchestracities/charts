@@ -112,8 +112,8 @@ Fallback to RAM disk for database file storage if persistent volume is disabled.
   {{- if eq .Values.backupVolume.enabled true }}
         - name: backup
           persistentVolumeClaim:
-          {{- if .Values.backupVolume.existingClame }}
-            claimName: {{ .Values.backupVolume.existingClame }}
+          {{- if .Values.backupVolume.existingClaim }}
+            claimName: {{ .Values.backupVolume.existingClaim }}
           {{- else }}
             claimName: {{ template "crate.fullname" . }}-backup
           {{- end }}
