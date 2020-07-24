@@ -6,10 +6,9 @@ app: crate
 
 image:
   name: crate
-  tag: 3.3.5
+  tag: 4.0.12
   pullPolicy: IfNotPresent
 
-# 1) The Service connecting 3 ports...
 service:
   type: ClusterIP
   annotations: {}
@@ -48,14 +47,17 @@ http:
     enabled: true
     allowOrigin: "*"
 
-# 3) Resources
 resources:
-  requests:
-    cpu: 300m
-    memory: 2Gi
-  limits:
-    cpu: 1000m
-    memory: 5Gi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # requests:
+  #   cpu: 300m
+  #   memory: 2Gi
+  # limits:
+  #   cpu: 1000m
+  #   memory: 5Gi
 
 persistentVolume:
   enabled: true
@@ -70,6 +72,10 @@ backupVolume:
   # since in that case the container gets an emptyDir volume for database file
   # storage.
   enabled: false
+  # instead of creating a new claim, reuse an exsting one (useful to migrate
+  # data from a cluster to another)
+  # existingClaim: "existingClaim"
+
   storageClass: retain
   # accessModes gets hard-coded to ReadWriteMany since Crate backup requires a
   # volume shared by **all** nodes in the cluster.
@@ -107,4 +113,3 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-# 2) The StatefulSet forming the cluster...

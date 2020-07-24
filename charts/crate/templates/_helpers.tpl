@@ -15,6 +15,15 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+
+{{- define "crate.initialMasterNodes" }}
+  {{- $fullName := include "crate.fullname" . -}}
+  {{- range $i := until (int .Values.crate.replicas) -}}
+    {{- if $i }},{{ end }}{{$fullName}}-{{ $i -}}
+  {{- end }}
+{{- end }}
+
+
 {{/*
 Build a Crate command line suitable to the specified Crate version.
 */}}
@@ -22,10 +31,12 @@ Build a Crate command line suitable to the specified Crate version.
 {{- $version := semver .Values.image.tag -}}
 {{- if gt $version.Major 3 }}
           - /docker-entrypoint.sh
+          - -Cnode.name="$POD_NAME"
           - -Ccluster.name=${CLUSTER_NAME}
           - -Cnetwork.host="0.0.0.0"
           - -Cdiscovery.seed_providers=srv
           - -Cdiscovery.srv.query=_{{ .Values.service.clusterName }}._tcp.{{ template "crate.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+          - -Ccluster.initial_master_nodes={{ template "crate.initialMasterNodes" . }}
           - -Cgateway.recover_after_nodes=${RECOVER_AFTER_NODES}
           - -Cgateway.recover_after_time={{ .Values.crate.recoverAfterTime }}
           - -Cgateway.expected_nodes=${EXPECTED_NODES}
@@ -101,6 +112,10 @@ Fallback to RAM disk for database file storage if persistent volume is disabled.
   {{- if eq .Values.backupVolume.enabled true }}
         - name: backup
           persistentVolumeClaim:
+          {{- if .Values.backupVolume.existingClaim }}
+            claimName: {{ .Values.backupVolume.existingClaim }}
+          {{- else }}
             claimName: {{ template "crate.fullname" . }}-backup
+          {{- end }}
   {{- end }}
 {{- end -}}

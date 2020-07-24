@@ -36,13 +36,13 @@ $ helm install --name my-release oc/crate
 
 ## Configuration
 
-The following table lists the configurable parameters of the patroni chart and their default values.
+The following table lists the configurable parameters of the cratedb chart and their default values.
 
 |       Parameter                   |           Description                       |                         Default                     |
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|
 | `replicaCount`                    | Amount of pods to spawn                     | `3`                                                 |
-| `image.name`                      | The image to pull                           | `crate`        |
-| `image.tag`                       | The version of the image to pull            | `2.3.6`                                           |
+| `image.name`                      | The image to pull                           | `crate`                                             |
+| `image.tag`                       | The version of the image to pull            | `4.2.1`                                             |
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `resources`                       | Any resources you wish to assign to the pod | `{}`                                                |
 | `persistentVolume.accessModes`    | Persistent Volume access modes              | `[ReadWriteOnce]`                                   |
@@ -50,6 +50,7 @@ The following table lists the configurable parameters of the patroni chart and t
 | `persistentVolume.size`           | Persistent Volume size                      | `2Gi`                                               |
 | `persistentVolume.storageClass`   | Persistent Volume Storage Class             | `volume.alpha.kubernetes.io/storage-class: default` |
 | `backupVolume.annotations`        | Annotations for Backup Volume Claim         | `{}`                                                |
+| `backupVolume.existingClaim`      | Name of an existing PVC to reuse            | `existingClaim`                                     |
 | `backupVolume.size`               | Backup Volume size                          | `100Gi`                                             |
 | `backupVolume.storageClass`       | Backup Volume Storage Class                 | `retain`                                            |
 | `nodeSelector`                    | Crate Node labels for pod assignment        | {}                                                  |
@@ -66,6 +67,11 @@ $ helm install --name my-release -f values.yaml oc/crate
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+
+> **Note**: With official crate images supporting only enterprise edition
+> from 4.x, you will be limited to 3 nodes. Alternatively check out our
+> CE edition images: https://hub.docker.com/r/orchestracities/crate
 
 ## Cleanup
 

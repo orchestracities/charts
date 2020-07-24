@@ -62,6 +62,10 @@ spec:
           value: {{ .Values.crate.recoverAfterNodes | quote }}
         - name: MINIMUM_MASTER_NODES
           value: {{ .Values.crate.minimumMasterNodes | quote }}
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         {{- if .Values.livenessProbe.enabled }}
         livenessProbe:
           exec:
