@@ -60,8 +60,6 @@ ingress:
     #     - chart-example.local
 
 database:
-  defaultLimit: 10000
-  keepRawEntity: false
   crate:
   # Endpoint to reach crate database cluster
     host: crate
@@ -74,8 +72,12 @@ database:
     password: quantumleap
     ssl: true
 
-config:
+runtime:
+  defaultLimit: 10000
+  keepRawEntity: false
   logLevel: "INFO"
+
+config:
   tenants: {}
 # example valid configuration
 #    t1:
