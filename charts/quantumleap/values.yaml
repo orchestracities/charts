@@ -72,6 +72,11 @@ database:
     password: quantumleap
     ssl: true
 
+runtime:
+  defaultLimit: 10000
+  keepRawEntity: false
+  logLevel: "INFO"
+
 config:
   tenants: {}
 # example valid configuration

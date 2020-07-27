@@ -68,6 +68,10 @@ The following table lists the configurable parameters of the patroni chart and t
 |                                   |                                             | `  t2:`                                             |
 |                                   |                                             | `      backend: Crate`                              |
 |                                   |                                             | `default-backend: Crate`                            |
+| `runtime`                         | Section to configure Quantum Leap's runtime | `runtime:`                                          |
+|                                   | settings                                    | `  defaultLimit: 10000`                             |
+|                                   |                                             | `     keepRawEntity: false`                         |
+|                                   |                                             | `     logLevel: "INFO"`                             |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
