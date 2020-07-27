@@ -60,6 +60,8 @@ ingress:
     #     - chart-example.local
 
 database:
+  defaultLimit: 10000
+  keepRawEntity: false
   crate:
   # Endpoint to reach crate database cluster
     host: crate
@@ -73,6 +75,7 @@ database:
     ssl: true
 
 config:
+  logLevel: "INFO"
   tenants: {}
 # example valid configuration
 #    t1:
