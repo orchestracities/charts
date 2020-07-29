@@ -57,9 +57,9 @@ spec:
           - name: CRATE_DEFAULTDB
             value: {{ .Values.database.crate.defaultdb }}
           - name: DEFAULT_LIMIT
-            value: {{ .Values.runtime.defaultLimit }}
+            value: {{ .Values.runtime.defaultLimit | quote }}
           - name: KEEP_RAW_ENTITY
-            value: {{ .Values.runtime.keepRawEntity }}
+            value: {{ .Values.runtime.keepRawEntity | quote }}
           - name: LOGLEVEL
             value: {{ .Values.runtime.logLevel }}
           - name: POSTGRES_HOST
