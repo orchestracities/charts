@@ -41,6 +41,10 @@ spec:
               port: {{ .Values.service.internalPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /opt/iotaManager/config.js
+              subPath: config.js
     {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -49,10 +53,6 @@ spec:
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
-          volumeMounts:
-            - name: config
-              mountPath: /opt/iotaManager/config.js
-              subPath: config.js
       volumes:
         - name: config
           configMap:

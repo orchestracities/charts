@@ -54,14 +54,6 @@ spec:
               port: {{ .Values.service.configInternalPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- if .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
-    {{- end }}
           {{- if eq .Values.agent.agentType "ul" }}
           volumeMounts:
             - name: config
@@ -86,6 +78,14 @@ spec:
       {{- if eq .Values.agent.agentType "lwm2m" }}
       hostNetwork: true
       {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
       volumes:
         - name: config
           configMap:
