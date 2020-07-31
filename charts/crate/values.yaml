@@ -25,11 +25,18 @@ service:
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 nodeSelector: {}
 
-affinity: {}
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - crate
+      topologyKey: "kubernetes.io/hostname"
 
 tolerations: []
-antiAffinity: "soft"
-nodeAffinity: {}
 
 crate:
   clusterName: quantumleap
