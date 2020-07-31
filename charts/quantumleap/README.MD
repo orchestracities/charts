@@ -73,6 +73,8 @@ The following table lists the configurable parameters of the patroni chart and t
 |                                   |                                             | `     keepRawEntity: false`                         |
 |                                   |                                             | `     logLevel: "INFO"`                             |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
+| `affinity`               | If specified, defines affinity rules  | ``                                                  |
+
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

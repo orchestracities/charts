@@ -80,32 +80,10 @@ spec:
           - name: config
             mountPath: /etc/sdc/sdc.properties
             subPath: sdc.properties
-      {{- if or .Values.antiAffinity .Values.nodeAffinity }}
+    {{- with .Values.affinity }}
       affinity:
-      {{- end }}
-      {{- if eq .Values.antiAffinity "hard" }}
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: "kubernetes.io/hostname"
-              labelSelector:
-                matchLabels:
-                  app: "{{ template "datacollector.name" . }}"
-                  release: "{{ .Release.Name }}"
-      {{- else if eq .Values.antiAffinity "soft" }}
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  app: "{{ template "datacollector.name" . }}"
-                  release: "{{ .Release.Name }}"
-      {{- end }}
-      {{- with .Values.nodeAffinity }}
-        nodeAffinity:
-        {{ toYaml . | indent 10 }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

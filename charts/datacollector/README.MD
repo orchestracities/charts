@@ -47,6 +47,7 @@ Collector chart and their default values.
 | `persistentVolume.size`           | Persistent Volume size                      | `4Gi`                                               |
 | `persistentVolume.storageClass`   | Persistent Volume Storage Class             | `default` |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
+| `affinity`               | If specified, defines affinity rules  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

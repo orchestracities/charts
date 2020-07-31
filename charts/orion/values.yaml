@@ -8,7 +8,7 @@ image:
   pullPolicy: IfNotPresent
 
 chaos:
-  enabled: true
+  enabled: false
 
 updateStrategy:
   rollingUpdate:
@@ -43,8 +43,10 @@ mongo:
   # The name of the k8s service of the replicaset
   dbhost: mongo-rs-mongodb-replicaset
 
+affinity: {}
+
 ingress:
-  enabled: true
+  enabled: false
   # Used to create an Ingress record.
   hosts:
     - orion.example.com
@@ -56,10 +58,10 @@ ingress:
     # - secretName: chart-example-tls
     #   hosts:
     #     - chart-example.local
-resources:
-  limits:
-    cpu: 500m
-    memory: 256Mi
-  requests:
-    cpu: 200m
-    memory: 128Mi
+resources: {}
+  # limits:
+  #   cpu: 500m
+  #   memory: 256Mi
+  # requests:
+  #   cpu: 200m
+  #   memory: 128Mi

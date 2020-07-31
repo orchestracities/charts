@@ -51,6 +51,7 @@ chart and their default values.
 | `service.providerUrl`             | URL to send in the Context Provider registration requests. Should represent the external IP of the deployed IoT Agent (the IP where the Context Broker will redirect the NGSI requests) | 'http://ul-iot-agent:4041' |
 | `service.deviceRegistrationDuration`          | duration of the registrations as Context Providers, in ISO 8601 standard format. | P1M |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
+| `affinity`               | If specified, defines affinity rules  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
