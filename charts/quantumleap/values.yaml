@@ -8,7 +8,7 @@ image:
   pullPolicy: IfNotPresent
 
 chaos:
-  enabled: true
+  enabled: false
 
 updateStrategy:
   rollingUpdate:
@@ -16,7 +16,7 @@ updateStrategy:
   type: RollingUpdate
 
 autoscaling:
-  enabled: true
+  enabled: false
   minReplicas: 2
   maxReplicas: 6
   targetAverageUtilization: 50
@@ -45,8 +45,10 @@ livenessProbe:
   periodSeconds: 10
   successThreshold: 1
 
+affinity: {}
+
 ingress:
-  enabled: true
+  enabled: false
   # Used to create an Ingress record.
   hosts:
     - quantumleap.example.com
@@ -97,14 +99,13 @@ init:
   resources: {}
 
 geocoding:
-  enabled: true
-  # installed via deploy-redis.sh
+  enabled: false
   redisHost: redis-redis
 
-resources:
-  limits:
-    cpu: 100m
-    memory: 128Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi

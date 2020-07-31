@@ -45,8 +45,8 @@ persistence:
   name: data
   size: "4Gi"
   storageClass: default
-antiAffinity: "soft"
-nodeAffinity: {}
+
+affinity: {}
 
 ingress:
   enabled: false

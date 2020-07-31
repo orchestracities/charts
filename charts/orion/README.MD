@@ -39,6 +39,7 @@ Orion Context Broker chart and their default values.
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `resources`                       | Any resources you wish to assign to the pod | `{}`                                                |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
+| `affinity`               | If specified, defines affinity rules  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

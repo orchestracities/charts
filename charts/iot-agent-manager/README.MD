@@ -38,6 +38,7 @@ chart and their default values.
 | `image.tag`                       | The version of the image to pull            | `1.9.0`                                             |
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
+| `affinity`               | If specified, defines affinity rules  | ``                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
