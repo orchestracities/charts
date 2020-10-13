@@ -66,6 +66,7 @@ database:
   # Endpoint to reach crate database cluster
     host: crate
     defaultdb: default
+    port: 4200
   timescale:
     host: timescale
     port: 5432
