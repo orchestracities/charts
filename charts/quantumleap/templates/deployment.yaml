@@ -54,6 +54,8 @@ spec:
           env:
           - name: CRATE_HOST
             value: {{ .Values.database.crate.host }}
+          - name: CRATE_PORT
+            value: {{ .Values.database.crate.port }}
           - name: CRATE_DEFAULTDB
             value: {{ .Values.database.crate.defaultdb }}
           - name: DEFAULT_LIMIT
