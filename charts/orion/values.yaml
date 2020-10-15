@@ -26,6 +26,8 @@ service:
   type: ClusterIP
   externalPort: 80
   internalPort: 1026
+
+orion:
   multitenancy: false
   # Enable multitenancy support in contextBroker
   writeConcern: 0
@@ -33,6 +35,10 @@ service:
   notificationMode: transient
   httpTimeout: 30000
   disableMetrics: false
+  logLevel: INFO
+  noCache: false
+  logForHumans: false
+  reqMutexPolicy: none
 
 mongo:
   replicaset: true
