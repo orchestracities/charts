@@ -1,0 +1,25 @@
+{{- if and (eq .Values.backupVolume.enabled true) (not .Values.backupVolume.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "datacollector.fullname" . }}-backup
+  labels:
+    app: {{ template "datacollector.name" . }}
+    name: {{ template "datacollector.fullname" . }}-backup
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    annotations:
+    {{- range $key, $value := .Values.backupVolume.annotations }}
+      {{ $key }}: {{ $value }}
+    {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.backupVolume.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.backupVolume.size | quote }}
+{{- if .Values.backupVolume.storageClass }}
+  storageClassName: "{{ .Values.backupVolume.storageClass }}"
+{{- end }}
+{{- end }}
