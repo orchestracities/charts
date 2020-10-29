@@ -6,6 +6,7 @@ terminationGracePeriodSeconds: 10
 configuration:
   memoryHeap: 1024m
   garbageCollector: "-XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
+  sdcHome: /opt/streamsets-datacollector-3.18.1
 
 image:
   repository: streamsets/datacollector

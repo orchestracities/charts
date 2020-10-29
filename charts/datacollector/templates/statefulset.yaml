@@ -76,6 +76,9 @@ spec:
             mountPath: /data
             subPath: data
           - name: data
+            mountPath: {{ .Values.configuration.sdcHome }}/streamsets-libs
+            subPath: stagelibs
+          - name: data
             mountPath: /opt/streamsets-datacollector-user-libs
             subPath: streamsets-datacollector-user-libs
           - name: data
