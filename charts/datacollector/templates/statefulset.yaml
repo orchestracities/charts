@@ -32,17 +32,19 @@ spec:
       initContainers:
        - name: init-datacollector-data
          image: busybox
-         command: ['sh', '-c', 'chown -R 20159 /data  {{ .Values.configuration.sdcHome }}/streamsets-libs /opt/sdc-extras']
+         command: ['sh', '-c', 'chown -R 20159 /data /opt/streamsets-datacollector-user-libs /opt/sdc-extras']
          volumeMounts:
          - name: data
            mountPath: /data
            subPath: data
          - name: data
-           mountPath: {{ .Values.configuration.sdcHome }}/streamsets-libs
-           subPath: stagelibs
+           mountPath: /opt/streamsets-datacollector-user-libs
+           subPath: streamsets-datacollector-user-libs
          - name: data
            mountPath: /opt/sdc-extras
            subPath: sdc-extras
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecretName }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -55,6 +57,8 @@ spec:
           env:
           - name: SDC_JAVA_OPTS
             value: "-Xmx{{ .Values.configuration.memoryHeap}} -Xms{{ .Values.configuration.memoryHeap}}"
+          - name: SDC_JAVA8_OPTS
+            value: "{{.Values.configuration.garbageCollector}}"
           - name: STREAMSETS_LIBRARIES_EXTRA_DIR
             value: "/opt/sdc-extras/"
           livenessProbe:
@@ -72,14 +76,18 @@ spec:
             mountPath: /data
             subPath: data
           - name: data
-            mountPath: {{ .Values.configuration.sdcHome }}/streamsets-libs
-            subPath: stagelibs
+            mountPath: /opt/streamsets-datacollector-user-libs
+            subPath: streamsets-datacollector-user-libs
           - name: data
             mountPath: /opt/sdc-extras
             subPath: sdc-extras
           - name: config
             mountPath: /etc/sdc/sdc.properties
             subPath: sdc.properties
+          {{- if (eq .Values.backupVolume.enabled true) }}
+          - mountPath: /backup
+            name: backup
+          {{- end }}
     {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -97,6 +105,15 @@ spec:
         - name: config
           configMap:
             name: {{ template "datacollector.fullname" . }}
+        {{- if eq .Values.backupVolume.enabled true }}
+        - name: backup
+          persistentVolumeClaim:
+          {{- if .Values.backupVolume.existingClaim }}
+            claimName: {{ .Values.backupVolume.existingClaim }}
+          {{- else }}
+            claimName: {{ template "datacollector.fullname" . }}-backup
+          {{- end }}
+        {{- end }}
   volumeClaimTemplates:
   - metadata:
       name: {{ .Values.persistence.name }}
