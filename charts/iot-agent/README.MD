@@ -53,6 +53,8 @@ chart and their default values.
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 | `affinity`               | If specified, defines affinity rules  | ``                                                  |
 
+Be careful with enabling `multiCore` on k8s running on top of aws nodes.
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
