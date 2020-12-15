@@ -283,7 +283,7 @@ data:
      * flag indicating whether the node server will be executed in multi-core option (true) or it will be a
      * single-thread one (false).
      */
-    config.multiCore = {{ .Values.agent.multiCore | default true }};
+    config.multiCore = {{ .Values.agent.multiCore | default false }};
     config.defaultExpressionLanguage = {{ .Values.agent.defaultExpressionLanguage | quote }};
     module.exports = config;
 
