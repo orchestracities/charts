@@ -72,7 +72,7 @@ agent:
   configRetrieval: false
   # flag indicating whether the node server will be executed in multi-core option (true) or it will be a
   # single-thread one (false).
-  multiCore: true
+  multiCore: false
   # flag indicating whether the incoming measures to the IoTAgent should be processed as per the "attributes" field.
   explicitAttrs: false
   defaultExpressionLanguage: legacy
