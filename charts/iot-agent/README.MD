@@ -53,7 +53,9 @@ chart and their default values.
 | `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
 | `affinity`               | If specified, defines affinity rules  | ``                                                  |
 
-Be careful with enabling `multiCore` on k8s running on top of aws nodes.
+> **NOTE**: Be careful with enabling `multiCore: true` on k8s running on top of aws nodes.
+We witnessed processors constantly spawn and killed, without any instance 
+remaining active.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
