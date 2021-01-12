@@ -12,7 +12,9 @@ spec:
   selector:
     matchLabels:
       app: {{ template "iot-agent.name" . }}
+{{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+{{- end }}
   strategy:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   template:
