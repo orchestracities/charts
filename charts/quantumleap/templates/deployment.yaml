@@ -58,6 +58,8 @@ spec:
             value: {{ .Values.database.crate.host }}
           - name: CRATE_PORT
             value: "{{ .Values.database.crate.port }}"
+          - name: CRATE_WAIT_ACTIVE_SHARDS
+            value: {{ .Values.database.crate.waitActiveShards }}
           - name: DEFAULT_LIMIT
             value: {{ .Values.runtime.defaultLimit | quote }}
           - name: KEEP_RAW_ENTITY
@@ -82,10 +84,22 @@ spec:
           - name: QL_CONFIG
             value: /config/config.yml
 {{- end }}
+          - name: QL_DEFAULT_DB
+            value: {{ .Values.runtime.defaultDb }}
           - name: USE_GEOCODING
             value: {{ .Values.geocoding.enabled | quote }}
           - name: REDIS_HOST
-            value: {{ .Values.geocoding.redisHost }}
+            value: {{ .Values.redis.host }}
+          - name: REDIS_PORT
+            value: {{ .Values.redis.port }}
+          - name: CACHE_GEOCODING
+            value: {{ .Values.cache.geocoding }}
+          - name: CACHE_QUERIES
+            value: {{ .Values.cache.queries }}
+          - name: DEFAULT_CACHE_TTL
+            value: {{ .Values.cache.defaultTtl }}
+          - name: USE_FLASK
+            value: {{ .Values.runtime.useFlask }}
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
