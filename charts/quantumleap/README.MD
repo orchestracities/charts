@@ -9,13 +9,22 @@ This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://gi
 
 #### Note: Quantum Leap version
 
-This chart is **not** fully compatible with Quantum Leap versions earlier
-than `0.7.6`. However, it is still possible to use this chart with an older
-image if liveness and readiness probes are both turned off---default settings.
-Alternatively, to turn the probes on, change the probes path from `/health`
-to `/v2/health`. (This is because of API backward-incompatible changes in
-release `0.7.6`, see PR [#275](https://github.com/smartsdk/ngsi-timeseries-api/pull/275)
-for further details.)
+- There is an issue when using a Quantum Leap version earlier than `0.8.0`.  
+  If you want to change the default backend, you cannot use the
+  `runtime.defaultDb` option.  
+  Instead, you need to change the `config` option
+  to `{ "tenants": {}, "default-backend": "Crate" }`.  
+  Furthermore the options `database.crate.waitActiveShards`, `cache.geocoding`,
+  `cache.queries`, `cache.defaultTtl` and `runtime.useFlask` are not supported
+  prior to `0.8.0`.
+
+- This chart is **not** fully compatible with Quantum Leap versions earlier
+  than `0.7.6`. However, it is still possible to use this chart with an older
+  image if liveness and readiness probes are both turned off---default settings.
+  Alternatively, to turn the probes on, change the probes path from `/health`
+  to `/v2/health`. (This is because of API backward-incompatible changes in
+  release `0.7.6`, see PR [#275](https://github.com/smartsdk/ngsi-timeseries-api/pull/275)
+  for further details.)
 
 ## Todo
 
