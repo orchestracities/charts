@@ -5,7 +5,7 @@ This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://gi
 ## Prerequisites Details
 
 - Kubernetes 1.9+
-- Quantum Leap >= 0.7.6
+- Quantum Leap >= 0.8.0
 
 #### Note: Quantum Leap version
 
