@@ -6,7 +6,7 @@ app: crate
 
 image:
   name: crate
-  tag: 4.0.12
+  tag: 4.4.1
   pullPolicy: IfNotPresent
 
 service:
