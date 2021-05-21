@@ -36,9 +36,23 @@ spec:
           - name: PG_HOST
             value: {{ .Values.database.timescale.host }}
           - name: PG_PASS
+            {{- if .Values.init.passwordSecret }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.init.passwordSecret }}
+                key: password
+            {{- else }}
             value: {{ .Values.init.password }}
+            {{- end }}
           - name: QL_DB_PASS
+            {{- if .Values.database.timescale.passwordSecret }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.database.timescale.passwordSecret }}
+                key: password
+            {{- else }}
             value: {{ .Values.database.timescale.password }}
+            {{- end }}
           - name: QL_DB_INIT_DIR
             value: "/init"
           resources:
@@ -75,7 +89,14 @@ spec:
           - name: POSTGRES_DB_USER
             value: {{ .Values.database.timescale.user }}
           - name: POSTGRES_DB_PASS
+            {{- if .Values.database.timescale.passwordSecret }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.database.timescale.passwordSecret }}
+                key: password
+            {{- else }}
             value: {{ .Values.database.timescale.password }}
+            {{- end }}
 {{- if .Values.database.timescale.ssl }}
           - name: POSTGRES_USE_SSL
             value: t
