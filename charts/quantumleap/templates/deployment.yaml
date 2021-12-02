@@ -58,12 +58,18 @@ spec:
             value: {{ .Values.database.crate.host }}
           - name: CRATE_PORT
             value: "{{ .Values.database.crate.port }}"
+          - name: CRATE_BACKOFF_FACTOR
+            value: {{ .Values.database.crate.backoffFactor | quote }}
           - name: CRATE_WAIT_ACTIVE_SHARDS
             value: {{ .Values.database.crate.waitActiveShards }}
           - name: DEFAULT_LIMIT
             value: {{ .Values.runtime.defaultLimit | quote }}
           - name: KEEP_RAW_ENTITY
             value: {{ .Values.runtime.keepRawEntity | quote }}
+          {{- if gt .Values.runtime.insertMaxSize 0.0 }}
+          - name: INSERT_MAX_SIZE
+            value: {{ .Values.runtime.insertMaxSize | quote }}
+          {{- end }}
           - name: LOGLEVEL
             value: {{ .Values.runtime.logLevel }}
           - name: POSTGRES_HOST
@@ -91,15 +97,33 @@ spec:
           - name: REDIS_HOST
             value: {{ .Values.redis.host }}
           - name: REDIS_PORT
-            value: {{ .Values.redis.port }}
+            value: {{ .Values.redis.port | quote }}
           - name: CACHE_GEOCODING
             value: {{ .Values.cache.geocoding }}
           - name: CACHE_QUERIES
             value: {{ .Values.cache.queries }}
           - name: DEFAULT_CACHE_TTL
-            value: {{ .Values.cache.defaultTtl }}
+            value: {{ .Values.cache.defaultTtl | quote }}
+          - name: WQ_OFFLOAD_WORK
+            value: {{ .Values.cache.wq.offloadWork }}
+          - name: WQ_RECOVER_FROM_ENQUEUEING_FAILURE
+            value: {{ .Values.cache.wq.recoverFromEnqueueingFailure }}
+          - name: WQ_MAX_RETRIES
+            value: {{ .Values.cache.wq.maxRetries | quote }}
+          - name: WQ_FAILURE_TTL
+            value: {{ .Values.cache.wq.failureTtl | quote }}
+          - name: WQ_SUCCESS_TTL
+            value: {{ .Values.cache.wq.successTtl | quote }}
+          {{- if gt .Values.cache.wq.workers 0.0 }}
+          - name: WQ_WORKERS
+            value: {{ .Values.cache.wq.workers | quote }}
+          {{- end }}
           - name: USE_FLASK
             value: {{ .Values.runtime.useFlask }}
+          - name: WORKERS
+            value: {{ .Values.runtime.workers | quote }}
+          - name: THREADS
+            value: {{ .Values.runtime.threads | quote }}
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:

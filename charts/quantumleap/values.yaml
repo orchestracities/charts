@@ -55,7 +55,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  tls: {}
+  tls:
+    {}
     # Secrets must be manually created in the namespace.
     # - secretName: chart-example-tls
     #   hosts:
@@ -63,10 +64,11 @@ ingress:
 
 database:
   crate:
-  # Endpoint to reach crate database cluster
+    # Endpoint to reach crate database cluster
     host: crate
     port: 4200
     waitActiveShards: 1
+    backoffFactor: 0.0
   timescale:
     host: timescale
     port: 5432
@@ -79,10 +81,14 @@ runtime:
   defaultLimit: 10000
   defaultDb: crate
   keepRawEntity: false
+  insertMaxSize: 0 # 0 means disabled
   logLevel: "INFO"
   useFlask: false
+  workers: 2
+  threads: 1
 
-config: {}
+config:
+  {}
   # example valid configuration
   # tenants:
   #   t1:
@@ -112,8 +118,16 @@ cache:
   queries: false
   geocoding: false
   defaultTtl: 60
+  wq:
+    offloadWork: False
+    recoverFromEnqueueingFailure: False
+    maxRetries: 0
+    failureTtl: 604800
+    successTtl: 86400
+    workers: 0 # 0 means disabled
 
-resources: {}
+resources:
+  {}
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
