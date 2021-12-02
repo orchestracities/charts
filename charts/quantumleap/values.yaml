@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 replicaCount: 2
 image:
-  repository: smartsdk/quantumleap
+  repository: orchestracities/quantumleap
   tag: 0.8.0
   pullPolicy: IfNotPresent
 
@@ -102,7 +102,7 @@ config:
 init:
   password: password
   image:
-    repository: smartsdk/quantumleap-pg-init
+    repository: orchestracities/quantumleap-pg-init
     tag: latest
     pullPolicy: IfNotPresent
   resources: {}

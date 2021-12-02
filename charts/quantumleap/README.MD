@@ -1,6 +1,6 @@
 # Quantum Leap Helm Chart
 
-This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://github.com/smartsdk/ngsi-timeseries-api) cluster using Deployment.
+This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://github.com/orchestracities/ngsi-timeseries-api) cluster using Deployment.
 
 ## Prerequisites Details
 
@@ -52,11 +52,10 @@ $ helm install --name my-release oc/quantumleap
 
 The following table lists the configurable parameters of the Quantum Leap chart and their default values.
 
-| `image.repository`                     | The image to pull                           | `smartsdk/quantumleap`                      |
-|                                        | CrateDB)                                    | ` repository: smartsdk/quantumleap-pg-init` |
 | Parameter                              | Description                                 | Default                                            |
 | -------------------------------------- | ------------------------------------------- | -------------------------------------------------- |
 | `replicaCount`                         | Amount of pods to spawn                     | `2`                                                |
+| `image.repository`                     | The image to pull                           | `orchestracities/quantumleap`                      |
 | `image.tag`                            | The version of the image to pull            | `0.8.2`                                            |
 | `image.pullPolicy`                     | The pull policy                             | `IfNotPresent`                                     |
 | `chaos.enabled`                        |                                             | `false`                                            |
@@ -90,6 +89,7 @@ The following table lists the configurable parameters of the Quantum Leap chart 
 | `resources`                            | Any resources you wish to assign to the pod | `{}`                                               |
 | `init`                                 | Init section enable init image to configure | `password: password`                               |
 |                                        | TimescaleDB (option not required using only | `image:`                                           |
+|                                        | CrateDB)                                    | ` repository: orchestracities/quantumleap-pg-init` |
 |                                        |                                             | ` tag: latest`                                     |
 |                                        |                                             | ` pullPolicy: IfNotPresent`                        |
 |                                        |                                             | `resources: {}`                                    |

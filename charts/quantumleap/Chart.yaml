@@ -3,7 +3,7 @@ description: A Helm chart for QuantumLeap
 name: quantumleap
 version: 0.1.19
 sources:
-- https://github.com/smartsdk/ngsi-timeseries-api
+  - https://github.com/orchestracities/ngsi-timeseries-api
 maintainers:
-- name: taliaga
-  email: tomas.aliaga@martel-innovate.com
+  - name: taliaga
+    email: tomas.aliaga@martel-innovate.com
