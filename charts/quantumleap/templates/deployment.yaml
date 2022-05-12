@@ -23,6 +23,9 @@ spec:
       labels:
         app: {{ template "quantumleap.name" . }}
         release: {{ .Release.Name }}
+{{- with .Values.podLabels }}
+{{ toYaml . | indent 8 }}
+{{- end }}
     spec:
     {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
