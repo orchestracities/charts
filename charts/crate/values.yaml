@@ -20,7 +20,6 @@ service:
   postgresPort: 5432
 
 
-
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 nodeSelector: {}

@@ -8,13 +8,13 @@ image:
   pullPolicy: Always
 
 # Type Configuration
-# 
+#
 # The IoT Agent can be configured to expect certain kinds of devices, with
 # preconfigured sets of attributes, service information, security information
 # and other attributes. The types attribute of the configuration is a map, where
 # the key is the type name and the value is an object containing all the type
 # information. Each type can has the following information configured:
-# 
+#
 # - service: service of the devices of this type.
 # - subservice: subservice of the devices of this type.
 # - active: list of active attributes of the device. For each attribute,
@@ -26,9 +26,9 @@ image:
 # - internalAttributes: optional section with free format, to allow specific
 #        IoT Agents to store information along with the devices in the
 #        Device Registry.
-# - staticAttributes: this array of attributes will be added to every entity 
+# - staticAttributes: this array of attributes will be added to every entity
 #        of this type 'as is'.
-# - trust: trust token to use for secured access to the Context Broker for 
+# - trust: trust token to use for secured access to the Context Broker for
 #        this type of devices (optional; only needed for secured scenarios).
 # - cbHost: Context Broker host url. This option can be used to override
 #        the global CB configuration for specific types of devices.
@@ -120,7 +120,7 @@ mqtt:
   retryTime: 5
   keepalive: 0
   avoidLeadingSlash: false
-  # ssl configuration 
+  # ssl configuration
   # ssl:
   #  rejectUnauthorized: true
   #  ca: <path_to_ca>
@@ -177,8 +177,8 @@ ingress:
   hosts:
     - iot-agent-ul.example.com
   annotations:
-    #kubernetes.io/ingress.class: nginx
-    #kubernetes.io/tls-acme: "true"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   tls: {}
     # Secrets must be manually created in the namespace.
     # - secretName: chart-example-tls
