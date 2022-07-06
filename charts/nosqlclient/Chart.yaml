@@ -3,3 +3,7 @@ appVersion: "2.2.0"
 description: A Helm chart to deploy nosql client
 name: nosqlclient
 version: 0.1.3
+sources:
+- https://github.com/nosqlclient/nosqlclient
+maintainers:
+- name: chicco785
