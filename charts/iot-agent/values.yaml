@@ -138,7 +138,7 @@ http:
 # in the object. The IoTAgent URL that will be reported will be the providedUrl
 # (described below) with the added agentPath
 iotManager:
-  enabled: true
+  enabled: false
   host: iot-agent-manager-iot-agent-manager
   port: 8082
   path: /iot/protocols
@@ -155,7 +155,7 @@ updateStrategy:
   type: RollingUpdate
 
 autoscaling:
-  enabled: true
+  enabled: false
   minReplicas: 3
   maxReplicas: 12
   targetAverageUtilization: 50
