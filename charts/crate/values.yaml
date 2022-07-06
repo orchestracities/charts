@@ -66,8 +66,8 @@ resources:
   #   memory: 5Gi
 
 persistentVolume:
-  enabled: true
-  storageClass: retain
+  enabled: false
+  storageClass: default
   accessModes:
     - ReadWriteOnce
   size: 20Gi  # Per instance

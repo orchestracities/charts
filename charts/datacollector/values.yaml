@@ -520,7 +520,7 @@ service:
   dataPath: /data
   annotations: {}
 persistence:
-  enabled: true
+  enabled: false
   accessMode: ReadWriteOnce
   name: data
   size: "4Gi"
@@ -529,7 +529,7 @@ backupVolume:
   # even if set to true, it'll be ignored if persistentVolume.enabled is false,
   # since in that case the container gets an emptyDir volume for database file
   # storage.
-  enabled: true
+  enabled: false
   # instead of creating a new claim, reuse an exsting one (useful to migrate
   # data from a cluster to another)
   # existingClaim: "existingClaim"
