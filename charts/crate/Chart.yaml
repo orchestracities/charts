@@ -7,5 +7,7 @@ sources:
 - https://github.com/crate/crate
 - https://github.com/crate/docker-crate
 maintainers:
+- name: chicco785
+- name: c0c0n3
 - name: undefinedhashtag
   email: d.sarah710@yahoo.com
