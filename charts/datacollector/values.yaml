@@ -82,7 +82,7 @@ properties: |+
 
   # Path to keystore file on the worker node. This should always be an absolute location
   https.cluster.keystore.path=/opt/security/jks/sdc-keystore.jks
-                              
+
   # Password for keystore file on the worker node
   https.cluster.keystore.password=${file("/opt/security/jks/keystore-password.txt")}
 
@@ -203,7 +203,7 @@ properties: |+
   ui.refresh.interval.ms=2000
   ui.jvmMetrics.refresh.interval.ms=4000
 
-  # If set to true, the Data Collector UI will use WebSocket to fetch pipeline status/metrics/alerts. Otherwise, the UI 
+  # If set to true, the Data Collector UI will use WebSocket to fetch pipeline status/metrics/alerts. Otherwise, the UI
   # will poll every few seconds to get the pipeline status/metrics/alerts.
   ui.enable.webSocket=true
 
@@ -275,12 +275,12 @@ properties: |+
   # The following config properties are for particular stages, please refer to their documentation for further details.
   #
   # Hadoop components
-  # Uncomment to enforce Hadoop components in Data Collector to always impersonate current user rather then use 
+  # Uncomment to enforce Hadoop components in Data Collector to always impersonate current user rather then use
   # the impersonation configuration option. Current user is a user who either started the pipeline or run preview.
   #stage.conf_hadoop.always.impersonate.current.user=true
   # Uncomment to enforce impersonated user name to be lower cased.
   #stage.conf_hadoop.always.lowercase.user=true
-  #                            
+  #
 
   # Impersonate current user to connect to Hive
   stage.conf_com.streamsets.pipeline.stage.hive.impersonate.current.user=false
@@ -520,7 +520,7 @@ service:
   dataPath: /data
   annotations: {}
 persistence:
-  enabled: true
+  enabled: false
   accessMode: ReadWriteOnce
   name: data
   size: "4Gi"
@@ -529,7 +529,7 @@ backupVolume:
   # even if set to true, it'll be ignored if persistentVolume.enabled is false,
   # since in that case the container gets an emptyDir volume for database file
   # storage.
-  enabled: true
+  enabled: false
   # instead of creating a new claim, reuse an exsting one (useful to migrate
   # data from a cluster to another)
   # existingClaim: "existingClaim"
