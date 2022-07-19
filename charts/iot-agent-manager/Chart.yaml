@@ -2,3 +2,8 @@ apiVersion: v1
 description: A Helm chart for IoT Agent Manager
 name: iot-agent-manager
 version: 0.1.8
+sources:
+- https://github.com/telefonicaid/iotagent-manager
+maintainers:
+- name: chicco785
+- name: c0c0n3
