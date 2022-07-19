@@ -20,7 +20,6 @@ service:
   postgresPort: 5432
 
 
-
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 nodeSelector: {}
@@ -43,11 +42,11 @@ crate:
   # https://crate.io/docs/crate/reference/en/latest/config/environment.html#use-max-50-of-available-ram
   createHeapSize: 3g
   recoverAfterTime: 5m
-  replicas: 3
-  recoverAfterNodes: 2
+  replicas: 1
+  recoverAfterNodes: 1
   # minimumMasterNodes is only required for Crate versions prior to 4 and will
   # be ignored when using a 4.x image.
-  minimumMasterNodes: 2
+  minimumMasterNodes: 1
 
 http:
   cors:
@@ -67,8 +66,8 @@ resources:
   #   memory: 5Gi
 
 persistentVolume:
-  enabled: true
-  storageClass: retain
+  enabled: false
+  storageClass: default
   accessModes:
     - ReadWriteOnce
   size: 20Gi  # Per instance
