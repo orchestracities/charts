@@ -5,7 +5,5 @@ version: 0.1.19
 sources:
   - https://github.com/orchestracities/ngsi-timeseries-api
 maintainers:
-  - name: taliaga
-    email: tomas.aliaga@martel-innovate.com
-- name: chicco785
-- name: c0c0n3
+  - name: chicco785
+  - name: c0c0n3
