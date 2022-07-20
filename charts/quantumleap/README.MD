@@ -5,26 +5,39 @@ This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://gi
 ## Prerequisites Details
 
 - Kubernetes 1.9+
-- Quantum Leap >= 0.8.0
+- Quantum Leap >= 0.8.3
 
-#### Note: Quantum Leap version
+#### Quantum Leap version compatibility
+This chart is **not** fully compatible with Quantum Leap versions
+earlier than `0.8.3`. However, it is still possible to use this chart
+with an older image after taking into account the considerations
+below.
 
-- There is an issue when using a Quantum Leap version earlier than `0.8.0`.  
-  If you want to change the default backend, you cannot use the
-  `runtime.defaultDb` option.  
-  Instead, you need to change the `config` option
-  to `{ "tenants": {}, "default-backend": "Crate" }`.  
-  Furthermore the options `database.crate.waitActiveShards`, `cache.geocoding`,
-  `cache.queries`, `cache.defaultTtl` and `runtime.useFlask` are not supported
-  prior to `0.8.0`.
+Some settings in this chart are only available for certain Quantum
+Leap version ranges. Specifying a value for any of those settings
+will have no effect if the Quantum Leap image version does **not**
+support that setting.
 
-- This chart is **not** fully compatible with Quantum Leap versions earlier
-  than `0.7.6`. However, it is still possible to use this chart with an older
-  image if liveness and readiness probes are both turned off---default settings.
-  Alternatively, to turn the probes on, change the probes path from `/health`
-  to `/v2/health`. (This is because of API backward-incompatible changes in
-  release `0.7.6`, see PR [#275](https://github.com/smartsdk/ngsi-timeseries-api/pull/275)
-  for further details.)
+* `database.crate.backoffFactor`. Availability: Quantum Leap `>= 0.8.3`
+* `database.crate.waitActiveShards`. Availability: Quantum Leap `>= 0.8.2`
+* `cache.wq.*`. Availability: Quantum Leap `>= 0.8.2`
+* `runtime.insertMaxSize`. Availability: Quantum Leap `>= 0.8.1`
+* `cache.geocoding`, `cache.queries`, `cache.defaultTtl`, `runtime.useFlask`.
+  Availability: Quantum Leap `>= 0.8.0`
+
+Also, there is an issue when using a Quantum Leap version earlier
+than `0.8.0`. If you want to change the default backend, you cannot
+use the `runtime.defaultDb` option. Instead, you need to change the
+`config` option to `{ "tenants": {}, "default-backend": "Crate" }`.
+
+Finally, the liveness and readiness probes of this chart are **not**
+compatible with Quantum Leap versions earlier than `0.7.6`. However,
+it is still possible to use this chart with an older image if liveness
+and readiness probes are both turned off---default settings.
+Alternatively, to turn the probes on, change the probes path from
+`/health` to `/v2/health`. (This is because of API backward-incompatible
+changes in release `0.7.6`, for further details see PR
+[#275](https://github.com/smartsdk/ngsi-timeseries-api/pull/275).)
 
 ## Todo
 
