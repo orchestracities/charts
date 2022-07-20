@@ -75,6 +75,8 @@ database:
     name: quantumleap
     user: quantumleap
     password: quantumleap
+    # Secret must be set manually in the namespace and overrides the above set password if provided. Key has to be "password".
+    # passwordSecret: quantumleap-pg-timescale
     ssl: true
 
 runtime:
@@ -101,6 +103,8 @@ config:
 
 init:
   password: password
+  # Secret must be set manually in the namespace and overrides the above set password if provided. Key has to be "password".
+  # passwordSecret: quantumleap-pg-init
   image:
     repository: orchestracities/quantumleap-pg-init
     tag: latest
