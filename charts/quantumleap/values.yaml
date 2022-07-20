@@ -83,7 +83,7 @@ runtime:
   defaultLimit: 10000
   defaultDb: crate
   keepRawEntity: false
-  insertMaxSize: 0 # 0 means disabled
+  insertMaxSize: 0  # 0 means disabled
   logLevel: "INFO"
   useFlask: false
   workers: 2
@@ -123,12 +123,12 @@ cache:
   geocoding: false
   defaultTtl: 60
   wq:
-    offloadWork: False
-    recoverFromEnqueueingFailure: False
+    offloadWork: false
+    recoverFromEnqueueingFailure: false
     maxRetries: 0
     failureTtl: 604800
     successTtl: 86400
-    workers: 0 # 0 means disabled
+    workers: 0  # 0 means disabled
 
 resources:
   {}
