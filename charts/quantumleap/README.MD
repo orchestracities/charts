@@ -8,6 +8,7 @@ This directory contains a Kubernetes chart to deploy a [Quantum Leap](https://gi
 - Quantum Leap >= 0.8.3
 
 #### Quantum Leap version compatibility
+
 This chart is **not** fully compatible with Quantum Leap versions
 earlier than `0.8.3`. However, it is still possible to use this chart
 with an older image after taking into account the considerations
