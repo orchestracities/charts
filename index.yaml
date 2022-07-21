@@ -2,6 +2,23 @@ apiVersion: v1
 entries:
   crate:
   - apiVersion: v1
+    created: "2022-07-21T10:17:46.812083883Z"
+    description: CrateDB chart
+    digest: 84243025f47ca12b2b34a487d4d40e894b01a92fbba272496d013497d4b57b3a
+    icon: https://crate.io/wp-content/themes/webflow/images/logo-crate.png
+    maintainers:
+    - name: chicco785
+    - name: c0c0n3
+    - email: d.sarah710@yahoo.com
+      name: undefinedhashtag
+    name: crate
+    sources:
+    - https://github.com/crate/crate
+    - https://github.com/crate/docker-crate
+    urls:
+    - https://github.com/orchestracities/charts/releases/download/crate-0.1.15/crate-0.1.15.tgz
+    version: 0.1.15
+  - apiVersion: v1
     created: "2021-02-04T12:34:15.186524949Z"
     description: CrateDB chart
     digest: b3d57545c8724df440e30ff2c42fdb70bff6a2b8a380383819d63c820ef88d98
