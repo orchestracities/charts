@@ -42,7 +42,7 @@ The following table lists the configurable parameters of the cratedb chart and t
 |-----------------------------------|---------------------------------------------|-----------------------------------------------------|
 | `replicaCount`                    | Amount of pods to spawn                     | `3`                                                 |
 | `image.name`                      | The image to pull                           | `crate`                                             |
-| `image.tag`                       | The version of the image to pull            | `4.2.1`                                             |
+| `image.tag`                       | The version of the image to pull            | `4.6.7`                                             |
 | `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
 | `resources`                       | Any resources you wish to assign to the pod | `{}`                                                |
 | `persistentVolume.accessModes`    | Persistent Volume access modes              | `[ReadWriteOnce]`                                   |
