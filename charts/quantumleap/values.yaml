@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 2
 image:
-  repository: smartsdk/quantumleap
-  tag: 0.7.6
+  repository: orchestracities/quantumleap
+  tag: 0.8.3
   pullPolicy: IfNotPresent
 
 chaos:
@@ -55,7 +55,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  tls: {}
+  tls:
+    {}
     # Secrets must be manually created in the namespace.
     # - secretName: chart-example-tls
     #   hosts:
@@ -63,10 +64,11 @@ ingress:
 
 database:
   crate:
-  # Endpoint to reach crate database cluster
+    # Endpoint to reach crate database cluster
     host: crate
-    defaultdb: default
     port: 4200
+    waitActiveShards: 1
+    backoffFactor: 0.0
   timescale:
     host: timescale
     port: 5432
@@ -79,35 +81,58 @@ database:
 
 runtime:
   defaultLimit: 10000
+  defaultDb: crate
   keepRawEntity: false
+  insertMaxSize: 0  # 0 means disabled
   logLevel: "INFO"
+  useFlask: false
+  workers: 2
+  threads: 1
 
 config:
-  tenants: {}
-# example valid configuration
-#    t1:
-#        backend: "Timescale"
-#    t2:
-#        backend: "Crate"
-#    t3:
-#        backend: "Timescale"
-  default-backend: "Crate"
+  {}
+  # example valid configuration
+  # tenants:
+  #   t1:
+  #       backend: "Timescale"
+  #   t2:
+  #       backend: "Crate"
+  #   t3:
+  #       backend: "Timescale"
+  # default-backend: "Crate"
 
 init:
+  enabled: false
   password: password
   # Secret must be set manually in the namespace and overrides the above set password if provided. Key has to be "password".
   # passwordSecret: quantumleap-pg-init
   image:
-    repository: smartsdk/quantumleap-pg-init
+    repository: orchestracities/quantumleap-pg-init
     tag: latest
     pullPolicy: IfNotPresent
   resources: {}
 
 geocoding:
   enabled: false
-  redisHost: redis-redis
 
-resources: {}
+redis:
+  host: redis-redis
+  port: 6379
+
+cache:
+  queries: false
+  geocoding: false
+  defaultTtl: 60
+  wq:
+    offloadWork: false
+    recoverFromEnqueueingFailure: false
+    maxRetries: 0
+    failureTtl: 604800
+    successTtl: 86400
+    workers: 0  # 0 means disabled
+
+resources:
+  {}
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
