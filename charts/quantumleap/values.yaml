@@ -102,6 +102,7 @@ config:
   # default-backend: "Crate"
 
 init:
+  enabled: false
   password: password
   # Secret must be set manually in the namespace and overrides the above set password if provided. Key has to be "password".
   # passwordSecret: quantumleap-pg-init
