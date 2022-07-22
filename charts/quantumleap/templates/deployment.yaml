@@ -27,7 +27,7 @@ spec:
     {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
     {{- end }}
-    {{- if .Values.init }}
+    {{- if .Values.init.enabled }}
       initContainers:
         - name: init-postgresql
           image: "{{ .Values.init.image.repository }}:{{ .Values.init.image.tag }}"
@@ -65,6 +65,13 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if gt .Values.cache.wq.workers 0.0 }}
+          command:
+            - supervisord
+            - -n
+            - -c
+            - ./wq/supervisord.conf
+          {{- end }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           env:
@@ -75,7 +82,7 @@ spec:
           - name: CRATE_BACKOFF_FACTOR
             value: {{ .Values.database.crate.backoffFactor | quote }}
           - name: CRATE_WAIT_ACTIVE_SHARDS
-            value: {{ .Values.database.crate.waitActiveShards }}
+            value: {{ .Values.database.crate.waitActiveShards | quote }}
           - name: DEFAULT_LIMIT
             value: {{ .Values.runtime.defaultLimit | quote }}
           - name: KEEP_RAW_ENTITY
@@ -120,15 +127,15 @@ spec:
           - name: REDIS_PORT
             value: {{ .Values.redis.port | quote }}
           - name: CACHE_GEOCODING
-            value: {{ .Values.cache.geocoding }}
+            value: {{ .Values.cache.geocoding | quote }}
           - name: CACHE_QUERIES
-            value: {{ .Values.cache.queries }}
+            value: {{ .Values.cache.queries | quote }}
           - name: DEFAULT_CACHE_TTL
             value: {{ .Values.cache.defaultTtl | quote }}
           - name: WQ_OFFLOAD_WORK
-            value: {{ .Values.cache.wq.offloadWork }}
+            value: {{ .Values.cache.wq.offloadWork | quote }}
           - name: WQ_RECOVER_FROM_ENQUEUEING_FAILURE
-            value: {{ .Values.cache.wq.recoverFromEnqueueingFailure }}
+            value: {{ .Values.cache.wq.recoverFromEnqueueingFailure | quote }}
           - name: WQ_MAX_RETRIES
             value: {{ .Values.cache.wq.maxRetries | quote }}
           - name: WQ_FAILURE_TTL
@@ -140,7 +147,7 @@ spec:
             value: {{ .Values.cache.wq.workers | quote }}
           {{- end }}
           - name: USE_FLASK
-            value: {{ .Values.runtime.useFlask }}
+            value: {{ .Values.runtime.useFlask | quote }}
           - name: WORKERS
             value: {{ .Values.runtime.workers | quote }}
           - name: THREADS
@@ -189,7 +196,7 @@ spec:
           configMap:
             name: {{ template "quantumleap.fullname" . }}
       {{- end }}
-      {{- if .Values.init }}
+      {{- if .Values.init.enabled }}
         - name: init
           emptyDir: {}
       {{- end }}

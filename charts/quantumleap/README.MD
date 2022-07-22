@@ -52,12 +52,51 @@ This chart will do the following:
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+This chart deploys Quantum Leap to a Kubernetes cluster. The standalone
+deployment creates an HA, scalable replica set of Quantum Leap pods.
+Additionally, this chart can also be used to deploy Quantum Leap in
+work queue mode---only available for Quantum Leap versions `>= 0.8.2`.
+
+To be able to deploy Quantum Leap to your Kubernetes cluster through
+this chart, you first have to add the chart repository to your Helm
+installation as shown below.
 
 ```console
 $ helm repo add oc https://orchestracities.github.io/charts/
 $ helm dependency update
+```
+
+Then to perform a standalone deployment, install this chart with a
+release name of your choice, e.g. `my-release` as in the example
+below. (Note you can also override default chart settings through
+a "values" file as explained in the next section.)
+
+```console
 $ helm install --name my-release oc/quantumleap
+```
+
+To deploy Quantum Leap in work queue mode, you'll have to install
+this chart twice. One installation is for the Quantum Leap frontend
+whereas the other for the work queue backend. To install the frontend,
+you have to prepare a "values" file (see next section for the details)
+with `cache.wq.offloadWork` set to `true`. Then you need to specify
+a unique release name to identify the frontend installation as in
+the example below.
+
+```console
+$ helm install quantumleap --name fe -f fe.values.yaml
+```
+
+After installing the frontend, you need to install the work queue
+backend. Similarly to the frontend, you have to prepare a "values"
+file to configure the backend deployment. This is done by setting
+`cache.wq.workers` to a positive integer, the number of work queue
+processes to spawn in a single pod. Then install again using this
+"values" file and taking care of specifying a unique release name
+to identify the backend installation as in the example below.
+
+```console
+$ helm install quantumleap --name wq -f wq.values.yaml
 ```
 
 ## Connecting to QuantumLeap
