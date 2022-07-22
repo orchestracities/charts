@@ -68,8 +68,8 @@ spec:
               fieldPath: metadata.name
         {{- if .Values.livenessProbe.enabled }}
         livenessProbe:
-          exec:
-            command: ["sh", "-c", "curl -I http://localhost:4200 2&>/dev/null | grep '\"200\" : true'"]
+          httpGet:
+            port: {{ .Values.service.adminName }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
@@ -79,7 +79,7 @@ spec:
         {{- if .Values.readinessProbe.enabled }}
         readinessProbe:
           exec:
-            command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
+            command: ["sh", "-c", "curl -s http://localhost:4200 | grep -q '\"ok\" : true,'"]
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
