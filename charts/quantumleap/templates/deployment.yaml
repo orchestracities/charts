@@ -14,15 +14,25 @@ spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   strategy:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   template:
     metadata:
       annotations:
         chaos.alpha.kubernetes.io/enabled: "{{ .Values.chaos.enabled }}"
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- if .Values.additionalAnnotations }}
+        {{- with .Values.additionalAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
       labels:
         app: {{ template "quantumleap.name" . }}
         release: {{ .Release.Name }}
+        {{- with .Values.additionalLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
     {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
@@ -190,6 +200,10 @@ spec:
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
       {{- if .Values.config }}
         - name: config
