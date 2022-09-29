@@ -5,7 +5,7 @@ This directory contains a Kubernetes chart to deploy a
 MongoDB.
 
 ## Prerequisites Details
-* Kubernetes 1.14+
+* Kubernetes 1.16+
 
 ## Chart Details
 This chart will do the following:

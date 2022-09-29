@@ -5,7 +5,7 @@ This directory contains a Kubernetes chart to deploy an
 cluster using Deployment.
 
 ## Prerequisites Details
-* Kubernetes 1.14+
+* Kubernetes 1.16+
 
 ## Todo
 * Finalise README

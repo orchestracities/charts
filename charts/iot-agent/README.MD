@@ -8,7 +8,7 @@ Deployment. IoT Agents supported are:
 * [LORAWAN](https://github.com/Atos-Research-and-Innovation/IoTagent-LoRaWAN)
 
 ## Prerequisites Details
-* Kubernetes 1.14+
+* Kubernetes 1.16+
 
 ## Todo
 * Finalise README

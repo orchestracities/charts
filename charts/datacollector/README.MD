@@ -3,7 +3,7 @@
 This directory contains a Kubernetes chart to deploy a [StreamSets Data Collector](https://github.com/streamsets/datacollector) cluster using a StatefulSet.
 
 ## Prerequisites Details
-* Kubernetes 1.14+
+* Kubernetes 1.16+
 * PV support on the underlying infrastructure
 
 ## StatefulSet Details
