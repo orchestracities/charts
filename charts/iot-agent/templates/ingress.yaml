@@ -2,7 +2,7 @@
 {{- $serviceName := include "iot-agent.fullname" . -}}
 {{- $httpPort := .Values.service.dataExternalPort -}}
 {{- $northPort := .Values.service.configExternalPort -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "iot-agent.fullname" . }}
