@@ -3,7 +3,7 @@
 This directory contains a Kubernetes chart to deploy a [Orion Context Broker](https://github.com/telefonicaid/fiware-orion) cluster using Deployment.
 
 ## Prerequisites Details
-* Kubernetes 1.14+
+* Kubernetes 1.16+
 
 ## Todo
 * 
