@@ -9,6 +9,24 @@ image:
   pullPolicy: IfNotPresent
   tag: "0.6.0"
 
+env:
+- name: DB_TYPE
+  value: postgres
+- name: DB_HOST
+  value: acid-oc-cluster
+- name: DB_NAME
+  value: anubis
+- name: DB_USER
+  valueFrom:
+    secretKeyRef:
+      name: anubis.acid-oc-cluster.credentials.postgresql.acid.zalan.do
+      key: username
+- name: DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: anubis.acid-oc-cluster.credentials.postgresql.acid.zalan.do
+      key: password
+
 chaos:
   enabled: false
 

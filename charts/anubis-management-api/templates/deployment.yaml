@@ -34,6 +34,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+          env:
+{{ toYaml .Values.env | indent 12 }}
           livenessProbe:
             httpGet:
               path: /ping
