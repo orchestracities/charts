@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: orchestracities/anubis-management-api
   pullPolicy: IfNotPresent
-  tag: "0.6.0"
+  tag: "0.7.0"
 
 env:
 - name: DB_TYPE
