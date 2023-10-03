@@ -1,6 +1,14 @@
 # Default values for quantumleap.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+additionalLabels:
+  fiware/platform: fiware
+  fiware/component: core
+  fiware/subcomponent: historical
+  fiware/product: quantumleap
+# -- additional annotations for the deployment, if required
+additionalAnnotations: {}
+
 replicaCount: 2
 image:
   repository: orchestracities/quantumleap

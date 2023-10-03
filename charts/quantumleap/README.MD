@@ -141,6 +141,7 @@ The following table lists the configurable parameters of the Quantum Leap chart 
 | `ingress.tls`                          |                                             | `{}`                                               |
 | `resources`                            | Any resources you wish to assign to the pod | `{}`                                               |
 | `init`                                 | Init section enable init image to configure | `password: password`                               |
+|                                   | the secret used to store db password    | `  passwordSecret: secret`                           |
 |                                        | TimescaleDB (option not required using only | `image:`                                           |
 |                                        | CrateDB)                                    | ` repository: orchestracities/quantumleap-pg-init` |
 |                                        |                                             | ` tag: latest`                                     |
@@ -157,6 +158,7 @@ The following table lists the configurable parameters of the Quantum Leap chart 
 |                                        |                                             | ` name: quantumleap`                               |
 |                                        |                                             | ` user: quantumleap`                               |
 |                                        |                                             | ` password: quantumleap`                           |
+|                                   | the secret used to store db password    | `  passwordSecret: secret`                           |
 |                                        |                                             | ` ssl: true`                                       |
 | `config`                               | Section to configure db support per tenant  | `{}`                                               |
 | `runtime`                              | Section to configure Quantum Leap's runtime | `runtime:`                                         |
@@ -184,6 +186,11 @@ The following table lists the configurable parameters of the Quantum Leap chart 
 |                                        |                                             | `  successTtl: 86400`                              |
 |                                        |                                             | `  workers: 0`                                     |
 | `resources`                            |                                             | `{}`                                               |
+| `additionalLabels`               | If specified, defines labels to be attached to pods  | `fiware/platform: fiware` |
+|  |  | `fiware/component: core` |
+|  |  | `fiware/subcomponent: historical` |
+|  |  | `fiware/product: quantumleap` |
+| `additionalAnnotations`               | Additional annotations for the deployment, if required  | `{}`                                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
