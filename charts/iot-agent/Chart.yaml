@@ -1,7 +1,7 @@
 apiVersion: v1
 description: A Helm chart for NodeJS based IoT Agents
 name: iot-agent
-version: 0.1.15
+version: 0.1.16
 sources:
 - https://github.com/telefonicaid/iotagent-json
 - https://github.com/telefonicaid/iotagent-ul
