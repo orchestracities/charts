@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: telefonicaiot/iotagent-manager
-  tag: 1.6.0
+  tag: 1.13.0
   pullPolicy: IfNotPresent
 
 chaos:
@@ -37,7 +37,7 @@ mongo:
   # The name of the replicaset iot-agent will attempt to connect to
   rs: rs
   # The hostname of the mongodb service
-  dbhost: mongo-rs-mongodb-replicaset-0.mongo-rs-mongodb-replicaset.prod,mongo-rs-mongodb-replicaset-1.mongo-rs-mongodb-replicaset.prod,mongo-rs-mongodb-replicaset-2.mongo-rs-mongodb-replicaset.prod
+  dbhost: mongo-rs-mongodb-replicaset.prod
   # The database name to be used for the agent
   dbname: iot-agent-manager
   # The database name to be used for the agent

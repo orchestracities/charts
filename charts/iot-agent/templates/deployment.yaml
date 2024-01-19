@@ -20,6 +20,7 @@ spec:
   template:
     metadata:
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-" .Values.agent.agentType ".yaml") . | sha256sum }}
         chaos.alpha.kubernetes.io/enabled: "{{ .Values.chaos.enabled }}"
       labels:
         app: {{ template "iot-agent.name" . }}

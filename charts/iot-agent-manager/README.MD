@@ -5,12 +5,14 @@ This directory contains a Kubernetes chart to deploy an
 cluster using Deployment.
 
 ## Todo
-* Finalise README
+
+- Finalise README
 
 ## Chart Details
+
 This chart will do the following:
 
-* Implement a HA scalable IoT Agent Manager cluster using a Kubernetes Deployment.
+- Implement a HA scalable IoT Agent Manager cluster using a Kubernetes Deployment.
 
 ## Installing the Chart
 
@@ -31,14 +33,14 @@ TODO
 The following table lists the configurable parameters of the IoT Agent Manager
 chart and their default values.
 
-|       Parameter                   |           Description                       |                         Default                     |
-|-----------------------------------|---------------------------------------------|-----------------------------------------------------|
-| `replicaCount`                    | Amount of pods to spawn                     | `3`                                                 |
-| `image.repository`                | The image to pull                           | `fiware/iotagent-ul`                                      |
-| `image.tag`                       | The version of the image to pull            | `1.9.0`                                             |
-| `image.pullPolicy`                | The pull policy                             | `IfNotPresent`                                      |
-| `priorityClassName`               | If specified, indicates the pod's priority  | ``                                                  |
-| `affinity`               | If specified, defines affinity rules  | ``                                                  |
+| Parameter           | Description                                | Default                          |
+| ------------------- | ------------------------------------------ | -------------------------------- |
+| `replicaCount`      | Amount of pods to spawn                    | `3`                              |
+| `image.repository`  | The image to pull                          | `telefonicaiot/iotagent-manager` |
+| `image.tag`         | The version of the image to pull           | `1.13.0`                         |
+| `image.pullPolicy`  | The pull policy                            | `IfNotPresent`                   |
+| `priorityClassName` | If specified, indicates the pod's priority | ``                               |
+| `affinity`          | If specified, defines affinity rules       | ``                               |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
